@@ -24,7 +24,7 @@ CREATE TABLE Usuario(
 	UsuarioID int PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	Nombre varchar(64) NOT NULL,
 	UsuarioRolID int NOT NULL,
-	FOREIGN KEY (UsuarioRolID) REFERENCES UsuarioRol(UsuarioRolID)
+	CONSTRAINT FK_USUARIOROLID FOREIGN KEY (UsuarioRolID) REFERENCES UsuarioRol(UsuarioRolID)
 )
 
 --Simular VwDepMunicipio PJN
@@ -38,7 +38,7 @@ CREATE TABLE VwDepMunicipio(
 	Departamento varchar(64) NOT NULL,
 	Municipio varchar(64) NOT NULL,
 	EntidadlID int NOT NULL,
-	FOREIGN KEY (EntidadlID) REFERENCES Entidad(EntidadlID)
+	CONSTRAINT FK_ENTIDADID FOREIGN KEY (EntidadlID) REFERENCES Entidad(EntidadlID)
 )
 
 --db SalaViirtuales
@@ -60,10 +60,10 @@ CREATE TABLE Solicitud (
 	EstadoSolicitudID int NOT NULL DEFAULT 1, --Estado de la Solicitud
 	EstadoRegistroID INT NOT NULL DEFAULT 1, --Estado del Registro
 
-	FOREIGN KEY (SolicitanteID) REFERENCES Usuario(UsuarioID),
-	FOREIGN KEY (VwDepMunicipioID) REFERENCES VwDepMunicipio(VwDepMunicipioID),
-	FOREIGN KEY (EstadoSolicitudID) REFERENCES EstadoSolicitud(EstadoSolicitudID),
-	FOREIGN KEY (EstadoRegistroID) REFERENCES EstadoRegistro(EstadoRegistroID)
+	CONSTRAINT FK_SOLICITANTEID FOREIGN KEY (SolicitanteID) REFERENCES Usuario(UsuarioID),
+	CONSTRAINT FK_VWDEPMUNICIPIOID FOREIGN KEY (VwDepMunicipioID) REFERENCES VwDepMunicipio(VwDepMunicipioID),
+	CONSTRAINT FK_ESTADOSOLICITUDID FOREIGN KEY (EstadoSolicitudID) REFERENCES EstadoSolicitud(EstadoSolicitudID),
+	CONSTRAINT FK_ESTADOREGISTROID FOREIGN KEY (EstadoRegistroID) REFERENCES EstadoRegistro(EstadoRegistroID)
 );
 
 CREATE TABLE SolicitudHistorial (
@@ -87,7 +87,7 @@ CREATE TABLE SolicitudHistorial (
 		--Nuevos Campos
 		FechaModificacion date,
 		UsuarioModificaID int,
-		FOREIGN KEY (UsuarioModificaID) REFERENCES Usuario(UsuarioID)
+		CONSTRAINT FK_USUARIOMODIFICAID FOREIGN KEY (UsuarioModificaID) REFERENCES Usuario(UsuarioID)
 );
 
 INSERT INTO EstadoSolicitud (descripcion) VALUES
