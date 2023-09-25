@@ -6,52 +6,52 @@ namespace WebApiSalaVirtual.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuarioController : ControllerBase
+    public class EntidadController : ControllerBase
     {
         private readonly DbSalasVirtualesContext _context;
 
-        public UsuarioController(DbSalasVirtualesContext context)
+        public EntidadController(DbSalasVirtualesContext context)
         {
             _context = context;
         }
 
-        // GET: api/Usuario
+        // GET: api/Entidad
         [HttpGet]
         [Route("Lista")]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
+        public async Task<ActionResult<IEnumerable<Entidad>>> GetEntidads()
         {
-            if (_context.Usuarios == null)
+            if (_context.Entidads == null)
             {
                 return NotFound();
             }
-            return await _context.Usuarios.Include(c => c.oRolUsuario).ToListAsync();
+            return await _context.Entidads.ToListAsync();
         }
 
-        // GET: api/Usuario/5
+        // GET: api/Entidad/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> GetUsuario(int id)
+        public async Task<ActionResult<Entidad>> GetEntidad(int id)
         {
-            if (_context.Usuarios == null)
+            if (_context.Entidads == null)
             {
                 return NotFound();
             }
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var entidad = await _context.Entidads.FindAsync(id);
 
-            if (usuario == null)
+            if (entidad == null)
             {
                 return NotFound();
             }
 
-            return usuario;
+            return entidad;
         }
 
         [HttpPost]
         [Route("Guardar")]
-        public IActionResult Guardar([FromBody] Usuario objeto)
+        public IActionResult Guardar([FromBody] Entidad objeto)
         {
             try
             {
-                _context.Usuarios.Add(objeto);
+                _context.Entidads.Add(objeto);
                 _context.SaveChanges();
                 return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok" });
             }
@@ -63,29 +63,27 @@ namespace WebApiSalaVirtual.Controllers
 
         [HttpPut]
         [Route("Editar")]
-        public IActionResult Editar([FromBody] Usuario UsuarioActualizado)
+        public IActionResult Editar([FromBody] Entidad oEntidad)
         {
             try
             {
                 // Busca el producto existente en la base de datos por su IdProducto
-                var UsuarioExistente = _context.Usuarios.Find(UsuarioActualizado.UsuarioId);
+                var objeto = _context.UsuarioRols.Find(oEntidad.EntidadId);
 
                 // Si el producto no existe, devuelve un BadRequest
-                if (UsuarioExistente == null)
+                if (objeto == null)
                 {
-                    return BadRequest("Producto no encontrado");
+                    return BadRequest("Entidad no encontrado");
                 }
 
                 // Actualiza las propiedades del producto existente con los valores del producto actualizado
-                UsuarioExistente.Nombre = UsuarioActualizado.Nombre is null ? UsuarioExistente.Nombre : UsuarioActualizado.Nombre;
-                UsuarioExistente.UsuarioRolId = UsuarioActualizado.UsuarioRolId is null ? UsuarioExistente.UsuarioRolId : UsuarioActualizado.UsuarioRolId;
-
+                objeto.Descripcion = oEntidad.Descripcion is null ? objeto.Descripcion : oEntidad.Descripcion;
 
                 // Guarda los cambios en la base de datos   
                 _context.SaveChanges();
 
                 // Devuelve una respuesta exitosa
-                return Ok(new { mensaje = "Producto actualizado correctamente" });
+                return Ok(new { mensaje = "Entidad actualizado correctamente" });
             }
             catch (Exception ex)
             {
@@ -94,31 +92,29 @@ namespace WebApiSalaVirtual.Controllers
             }
         }
 
-
-
-        // DELETE: api/Usuario/5
+        // DELETE: api/Entidad/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsuario(int id)
+        public async Task<IActionResult> DeleteEntidad(int id)
         {
-            if (_context.Usuarios == null)
+            if (_context.Entidads == null)
             {
                 return NotFound();
             }
-            var usuario = await _context.Usuarios.FindAsync(id);
-            if (usuario == null)
+            var entidad = await _context.Entidads.FindAsync(id);
+            if (entidad == null)
             {
                 return NotFound();
             }
 
-            _context.Usuarios.Remove(usuario);
+            _context.Entidads.Remove(entidad);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        //private bool UsuarioExists(int id)
+        //private bool EntidadExists(int id)
         //{
-        //    return (_context.Usuarios?.Any(e => e.UsuarioId == id)).GetValueOrDefault();
+        //    return (_context.Entidads?.Any(e => e.EntidadId == id)).GetValueOrDefault();
         //}
     }
 }

@@ -6,52 +6,52 @@ namespace WebApiSalaVirtual.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuarioController : ControllerBase
+    public class EstadoRegistroController : ControllerBase
     {
         private readonly DbSalasVirtualesContext _context;
 
-        public UsuarioController(DbSalasVirtualesContext context)
+        public EstadoRegistroController(DbSalasVirtualesContext context)
         {
             _context = context;
         }
 
-        // GET: api/Usuario
+        // GET: api/EstadoRegistro
         [HttpGet]
         [Route("Lista")]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
+        public async Task<ActionResult<IEnumerable<EstadoRegistro>>> GetUsuarioRols()
         {
-            if (_context.Usuarios == null)
+            if (_context.UsuarioRols == null)
             {
                 return NotFound();
             }
-            return await _context.Usuarios.Include(c => c.oRolUsuario).ToListAsync();
+            return await _context.EstadoRegistros.ToListAsync();
         }
 
-        // GET: api/Usuario/5
+        // GET: api/EstadoRegistroes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> GetUsuario(int id)
+        public async Task<ActionResult<EstadoRegistro>> GetEstadoRegistro(int? id)
         {
-            if (_context.Usuarios == null)
+            if (_context.EstadoRegistros == null)
             {
                 return NotFound();
             }
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var estadoRegistro = await _context.EstadoRegistros.FindAsync(id);
 
-            if (usuario == null)
+            if (estadoRegistro == null)
             {
                 return NotFound();
             }
 
-            return usuario;
+            return estadoRegistro;
         }
 
         [HttpPost]
         [Route("Guardar")]
-        public IActionResult Guardar([FromBody] Usuario objeto)
+        public IActionResult Guardar([FromBody] EstadoRegistro objeto)
         {
             try
             {
-                _context.Usuarios.Add(objeto);
+                _context.EstadoRegistros.Add(objeto);
                 _context.SaveChanges();
                 return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok" });
             }
@@ -61,31 +61,30 @@ namespace WebApiSalaVirtual.Controllers
             }
         }
 
+
         [HttpPut]
         [Route("Editar")]
-        public IActionResult Editar([FromBody] Usuario UsuarioActualizado)
+        public IActionResult Editar([FromBody] EstadoRegistro oEstadoRegistro)
         {
             try
             {
                 // Busca el producto existente en la base de datos por su IdProducto
-                var UsuarioExistente = _context.Usuarios.Find(UsuarioActualizado.UsuarioId);
+                var objeto = _context.EstadoRegistros.Find(oEstadoRegistro.EstadoRegistroId);
 
                 // Si el producto no existe, devuelve un BadRequest
-                if (UsuarioExistente == null)
+                if (objeto == null)
                 {
-                    return BadRequest("Producto no encontrado");
+                    return BadRequest("Estado Registro no encontrado");
                 }
 
                 // Actualiza las propiedades del producto existente con los valores del producto actualizado
-                UsuarioExistente.Nombre = UsuarioActualizado.Nombre is null ? UsuarioExistente.Nombre : UsuarioActualizado.Nombre;
-                UsuarioExistente.UsuarioRolId = UsuarioActualizado.UsuarioRolId is null ? UsuarioExistente.UsuarioRolId : UsuarioActualizado.UsuarioRolId;
-
+                objeto.Descripcion = oEstadoRegistro.Descripcion is null ? objeto.Descripcion : oEstadoRegistro.Descripcion;
 
                 // Guarda los cambios en la base de datos   
                 _context.SaveChanges();
 
                 // Devuelve una respuesta exitosa
-                return Ok(new { mensaje = "Producto actualizado correctamente" });
+                return Ok(new { mensaje = "Estado Registro actualizado correctamente" });
             }
             catch (Exception ex)
             {
@@ -95,30 +94,29 @@ namespace WebApiSalaVirtual.Controllers
         }
 
 
-
-        // DELETE: api/Usuario/5
+        // DELETE: api/EstadoRegistroes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsuario(int id)
+        public async Task<IActionResult> DeleteEstadoRegistro(int? id)
         {
-            if (_context.Usuarios == null)
+            if (_context.EstadoRegistros == null)
             {
                 return NotFound();
             }
-            var usuario = await _context.Usuarios.FindAsync(id);
-            if (usuario == null)
+            var estadoRegistro = await _context.EstadoRegistros.FindAsync(id);
+            if (estadoRegistro == null)
             {
                 return NotFound();
             }
 
-            _context.Usuarios.Remove(usuario);
+            _context.EstadoRegistros.Remove(estadoRegistro);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        //private bool UsuarioExists(int id)
-        //{
-        //    return (_context.Usuarios?.Any(e => e.UsuarioId == id)).GetValueOrDefault();
-        //}
+        private bool EstadoRegistroExists(int? id)
+        {
+            return (_context.EstadoRegistros?.Any(e => e.EstadoRegistroId == id)).GetValueOrDefault();
+        }
     }
 }

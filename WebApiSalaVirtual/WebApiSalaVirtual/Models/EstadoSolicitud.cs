@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace WebApiSalaVirtual.Models;
+﻿namespace WebApiSalaVirtual.Models;
 
 public partial class EstadoSolicitud
 {
-    public int EstadoSolicitudId { get; set; }
+    public int? EstadoSolicitudId { get; set; }
 
-    public string Descripcion { get; set; } = null!;
+    public string? Descripcion { get; set; } = null!;
 
-    public virtual ICollection<Solicitud> Solicituds { get; set; } = new List<Solicitud>();
+    //public virtual ICollection<Solicitud> Solicituds { get; set; } = new List<Solicitud>();
 }

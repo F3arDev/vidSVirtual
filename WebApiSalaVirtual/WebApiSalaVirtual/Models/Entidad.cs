@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿using System.Text.Json.Serialization;
 namespace WebApiSalaVirtual.Models;
 
 public partial class Entidad
 {
-    public int EntidadlId { get; set; }
+    public int? EntidadId { get; set; }
 
-    public string Descripcion { get; set; } = null!;
+    public string? Descripcion { get; set; } = null!;
 
+    [JsonIgnore]
     public virtual ICollection<VwDepMunicipio> VwDepMunicipios { get; set; } = new List<VwDepMunicipio>();
 }

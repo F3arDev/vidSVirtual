@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-
+﻿using Microsoft.EntityFrameworkCore;
 namespace WebApiSalaVirtual.Models;
 
 public partial class DbSalasVirtualesContext : DbContext
@@ -35,11 +32,11 @@ public partial class DbSalasVirtualesContext : DbContext
     {
         modelBuilder.Entity<Entidad>(entity =>
         {
-            entity.HasKey(e => e.EntidadlId).HasName("PK__Entidad__68D4A4D899D75D30");
+            entity.HasKey(e => e.EntidadId).HasName("PK__Entidad__68D4A4D899D75D30");
 
             entity.ToTable("Entidad");
 
-            entity.Property(e => e.EntidadlId).HasColumnName("EntidadlID");
+            entity.Property(e => e.EntidadId).HasColumnName("EntidadID");
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(64)
                 .IsUnicode(false)
@@ -107,25 +104,25 @@ public partial class DbSalasVirtualesContext : DbContext
                 .HasDefaultValueSql("('Sin Generar')");
             entity.Property(e => e.VwDepMunicipioId).HasColumnName("VwDepMunicipioID");
 
-            entity.HasOne(d => d.EstadoRegistro).WithMany(p => p.Solicituds)
-                .HasForeignKey(d => d.EstadoRegistroId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ESTADOREGISTROID");
+            //entity.HasOne(d => d.EstadoRegistro).WithMany(p => p.Solicituds)
+            //    .HasForeignKey(d => d.EstadoRegistroId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_ESTADOREGISTROID");
 
-            entity.HasOne(d => d.EstadoSolicitud).WithMany(p => p.Solicituds)
-                .HasForeignKey(d => d.EstadoSolicitudId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ESTADOSOLICITUDID");
+            //entity.HasOne(d => d.EstadoSolicitud).WithMany(p => p.Solicituds)
+            //    .HasForeignKey(d => d.EstadoSolicitudId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_ESTADOSOLICITUDID");
 
-            entity.HasOne(d => d.Solicitante).WithMany(p => p.Solicituds)
-                .HasForeignKey(d => d.SolicitanteId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_SOLICITANTEID");
+            //entity.HasOne(d => d.Solicitante).WithMany(p => p.Solicituds)
+            //    .HasForeignKey(d => d.SolicitanteId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_SOLICITANTEID");
 
-            entity.HasOne(d => d.VwDepMunicipio).WithMany(p => p.Solicituds)
-                .HasForeignKey(d => d.VwDepMunicipioId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_VWDEPMUNICIPIOID");
+            //entity.HasOne(d => d.VwDepMunicipio).WithMany(p => p.Solicituds)
+            //    .HasForeignKey(d => d.VwDepMunicipioId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_VWDEPMUNICIPIOID");
         });
 
         modelBuilder.Entity<SolicitudHistorial>(entity =>
@@ -165,9 +162,9 @@ public partial class DbSalasVirtualesContext : DbContext
             entity.Property(e => e.UsuarioModificaId).HasColumnName("UsuarioModificaID");
             entity.Property(e => e.VwDepMunicipioId).HasColumnName("VwDepMunicipioID");
 
-            entity.HasOne(d => d.UsuarioModifica).WithMany(p => p.SolicitudHistorials)
-                .HasForeignKey(d => d.UsuarioModificaId)
-                .HasConstraintName("FK_USUARIOMODIFICAID");
+            //entity.HasOne(d => d.UsuarioModifica).WithMany(p => p.SolicitudHistorials)
+            //    .HasForeignKey(d => d.UsuarioModificaId)
+            //    .HasConstraintName("FK_USUARIOMODIFICAID");
         });
 
         modelBuilder.Entity<Usuario>(entity =>
@@ -182,7 +179,7 @@ public partial class DbSalasVirtualesContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.UsuarioRolId).HasColumnName("UsuarioRolID");
 
-            entity.HasOne(d => d.UsuarioRol).WithMany(p => p.Usuarios)
+            entity.HasOne(d => d.oRolUsuario).WithMany(p => p.Usuarios)
                 .HasForeignKey(d => d.UsuarioRolId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_USUARIOROLID");
@@ -211,13 +208,13 @@ public partial class DbSalasVirtualesContext : DbContext
             entity.Property(e => e.Departamento)
                 .HasMaxLength(64)
                 .IsUnicode(false);
-            entity.Property(e => e.EntidadlId).HasColumnName("EntidadlID");
+            entity.Property(e => e.EntidadID).HasColumnName("EntidadID");
             entity.Property(e => e.Municipio)
                 .HasMaxLength(64)
                 .IsUnicode(false);
 
             entity.HasOne(d => d.Entidadl).WithMany(p => p.VwDepMunicipios)
-                .HasForeignKey(d => d.EntidadlId)
+                .HasForeignKey(d => d.EntidadID)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ENTIDADID");
         });

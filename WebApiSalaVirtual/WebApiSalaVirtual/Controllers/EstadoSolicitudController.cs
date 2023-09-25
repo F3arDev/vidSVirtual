@@ -6,52 +6,52 @@ namespace WebApiSalaVirtual.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuarioController : ControllerBase
+    public class EstadoSolicitudController : ControllerBase
     {
         private readonly DbSalasVirtualesContext _context;
 
-        public UsuarioController(DbSalasVirtualesContext context)
+        public EstadoSolicitudController(DbSalasVirtualesContext context)
         {
             _context = context;
         }
 
-        // GET: api/Usuario
+        // GET: api/EstadoSolicitud
         [HttpGet]
         [Route("Lista")]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
+        public async Task<ActionResult<IEnumerable<EstadoSolicitud>>> GetEstadoSolicitud()
         {
-            if (_context.Usuarios == null)
+            if (_context.EstadoSolicituds == null)
             {
                 return NotFound();
             }
-            return await _context.Usuarios.Include(c => c.oRolUsuario).ToListAsync();
+            return await _context.EstadoSolicituds.ToListAsync();
         }
 
-        // GET: api/Usuario/5
+        // GET: api/EstadoSolicitud/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> GetUsuario(int id)
+        public async Task<ActionResult<EstadoSolicitud>> GetEstadoSolicitud(int? id)
         {
-            if (_context.Usuarios == null)
+            if (_context.EstadoSolicituds == null)
             {
                 return NotFound();
             }
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var estadoSolicitud = await _context.EstadoSolicituds.FindAsync(id);
 
-            if (usuario == null)
+            if (estadoSolicitud == null)
             {
                 return NotFound();
             }
 
-            return usuario;
+            return estadoSolicitud;
         }
 
         [HttpPost]
         [Route("Guardar")]
-        public IActionResult Guardar([FromBody] Usuario objeto)
+        public IActionResult Guardar([FromBody] EstadoSolicitud objeto)
         {
             try
             {
-                _context.Usuarios.Add(objeto);
+                _context.EstadoSolicituds.Add(objeto);
                 _context.SaveChanges();
                 return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok" });
             }
@@ -63,29 +63,28 @@ namespace WebApiSalaVirtual.Controllers
 
         [HttpPut]
         [Route("Editar")]
-        public IActionResult Editar([FromBody] Usuario UsuarioActualizado)
+        public IActionResult Editar([FromBody] EstadoSolicitud oEstadoSolicitud)
         {
             try
             {
                 // Busca el producto existente en la base de datos por su IdProducto
-                var UsuarioExistente = _context.Usuarios.Find(UsuarioActualizado.UsuarioId);
+                var objeto = _context.EstadoSolicituds.Find(oEstadoSolicitud.EstadoSolicitudId);
 
                 // Si el producto no existe, devuelve un BadRequest
-                if (UsuarioExistente == null)
+                if (objeto == null)
                 {
-                    return BadRequest("Producto no encontrado");
+
+                    return BadRequest("EstadoSolicitud no encontrado");
                 }
 
                 // Actualiza las propiedades del producto existente con los valores del producto actualizado
-                UsuarioExistente.Nombre = UsuarioActualizado.Nombre is null ? UsuarioExistente.Nombre : UsuarioActualizado.Nombre;
-                UsuarioExistente.UsuarioRolId = UsuarioActualizado.UsuarioRolId is null ? UsuarioExistente.UsuarioRolId : UsuarioActualizado.UsuarioRolId;
-
+                objeto.Descripcion = oEstadoSolicitud.Descripcion is null ? objeto.Descripcion : oEstadoSolicitud.Descripcion;
 
                 // Guarda los cambios en la base de datos   
                 _context.SaveChanges();
 
                 // Devuelve una respuesta exitosa
-                return Ok(new { mensaje = "Producto actualizado correctamente" });
+                return Ok(new { mensaje = "EstadoSolicitud actualizado correctamente" });
             }
             catch (Exception ex)
             {
@@ -95,30 +94,29 @@ namespace WebApiSalaVirtual.Controllers
         }
 
 
-
-        // DELETE: api/Usuario/5
+        // DELETE: api/EstadoSolicitud/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsuario(int id)
+        public async Task<IActionResult> DeleteEstadoSolicitud(int? id)
         {
-            if (_context.Usuarios == null)
+            if (_context.EstadoSolicituds == null)
             {
                 return NotFound();
             }
-            var usuario = await _context.Usuarios.FindAsync(id);
-            if (usuario == null)
+            var estadoSolicitud = await _context.EstadoSolicituds.FindAsync(id);
+            if (estadoSolicitud == null)
             {
                 return NotFound();
             }
 
-            _context.Usuarios.Remove(usuario);
+            _context.EstadoSolicituds.Remove(estadoSolicitud);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        //private bool UsuarioExists(int id)
-        //{
-        //    return (_context.Usuarios?.Any(e => e.UsuarioId == id)).GetValueOrDefault();
-        //}
+        private bool EstadoSolicitudExists(int? id)
+        {
+            return (_context.EstadoSolicituds?.Any(e => e.EstadoSolicitudId == id)).GetValueOrDefault();
+        }
     }
 }

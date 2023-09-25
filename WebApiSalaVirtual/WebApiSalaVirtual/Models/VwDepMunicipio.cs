@@ -11,7 +11,7 @@ public partial class VwDepMunicipio
 
     public string Municipio { get; set; } = null!;
 
-    public int EntidadlId { get; set; }
+    public int EntidadID { get; set; }
 
     public virtual Entidad Entidadl { get; set; } = null!;
 

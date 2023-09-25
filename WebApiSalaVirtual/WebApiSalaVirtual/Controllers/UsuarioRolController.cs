@@ -6,52 +6,53 @@ namespace WebApiSalaVirtual.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsuarioController : ControllerBase
+    public class UsuarioRolController : ControllerBase
     {
         private readonly DbSalasVirtualesContext _context;
 
-        public UsuarioController(DbSalasVirtualesContext context)
+        public UsuarioRolController(DbSalasVirtualesContext context)
         {
             _context = context;
         }
 
+
         // GET: api/Usuario
         [HttpGet]
         [Route("Lista")]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
+        public async Task<ActionResult<IEnumerable<UsuarioRol>>> GetUsuarioRols()
         {
-            if (_context.Usuarios == null)
+            if (_context.UsuarioRols == null)
             {
                 return NotFound();
             }
-            return await _context.Usuarios.Include(c => c.oRolUsuario).ToListAsync();
+            return await _context.UsuarioRols.ToListAsync();
         }
 
-        // GET: api/Usuario/5
+        // GET: api/UsuarioRol/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> GetUsuario(int id)
+        public async Task<ActionResult<UsuarioRol>> GetUsuarioRol(int? id)
         {
-            if (_context.Usuarios == null)
+            if (_context.UsuarioRols == null)
             {
                 return NotFound();
             }
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var usuarioRol = await _context.UsuarioRols.FindAsync(id);
 
-            if (usuario == null)
+            if (usuarioRol == null)
             {
                 return NotFound();
             }
 
-            return usuario;
+            return usuarioRol;
         }
 
         [HttpPost]
         [Route("Guardar")]
-        public IActionResult Guardar([FromBody] Usuario objeto)
+        public IActionResult Guardar([FromBody] UsuarioRol objeto)
         {
             try
             {
-                _context.Usuarios.Add(objeto);
+                _context.UsuarioRols.Add(objeto);
                 _context.SaveChanges();
                 return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok" });
             }
@@ -63,29 +64,27 @@ namespace WebApiSalaVirtual.Controllers
 
         [HttpPut]
         [Route("Editar")]
-        public IActionResult Editar([FromBody] Usuario UsuarioActualizado)
+        public IActionResult Editar([FromBody] UsuarioRol UsuarioRolActualizado)
         {
             try
             {
                 // Busca el producto existente en la base de datos por su IdProducto
-                var UsuarioExistente = _context.Usuarios.Find(UsuarioActualizado.UsuarioId);
+                var UsuarioRolExistente = _context.UsuarioRols.Find(UsuarioRolActualizado.UsuarioRolId);
 
                 // Si el producto no existe, devuelve un BadRequest
-                if (UsuarioExistente == null)
+                if (UsuarioRolExistente == null)
                 {
-                    return BadRequest("Producto no encontrado");
+                    return BadRequest("Rol no encontrado");
                 }
 
                 // Actualiza las propiedades del producto existente con los valores del producto actualizado
-                UsuarioExistente.Nombre = UsuarioActualizado.Nombre is null ? UsuarioExistente.Nombre : UsuarioActualizado.Nombre;
-                UsuarioExistente.UsuarioRolId = UsuarioActualizado.UsuarioRolId is null ? UsuarioExistente.UsuarioRolId : UsuarioActualizado.UsuarioRolId;
-
+                UsuarioRolExistente.Descripcion = UsuarioRolActualizado.Descripcion is null ? UsuarioRolExistente.Descripcion : UsuarioRolActualizado.Descripcion;
 
                 // Guarda los cambios en la base de datos   
                 _context.SaveChanges();
 
                 // Devuelve una respuesta exitosa
-                return Ok(new { mensaje = "Producto actualizado correctamente" });
+                return Ok(new { mensaje = "Rol actualizado correctamente" });
             }
             catch (Exception ex)
             {
@@ -94,31 +93,29 @@ namespace WebApiSalaVirtual.Controllers
             }
         }
 
-
-
-        // DELETE: api/Usuario/5
+        // DELETE: api/UsuarioRol/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUsuario(int id)
+        public async Task<IActionResult> DeleteUsuarioRol(int? id)
         {
-            if (_context.Usuarios == null)
+            if (_context.UsuarioRols == null)
             {
                 return NotFound();
             }
-            var usuario = await _context.Usuarios.FindAsync(id);
-            if (usuario == null)
+            var usuarioRol = await _context.UsuarioRols.FindAsync(id);
+            if (usuarioRol == null)
             {
                 return NotFound();
             }
 
-            _context.Usuarios.Remove(usuario);
+            _context.UsuarioRols.Remove(usuarioRol);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        //private bool UsuarioExists(int id)
-        //{
-        //    return (_context.Usuarios?.Any(e => e.UsuarioId == id)).GetValueOrDefault();
-        //}
+        private bool UsuarioRolExists(int? id)
+        {
+            return (_context.UsuarioRols?.Any(e => e.UsuarioRolId == id)).GetValueOrDefault();
+        }
     }
 }

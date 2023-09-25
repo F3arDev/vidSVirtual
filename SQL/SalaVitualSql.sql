@@ -29,7 +29,7 @@ CREATE TABLE Usuario(
 
 --Simular VwDepMunicipio PJN
 CREATE TABLE Entidad(
-	EntidadlID int PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	EntidadID int PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	descripcion varchar(64) NOT NULL
 )
 
@@ -37,8 +37,8 @@ CREATE TABLE VwDepMunicipio(
 	VwDepMunicipioID int PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	Departamento varchar(64) NOT NULL,
 	Municipio varchar(64) NOT NULL,
-	EntidadlID int NOT NULL,
-	CONSTRAINT FK_ENTIDADID FOREIGN KEY (EntidadlID) REFERENCES Entidad(EntidadlID)
+	EntidadID int NOT NULL,
+	CONSTRAINT FK_ENTIDADID FOREIGN KEY (EntidadID) REFERENCES Entidad(EntidadID)
 )
 
 --db SalaViirtuales
@@ -127,4 +127,4 @@ select * from EstadoRegistro;
 select * from Solicitud;
 select * from SolicitudHistorial;
 select * from VwDepMunicipio;
-select * from Usuario;
+select * from Entidad;
