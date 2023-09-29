@@ -12,26 +12,26 @@ CREATE TABLE EstadoSolicitud (
 CREATE TABLE EstadoRegistro(
 	EstadoRegistroID int PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	descripcion varchar(32) NOT NULL
-)
+);
 
 --Simular Gaia
 CREATE TABLE UsuarioRol(
 	UsuarioRolID int PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	descripcion varchar(64) NOT NULL
-)
+);
 
 CREATE TABLE Usuario(
 	UsuarioID int PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	Nombre varchar(64) NOT NULL,
 	UsuarioRolID int NOT NULL,
 	CONSTRAINT FK_USUARIOROLID FOREIGN KEY (UsuarioRolID) REFERENCES UsuarioRol(UsuarioRolID)
-)
+);
 
 --Simular VwDepMunicipio PJN
 CREATE TABLE Entidad(
 	EntidadID int PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	descripcion varchar(64) NOT NULL
-)
+);
 
 CREATE TABLE VwDepMunicipio(
 	VwDepMunicipioID int PRIMARY KEY IDENTITY(1,1) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE VwDepMunicipio(
 	Municipio varchar(64) NOT NULL,
 	EntidadID int NOT NULL,
 	CONSTRAINT FK_ENTIDADID FOREIGN KEY (EntidadID) REFERENCES Entidad(EntidadID)
-)
+);
 
 --db SalaViirtuales
 CREATE TABLE Solicitud (
@@ -118,7 +118,7 @@ INSERT INTO VwDepMunicipio (Departamento, Municipio, EntidadlID) VALUES
 -- Insertar valor en la tabla Solicitud
 INSERT INTO Solicitud (SolicitanteID, FechaRegistro, FechaInicio, FechaFin, HoraInicio, HoraFin, VwDepMunicipioID, Expediente, Actividad, UrlSesion, Motivo)
 VALUES 
-(1, '2023-09-20', '2023-09-21', '2023-09-22', '08:00', '17:00', 1, 'Exp001', 'Reunión', 'https://ejemplo.com/sesion1', 'Reunión de trabajo'),
+(1, '2023-09-20', '2023-09-21', '2023-09-22', '08:00', '17:00', 1, 'Exp001', 'Reuniï¿½n', 'https://ejemplo.com/sesion1', 'Reuniï¿½n de trabajo'),
 (2, '2023-09-21', '2023-09-23', '2023-09-24', '09:00', '18:00', 1, 'Exp002', 'Conferencia', 'https://ejemplo.com/sesion2', 'Conferencia anual');
 
 

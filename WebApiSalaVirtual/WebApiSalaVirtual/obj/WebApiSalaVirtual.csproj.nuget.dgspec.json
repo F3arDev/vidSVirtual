@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\fredd\\OneDrive\\Documentos\\VS Code\\CSJ-DGTIC\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj": {}
+    "c:\\Users\\fredd\\OneDrive\\Documentos\\VS Code\\CSJ-DGTIC\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj": {}
   },
   "projects": {
-    "C:\\Users\\fredd\\OneDrive\\Documentos\\VS Code\\CSJ-DGTIC\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj": {
+    "c:\\Users\\fredd\\OneDrive\\Documentos\\VS Code\\CSJ-DGTIC\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\fredd\\OneDrive\\Documentos\\VS Code\\CSJ-DGTIC\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj",
+        "projectUniqueName": "c:\\Users\\fredd\\OneDrive\\Documentos\\VS Code\\CSJ-DGTIC\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj",
         "projectName": "WebApiSalaVirtual",
-        "projectPath": "C:\\Users\\fredd\\OneDrive\\Documentos\\VS Code\\CSJ-DGTIC\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj",
+        "projectPath": "c:\\Users\\fredd\\OneDrive\\Documentos\\VS Code\\CSJ-DGTIC\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj",
         "packagesPath": "C:\\Users\\fredd\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\fredd\\OneDrive\\Documentos\\VS Code\\CSJ-DGTIC\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\obj\\",
+        "outputPath": "c:\\Users\\fredd\\OneDrive\\Documentos\\VS Code\\CSJ-DGTIC\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
