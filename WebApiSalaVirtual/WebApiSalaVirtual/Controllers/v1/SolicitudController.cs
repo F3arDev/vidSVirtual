@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApiSalaVirtual.Models;
 
-namespace WebApiSalaVirtual.Controllers
+namespace WebApiSalaVirtual.Controllers.v1
 {
-    [Route("api/[controller]")]
+    [EnableCors("ReglasCors")]
     [ApiController]
+    [Route("api/v{version:apiVersion}/[controller]")] // Crea una instancia Unica para la version de la API
+    //[Route("api/[controller]")] --- manda de manera general una instancia de las funciones de la API
+    [ApiVersion("1.0")] //Deprecate, Indica que la version de la API Sera Descontinuada
     public class SolicitudController : ControllerBase
     {
         private readonly DbSalasVirtualesContext _context;
@@ -16,6 +20,7 @@ namespace WebApiSalaVirtual.Controllers
         }
 
         // GET: api/Solicitud
+        [MapToApiVersion("1.0")]
         [HttpGet]
         [Route("Lista")]
         public async Task<ActionResult<IEnumerable<Solicitud>>> GetSolicituds()
@@ -28,6 +33,7 @@ namespace WebApiSalaVirtual.Controllers
         }
 
         // GET: api/Solicitud/5
+        [MapToApiVersion("1.0")]
         [HttpGet("{id}")]
         public async Task<ActionResult<Solicitud>> GetSolicitud(int id)
         {
@@ -45,6 +51,7 @@ namespace WebApiSalaVirtual.Controllers
             return solicitud;
         }
 
+        [MapToApiVersion("1.0")]
         [HttpPost]
         [Route("Guardar")]
         public IActionResult Guardar([FromBody] Solicitud objeto)
@@ -61,6 +68,7 @@ namespace WebApiSalaVirtual.Controllers
             }
         }
 
+        [MapToApiVersion("1.0")]
         [HttpPut]
         [Route("Editar")]
         public IActionResult Editar([FromBody] Solicitud oSolicitud)

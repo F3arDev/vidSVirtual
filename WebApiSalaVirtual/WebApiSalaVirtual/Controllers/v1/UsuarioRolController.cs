@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebApiSalaVirtual.Models;
 
-namespace WebApiSalaVirtual.Controllers
+namespace WebApiSalaVirtual.Controllers.v1
 {
     [Route("api/[controller]")]
     [ApiController]

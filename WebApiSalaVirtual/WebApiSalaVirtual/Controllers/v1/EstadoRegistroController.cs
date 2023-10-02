@@ -2,56 +2,56 @@
 using Microsoft.EntityFrameworkCore;
 using WebApiSalaVirtual.Models;
 
-namespace WebApiSalaVirtual.Controllers
+namespace WebApiSalaVirtual.Controllers.v1
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EstadoSolicitudController : ControllerBase
+    public class EstadoRegistroController : ControllerBase
     {
         private readonly DbSalasVirtualesContext _context;
 
-        public EstadoSolicitudController(DbSalasVirtualesContext context)
+        public EstadoRegistroController(DbSalasVirtualesContext context)
         {
             _context = context;
         }
 
-        // GET: api/EstadoSolicitud
+        // GET: api/EstadoRegistro
         [HttpGet]
         [Route("Lista")]
-        public async Task<ActionResult<IEnumerable<EstadoSolicitud>>> GetEstadoSolicitud()
+        public async Task<ActionResult<IEnumerable<EstadoRegistro>>> GetUsuarioRols()
         {
-            if (_context.EstadoSolicituds == null)
+            if (_context.UsuarioRols == null)
             {
                 return NotFound();
             }
-            return await _context.EstadoSolicituds.ToListAsync();
+            return await _context.EstadoRegistros.ToListAsync();
         }
 
-        // GET: api/EstadoSolicitud/5
+        // GET: api/EstadoRegistroes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<EstadoSolicitud>> GetEstadoSolicitud(int? id)
+        public async Task<ActionResult<EstadoRegistro>> GetEstadoRegistro(int? id)
         {
-            if (_context.EstadoSolicituds == null)
+            if (_context.EstadoRegistros == null)
             {
                 return NotFound();
             }
-            var estadoSolicitud = await _context.EstadoSolicituds.FindAsync(id);
+            var estadoRegistro = await _context.EstadoRegistros.FindAsync(id);
 
-            if (estadoSolicitud == null)
+            if (estadoRegistro == null)
             {
                 return NotFound();
             }
 
-            return estadoSolicitud;
+            return estadoRegistro;
         }
 
         [HttpPost]
         [Route("Guardar")]
-        public IActionResult Guardar([FromBody] EstadoSolicitud objeto)
+        public IActionResult Guardar([FromBody] EstadoRegistro objeto)
         {
             try
             {
-                _context.EstadoSolicituds.Add(objeto);
+                _context.EstadoRegistros.Add(objeto);
                 _context.SaveChanges();
                 return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok" });
             }
@@ -61,30 +61,30 @@ namespace WebApiSalaVirtual.Controllers
             }
         }
 
+
         [HttpPut]
         [Route("Editar")]
-        public IActionResult Editar([FromBody] EstadoSolicitud oEstadoSolicitud)
+        public IActionResult Editar([FromBody] EstadoRegistro oEstadoRegistro)
         {
             try
             {
                 // Busca el producto existente en la base de datos por su IdProducto
-                var objeto = _context.EstadoSolicituds.Find(oEstadoSolicitud.EstadoSolicitudId);
+                var objeto = _context.EstadoRegistros.Find(oEstadoRegistro.EstadoRegistroId);
 
                 // Si el producto no existe, devuelve un BadRequest
                 if (objeto == null)
                 {
-
-                    return BadRequest("EstadoSolicitud no encontrado");
+                    return BadRequest("Estado Registro no encontrado");
                 }
 
                 // Actualiza las propiedades del producto existente con los valores del producto actualizado
-                objeto.Descripcion = oEstadoSolicitud.Descripcion is null ? objeto.Descripcion : oEstadoSolicitud.Descripcion;
+                objeto.Descripcion = oEstadoRegistro.Descripcion is null ? objeto.Descripcion : oEstadoRegistro.Descripcion;
 
                 // Guarda los cambios en la base de datos   
                 _context.SaveChanges();
 
                 // Devuelve una respuesta exitosa
-                return Ok(new { mensaje = "EstadoSolicitud actualizado correctamente" });
+                return Ok(new { mensaje = "Estado Registro actualizado correctamente" });
             }
             catch (Exception ex)
             {
@@ -94,29 +94,29 @@ namespace WebApiSalaVirtual.Controllers
         }
 
 
-        // DELETE: api/EstadoSolicitud/5
+        // DELETE: api/EstadoRegistroes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEstadoSolicitud(int? id)
+        public async Task<IActionResult> DeleteEstadoRegistro(int? id)
         {
-            if (_context.EstadoSolicituds == null)
+            if (_context.EstadoRegistros == null)
             {
                 return NotFound();
             }
-            var estadoSolicitud = await _context.EstadoSolicituds.FindAsync(id);
-            if (estadoSolicitud == null)
+            var estadoRegistro = await _context.EstadoRegistros.FindAsync(id);
+            if (estadoRegistro == null)
             {
                 return NotFound();
             }
 
-            _context.EstadoSolicituds.Remove(estadoSolicitud);
+            _context.EstadoRegistros.Remove(estadoRegistro);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool EstadoSolicitudExists(int? id)
+        private bool EstadoRegistroExists(int? id)
         {
-            return (_context.EstadoSolicituds?.Any(e => e.EstadoSolicitudId == id)).GetValueOrDefault();
+            return (_context.EstadoRegistros?.Any(e => e.EstadoRegistroId == id)).GetValueOrDefault();
         }
     }
 }
