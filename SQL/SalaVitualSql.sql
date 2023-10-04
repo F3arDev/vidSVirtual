@@ -96,9 +96,9 @@ INSERT INTO EstadoSolicitud (descripcion) VALUES
 	('REC'); --Rechazado
 
 INSERT INTO EstadoRegistro (descripcion) VALUES
-	('ACTIVO'),
-	('DE BAJA'),
-	('BORRADO');
+	('ACT'), --activo
+	('DEB'), --de Baja
+	('BOR'); --Borrado
 
 INSERT INTO UsuarioRol (descripcion) VALUES
 	('APROBANTE'),
@@ -118,7 +118,7 @@ INSERT INTO VwDepMunicipio (Departamento, Municipio, EntidadlID) VALUES
 -- Insertar valor en la tabla Solicitud
 INSERT INTO Solicitud (SolicitanteID, FechaRegistro, FechaInicio, FechaFin, HoraInicio, HoraFin, VwDepMunicipioID, Expediente, Actividad, UrlSesion, Motivo)
 VALUES 
-(1, '2023-09-20', '2023-09-21', '2023-09-22', '08:00', '17:00', 1, 'Exp001', 'Reuni�n', 'https://ejemplo.com/sesion1', 'Reuni�n de trabajo'),
+(1, '2023-09-20', '2023-09-21', '2023-09-22', '08:00', '17:00', 1, 'Exp001', 'Reunion', 'https://ejemplo.com/sesion1', 'Reunion de trabajo'),
 (2, '2023-09-21', '2023-09-23', '2023-09-24', '09:00', '18:00', 1, 'Exp002', 'Conferencia', 'https://ejemplo.com/sesion2', 'Conferencia anual');
 
 

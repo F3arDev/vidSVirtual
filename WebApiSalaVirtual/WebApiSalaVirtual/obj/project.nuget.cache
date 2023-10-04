@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+cGsv3W1YjxWLrvwzBjlegAIXjO84xzzszgVqJMb+/wYyq3bkNbhIgxGlqbM3hBn/YQ8ECLOWxL/szmceZ+j3w==",
+  "dgSpecHash": "1BrCUsqxWr8qUbPrmgghnjp8G+cCYkjXokDNye5VS7LMcA1lZCF9/Wp++2WxP9eZ+5VzECwQBSqceHhv59P6xg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\fredd\\OneDrive\\Documentos\\VS Code\\CSJ-DGTIC\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj",
+  "projectFilePath": "c:\\Users\\fredd\\OneDrive\\Documentos\\VS Code\\CSJ-DGTIC\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\fredd\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\fredd\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
