@@ -112,7 +112,7 @@ INSERT INTO Usuario (Nombre, UsuarioRolID) VALUES
 INSERT INTO Entidad (descripcion) VALUES
 	('CSJ');
 
-INSERT INTO VwDepMunicipio (Departamento, Municipio, EntidadlID) VALUES
+INSERT INTO VwDepMunicipio (Departamento, Municipio, EntidadID) VALUES
 	('Managua', 'Managua', 1);
 
 -- Insertar valor en la tabla Solicitud
