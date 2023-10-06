@@ -5,7 +5,7 @@ import NavBar from './components/NavBar.vue';
 
 <template>
   <NavBar />
-  
+  <!-- PruebasUbuntu server -->
   <div class="container">
     <RouterView />
   </div>
