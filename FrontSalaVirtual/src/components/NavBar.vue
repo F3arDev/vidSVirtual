@@ -14,9 +14,11 @@
 					<RouterLink to="/">
 						<a class="nav-link active text-color" aria-current="page">Inicio</a>
 					</RouterLink>
+
 					<RouterLink to="/Solicitante">
 						<a class="nav-link active text-color" aria-current="page">Solicitante</a>
 					</RouterLink>
+
 					<RouterLink to="/Aprobante">
 						<a class="nav-link active text-color" aria-current="page">Aprobante</a>
 					</RouterLink>

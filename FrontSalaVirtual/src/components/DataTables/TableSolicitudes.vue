@@ -1,31 +1,17 @@
 <template>
 	<div class="table-responsive">
-		<DataTables class="table table-striped table-bordered display" :options="dataTableOptions">
+		<DataTables class="table table-striped table-bordered display" :data="items" :columns="Columns"
+			:options="dataTableOptions">
 			<thead>
 				<tr>
 					<th>Detalles</th>
+					<th>ID</th>
 					<th>Nombre</th>
 					<th>Expediente</th>
 					<th>Estado</th>
 					<th>Acciones</th> <!-- Nueva columna para los botones -->
 				</tr>
 			</thead>
-			<tbody>
-				<tr v-for="(item, index) in items" :key="index">
-					<td>
-						<button class="btn btn-info btn-sm" @click="toggleDetails(index)">
-							{{ showDetails[index] ? 'Ocultar' : 'Mostrar' }}
-						</button>
-					</td>
-					<td>{{ item.nombre }}</td>
-					<td>{{ item.expediente }}</td>
-					<td>{{ item.estado }}</td>
-					<td>
-						<button class="btn btn-primary btn-sm" @click="handleAprobarClick(item.id)">Aprobar</button>
-						<button class="btn btn-danger btn-sm" @click="handleDenegarClick(item.id)">Denegar</button>
-					</td>
-				</tr>
-			</tbody>
 		</DataTables>
 	</div>
 </template>
@@ -43,58 +29,95 @@ const items = ref([
 	// Agrega más objetos según tus datos
 ]);
 
-const showDetails = ref(Array(items.value.length).fill(false));
+const name = ref('Vue.js')
+function greet(event) {
+	alert(`Hello ${name.value}!`)
+	// `event` is the native DOM event
+	if (event) {
+		alert(event.target.tagName)
+	}
+}
+
+const handleDenegarClick = (id) => {
+	console.log(`Denegando fila con ID: ${id}`);
+	// Lógica para denegar
+};
+
+const Columns = [
+	{
+		data: null,
+		render: (data, type, row) => {
+			return `<button class="btn btn-primary btn-sm" @click="handleVerClick(${row.id})">Ver Mas</button>
+                    
+					`;
+		}
+	},
+	{
+		data: 'id'
+		// data: null, render: function (data, type, row, meta) { return `${meta.row + 1}` }
+	},
+	{ data: 'nombre' },
+	{ data: 'expediente' },
+	{ data: 'estado' },
+	{
+		data: null,
+		render: (data, type, row) => {
+			return `
+			<button @click="greet">Greet</button>
+			<button class="btn btn-primary btn-sm" @click="ClickAprobar(${row.id})">Aprobar</button>
+					<button class="btn btn-danger btn-sm" @click="handleDenegarClick(${row.id})">Denegar</button>
+					`;
+		}
+	}
+]
 
 const dataTableOptions = ref({
 	responsive: true,
 	autoWidth: false,
 	dom: 'Bfrtip',
 	language: {
-		// ... tu configuración de idioma ...
+		search: 'Buscar',
+		zeroRecords: 'No hay registros para mostrar',
+		info: 'Mostrando del _START_ a _END_ de _TOTAL_ registros',
+		infoFiltered: '(Filtrados de _Max_ registros.)',
+		paginate: { first: 'Primero', previous: 'Anterior', next: 'Siguiente', last: 'Ultimo' }
 	},
 	select: {
 		style: 'single'
-	},
-	columns: [
-		{
-			render: (data, type, row, meta) => {
-				return `
-						<button class="btn btn-info btn-sm" @click="toggleDetails(${meta.row})">
-						{{ showDetails[${meta.row}] ? 'Ocultar' : 'Mostrar' }}
-						</button>
-					`;	
-			}
-		},
-		null, // Nombre
-		null, // Expediente
-		null, // Estado
-		{
-			render: (data, type, row) => {
-				return `
-					<button class="btn btn-primary btn-sm" @click="handleAprobarClick(${row.id})">Aprobar</button>
-					<button class="btn btn-danger btn-sm" @click="handleDenegarClick(${row.id})">Denegar</button>
-        `;
-			}
-		}
-	],
-	childRow: {
-		format: function (row) {
-			return `<div v-if="showDetails[row.index]">${row.detalles}</div>`;
-		}
 	}
+	// columns: [
+	// 	{
+	// 		render: (data, type, row, meta) => {
+	// 			return `
+	//             <button class="btn btn-info btn-sm" @click="toggleDetails(${meta.row})">
+	//                 ${showDetails.value[meta.row] ? 'Ocultar' : 'Mostrar'}
+	//             </button>
+	//         `;
+	// 		}
+	// 	},
+	// 	null, //ID
+	// 	null, // Nombre
+	// 	null, // Expediente
+	// 	null, // Estado
+	// 	{
+	// 		render: (data, type, row) => {
+	// 			return `
+	// 				<button class="btn btn-primary btn-sm" @click="handleAprobarClick(${row.id})">Aprobar</button>
+	// 				<button class="btn btn-danger btn-sm" @click="handleDenegarClick(${row.id})">Denegar</button>
+	//     `;
+	// 		}
+	// 	}
+	// ],
+	// childRow: {
+	// 	format: function (data) {
+	// 		return `<div v-if="showDetails[data.index]">${data.detalles}</div>`;
+	// 	}
+	// }
 });
 
-const handleAprobarClick = (id) => {
-	console.log(`Aprobando fila con ID: ${id}`);
-};
 
-const handleDenegarClick = (id) => {
-	console.log(`Denegando fila con ID: ${id}`);
-};
 
-const toggleDetails = (index) => {
-	showDetails.value[index] = !showDetails.value[index];
-};
+
 
 </script>
 
