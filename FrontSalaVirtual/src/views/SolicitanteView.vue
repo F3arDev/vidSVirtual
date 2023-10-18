@@ -34,13 +34,6 @@
 				</div>
 
 				<div class="tab-pane fade" id="nav-RegSolicitante" role="tabpanel" aria-labelledby="nav-RegSolicitante-tab" tabindex="0">
-
-					<div class="row mt-3">
-						<div class="col">
-							<button type="button" name="" id="" class="btn btn-primary">Exportar</button>
-						</div>
-
-					</div>
 					<div class="row mt-3">
 						<div class="col">
 							<TableSolicitanteRegistros />

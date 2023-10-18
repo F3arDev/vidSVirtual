@@ -55,8 +55,8 @@
 </template>
 
 <script setup>
-import TableSolicitudes from '../components/DataTables/TableSolicitudes.vue';
-import TableRegistros from '../components/DataTables/TableRegistros.vue';
+import TableSolicitudes from '@components/DataTables/TableSolicitudes.vue';
+import TableRegistros from '@components/DataTables/TableRegistros.vue';
 
 </script>
 
