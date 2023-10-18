@@ -14,7 +14,7 @@
 					</button>
 					<button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
 						type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
-						Registros
+						Registros de Solicitudes
 					</button>
 
 				</div>
@@ -42,14 +42,12 @@
 						<div class="col">
 							<button type="button" name="" id="" class="btn btn-primary">Exportar</button>
 						</div>
-
 					</div>
 					<div class="row mt-3">
 						<div class="col">
 							<TableRegistros /> 
 						</div>
 					</div>
-
 				</div>
 			</div>
 		</div>

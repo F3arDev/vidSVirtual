@@ -1,20 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\CSJ123\\Documents\\Agenda - VideoConferencias\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj": {}
+    "C:\\Users\\Developer\\Documents\\Vs Code\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj": {}
   },
   "projects": {
-    "C:\\Users\\CSJ123\\Documents\\Agenda - VideoConferencias\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj": {
+    "C:\\Users\\Developer\\Documents\\Vs Code\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\CSJ123\\Documents\\Agenda - VideoConferencias\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj",
+        "projectUniqueName": "C:\\Users\\Developer\\Documents\\Vs Code\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj",
         "projectName": "WebApiSalaVirtual",
-        "projectPath": "C:\\Users\\CSJ123\\Documents\\Agenda - VideoConferencias\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj",
-        "packagesPath": "C:\\Users\\CSJ123\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\CSJ123\\Documents\\Agenda - VideoConferencias\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\obj\\",
+        "projectPath": "C:\\Users\\Developer\\Documents\\Vs Code\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\WebApiSalaVirtual.csproj",
+        "packagesPath": "C:\\Users\\Developer\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Developer\\Documents\\Vs Code\\agenda-videoconferencia\\WebApiSalaVirtual\\WebApiSalaVirtual\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\CSJ123\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Developer\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -86,7 +89,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

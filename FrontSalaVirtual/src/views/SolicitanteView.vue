@@ -25,15 +25,9 @@
 			<div class="tab-content" id="nav-tabContent">
 				<div class="tab-pane fade show active" id="nav-EnvSolicitud" role="tabpanel"
 					aria-labelledby="nav-EnvSolicitud-tab" tabindex="0">
-					<div class="row mt-3">
-						<div class="col">
-							<button type="button" name="" id="" class="btn btn-primary">Exportar</button>
-						</div>
-
-					</div>
-					<div class="row mt-3">
-						<div class="col">
-
+					<div class="row mt-3 justify-content-center g-2">
+						<div class="col-10">
+							<solicitarSalaVirtual/>
 						</div>
 					</div>
 
@@ -61,7 +55,7 @@
 
 <script setup>
 import TableSolicitanteRegistros from '../components/DataTables/TableSolicitanteRegistros.vue';
-
+import solicitarSalaVirtual from '../components/vwSolicitante/solicitarSalaVirtual.vue';
 </script>
 
 <style scoped></style>

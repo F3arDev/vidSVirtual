@@ -15,7 +15,6 @@ namespace WebApiSalaVirtual.Controllers.v1
             _context = context;
         }
 
-
         // GET: api/Usuario
         [HttpGet]
         [Route("Lista")]

@@ -3,7 +3,7 @@
 		<DataTables class="table table-striped table-bordered display" :options="dataTableOptions">
 			<thead>
 				<tr>
-					<th></th>
+					<th>Ver</th>
 					<th>ID</th>
 					<th>Nombre</th>
 					<th>Acciones</th>
