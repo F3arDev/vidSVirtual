@@ -81,38 +81,7 @@ const dataTableOptions = ref({
 		info: 'Mostrando del _START_ a _END_ de _TOTAL_ registros',
 		infoFiltered: '(Filtrados de _Max_ registros.)',
 		paginate: { first: 'Primero', previous: 'Anterior', next: 'Siguiente', last: 'Ultimo' }
-	},
-	select: {
-		style: 'single'
 	}
-	// columns: [
-	// 	{
-	// 		render: (data, type, row, meta) => {
-	// 			return `
-	//             <button class="btn btn-info btn-sm" @click="toggleDetails(${meta.row})">
-	//                 ${showDetails.value[meta.row] ? 'Ocultar' : 'Mostrar'}
-	//             </button>
-	//         `;
-	// 		}
-	// 	},
-	// 	null, //ID
-	// 	null, // Nombre
-	// 	null, // Expediente
-	// 	null, // Estado
-	// 	{
-	// 		render: (data, type, row) => {
-	// 			return `
-	// 				<button class="btn btn-primary btn-sm" @click="handleAprobarClick(${row.id})">Aprobar</button>
-	// 				<button class="btn btn-danger btn-sm" @click="handleDenegarClick(${row.id})">Denegar</button>
-	//     `;
-	// 		}
-	// 	}
-	// ],
-	// childRow: {
-	// 	format: function (data) {
-	// 		return `<div v-if="showDetails[data.index]">${data.detalles}</div>`;
-	// 	}
-	// }
 });
 
 

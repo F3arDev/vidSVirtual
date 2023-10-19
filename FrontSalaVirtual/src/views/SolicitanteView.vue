@@ -47,8 +47,8 @@
 </template>
 
 <script setup>
-import TableSolicitanteRegistros from '../components/DataTables/TableSolicitanteRegistros.vue';
-import solicitarSalaVirtual from '../components/vwSolicitante/solicitarSalaVirtual.vue';
+import TableSolicitanteRegistros from '@/components/VwSolicitante/dataTables/TableSolicitanteRegistros.vue';
+import solicitarSalaVirtual from '@/components/VwSolicitante/solicitarSalaVirtual.vue';
 </script>
 
 <style scoped></style>

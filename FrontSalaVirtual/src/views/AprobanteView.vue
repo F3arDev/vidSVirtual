@@ -55,9 +55,8 @@
 </template>
 
 <script setup>
-import TableSolicitudes from '@components/DataTables/TableSolicitudes.vue';
-import TableRegistros from '@components/DataTables/TableRegistros.vue';
-
+import TableSolicitudes from '@/components/VwAprobante/dataTables/tableSolicitudes.vue';
+import TableRegistros from '@/components/VwAprobante/dataTables/TableRegistros.vue'
 </script>
 
 <style scoped></style>
