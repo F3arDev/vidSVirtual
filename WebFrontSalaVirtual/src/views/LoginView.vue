@@ -3,7 +3,7 @@
 		<div class="col-6">
 			<div class="row">
 				<div class="card text-start">
-					<div class="d-flex justify-content-center align-items-center mt-3" >
+					<div class="d-flex justify-content-center align-items-center mt-3">
 						<svg xmlns="http://www.w3.org/2000/svg" width="125" height="125" fill="currentColor"
 							class="bi bi-person-circle bi-4x d-flex justify-content-center align-items-center mt-3"
 							viewBox="0 0 16 16">
@@ -24,7 +24,7 @@
 								<input v-model="pass" type="password" class="form-control" id="exampleInputPassword1">
 							</div>
 
-							<button type="submit" class="btn btn-primary">Submit</button>
+							<button @click="login" type="submit" class="btn btn-primary">Submit</button>
 							{{ Usuario }}
 							{{ pass }}
 
@@ -38,11 +38,29 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 let Usuario = ref('');
 let pass = ref('');
 
+const router = useRouter();
 
+const login = () => {
+	// Simulación del inicio de sesión, verifica las credenciales aquí
+	if (Usuario.value == 'admin' && pass.value == '123') {
+		// Redirigir a la ruta principal después del inicio de sesi ón
+		router.push('/Aprobante');
+	}
+	else if (Usuario.value == 'usuario' && pass.value == '123') {
+		// Redirigir a la ruta principal después del inicio de sesi ón
+		router.push('/Solicitante');
+	}
+	else{
+		alert('Erro con las credenciales');
+	}
+};
 </script>
 
-<style></style>
+
+
+

@@ -27,13 +27,14 @@
 					aria-labelledby="nav-EnvSolicitud-tab" tabindex="0">
 					<div class="row mt-3 justify-content-center g-2">
 						<div class="col-10">
-							<solicitarSalaVirtual/>
+							<solicitarSalaVirtual />
 						</div>
 					</div>
 
 				</div>
 
-				<div class="tab-pane fade" id="nav-RegSolicitante" role="tabpanel" aria-labelledby="nav-RegSolicitante-tab" tabindex="0">
+				<div class="tab-pane fade" id="nav-RegSolicitante" role="tabpanel" aria-labelledby="nav-RegSolicitante-tab"
+					tabindex="0">
 					<div class="row mt-3">
 						<div class="col">
 							<TableSolicitanteRegistros />
@@ -47,6 +48,8 @@
 </template>
 
 <script setup>
+
+
 import TableSolicitanteRegistros from '@/components/VwSolicitante/dataTables/TableSolicitanteRegistros.vue';
 import solicitarSalaVirtual from '@/components/VwSolicitante/solicitarSalaVirtual.vue';
 </script>

@@ -6,6 +6,7 @@
 					<th>Ver</th>
 					<th>ID</th>
 					<th>Nombre</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>

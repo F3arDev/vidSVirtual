@@ -11,7 +11,7 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 				<div class="navbar-nav">
-					<Router-Link to="/">
+					<!-- <Router-Link to="/">
 						<a class="nav-link active" >Inicio</a>
 					</Router-Link>
 
@@ -21,7 +21,7 @@
 
 					<Router-Link to="/Aprobante">
 						<a class="nav-link active">Aprobante</a>
-					</Router-Link>
+					</Router-Link> -->
 				</div>
 			</div>
 		</div>
