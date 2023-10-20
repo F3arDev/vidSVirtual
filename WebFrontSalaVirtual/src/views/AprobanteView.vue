@@ -56,7 +56,7 @@
 
 <script setup>
 import TableSolicitudes from '../components/VwAprobante/dataTables/TableSolicitudes.vue'
-
+import TableRegistros from '../components/VwAprobante/dataTables/TableRegistros.vue'
 
 
 </script>

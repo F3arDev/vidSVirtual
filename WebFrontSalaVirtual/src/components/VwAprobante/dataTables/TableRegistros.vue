@@ -1,62 +1,74 @@
 <template>
-	<h3>Tabla Registros</h3>
-	<div class="container">
-		<div class="col-md-12">
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					Employee
-				</div>
-				<div class="panel-body">
-					<table class="table table-condensed table-striped">
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Fist Name</th>
-								<th>Last Name</th>
-								<th>City</th>
-								<th>State</th>
-								<th>Status</th>
-							</tr>
-						</thead>
-
-						<tbody>
-							<tr data-toggle="collapse" data-target="#demo2" class="accordion-toggle">
-								<td>
-									<button class="btn btn-default btn-xs">#</button>
-								</td>
-								<td>Silvio</td>
-								<td>Santos</td>
-								<td>São Paulo</td>
-								<td>SP</td>
-								<td> new</td>
-							</tr>
-							<tr>
-								<td colspan="6" class="hiddenRow">
-									<div id="demo2" class="accordian-body collapse">Demo2</div>
-								</td>
-							</tr>
-
-						</tbody>
-					</table>
-				</div>
-
-			</div>
-
-		</div>
+	<div class="table-responsive">
+		<table id="tblSolicitudRegistros" class="table table-bordered">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>ID</th>
+					<th>Usuario</th>
+					<th>Entidad</th>
+					<th>Expediente</th>
+					<th>fechaInicio</th>
+					<th>horaInicio</th>
+					<th>fechaFin</th>
+					<th>horaFin</th>
+					<th>URL Sesion</th>
+					<th>Estado</th>
+				</tr>
+			</thead>
+		</table>
 	</div>
 </template>
 
 <script setup>
+import { onMounted, onUnmounted } from 'vue';
+import $ from 'jquery';
+import solicitudServices from '@/services/solicitudServices'
+const service = new solicitudServices();
+let table;
 
+onMounted(async () => {
+	await service.fetchAll();
+	const solicidudes = await service.getPost();
+	table = $('#tblSolicitudRegistros').DataTable({
+		data: solicidudes.value,
+		columns: [
+			{ defaultContent: `<button class="btn btn-primary btn-sn btnAgregar">Ver</button>`, title: 'ver' },
+			{ data: 'solicitudId', title: 'ID' },
+			{ data: 'solicitanteId' , title: 'Usuario' },
+			{ data: 'vwDepMunicipioId' , title: 'Entidad' },
+			{ data: 'expediente' , title: 'Expediente' },
+			{ data: 'fechaInicio' , title: 'fechaInicio' },
+			{ data: 'horaInicio' , title: 'horaInicio' },
+			{ data: 'fechaFin' , title: 'fechaFin' },
+			{ data: 'horaFin' , title: 'horaFin' },
+			{ data: 'urlSesion' , title: 'URL Sesion' },
+			{ data: 'estadoSolicitudId', title: 'Estado' }
+		],
+		columnDefs: [
+			{ "className": "dt-center", "targets": "_all" }
+		],
+		responsive: true,
+		autoWidth: false,
+		dom: 'Bfrtip',
+		language: {
+			search: 'Buscar',
+			zeroRecords: 'No hay registros para mostrar',
+			info: 'Mostrando del _START_ a _END_ de _TOTAL_ registros',
+			infoFiltered: '(Filtrados de _Max_ registros.)',
+			paginate: { first: 'Primero', previous: 'Anterior', next: 'Siguiente', last: 'Ultimo' }
+		}
+	});
+})
+
+onUnmounted(() => {
+	// Destruye la tabla cuando el componente se desmonta para evitar pérdidas de memoria
+	if (table) {
+		table.destroy();
+	}
+});
 </script>
 
-<style scoped>
-body {
-	padding-top: 50px;
-	background-color: #34495e;
-}
+<style scoped></style>
 
-.hiddenRow {
-	padding: 0 !important;
-}
-</style>
+
