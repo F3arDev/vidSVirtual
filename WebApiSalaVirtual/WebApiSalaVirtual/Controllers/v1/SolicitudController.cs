@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApiSalaVirtual.Models;
-
+using System.Linq;
 namespace WebApiSalaVirtual.Controllers.v1
 {
     [EnableCors("ReglasCors")]
@@ -98,6 +98,24 @@ namespace WebApiSalaVirtual.Controllers.v1
             {
                 // Si ocurre una excepción, devuelve un error con el mensaje de la excepción
                 return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = ex.Message });
+            }
+        }
+
+        [MapToApiVersion("1.0")]
+        [HttpGet]
+        [Route("ListaPEN")]
+        public IActionResult ListaPendiente()
+        {
+            List<Solicitud> lista = new List<Solicitud>();
+            try
+            {
+                // Filtrar solicitudes pendientes por EstadoSolicitudId igual a un valor específico (por ejemplo, 1 para estado pendiente)
+                lista = _context.Solicituds.Where(s => s.EstadoSolicitudId == 1).ToList();
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Ok", response = lista });
+            }
+            catch (Exception error)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = error.Message, respuesta = lista });
             }
         }
     }

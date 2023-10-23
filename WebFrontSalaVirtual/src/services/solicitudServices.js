@@ -1,19 +1,38 @@
 import { ref } from 'vue'
 
 class solicitudServices {
-	solicidudes
+	solicidudesPEN
+	SolicitudesREGISTRO
 	constructor() {
-		this.solicidudes = ref([])
+		this.SolicitudesREGISTRO = ref([])
+		this.solicidudesPEN = ref([])
 	}
-	getPost() {
-		return this.solicidudes
+	
+	getSolicitud() {
+		return this.SolicitudesREGISTRO
 	}
-	async fetchAll() {
+	
+	getSolicitudPEN() {
+		return this.solicidudesPEN
+	}
+
+	async fetchAllSolicitud() {
 		try {
 			const url = 'http://localhost:5172/api/v1/Solicitud/Lista';
 			const result = await fetch(url)
 			const json = await result.json();
-			this.solicidudes.value = await json;
+			this.SolicitudesREGISTRO.value = await json;
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	async fetchAllSolicitudPEN() {
+		try {
+			const url = 'http://localhost:5172/api/v1/Solicitud/ListaPEN';
+			const result = await fetch(url)
+			const json = await result.json();
+			this.solicidudesPEN.value = await json.response;
 		} catch (error) {
 			console.log(error)
 		}

@@ -28,10 +28,10 @@ const service = new solicitudServices();
 let table;
 
 onMounted(async () => {
-	await service.fetchAll();
-	const solicidudes = await service.getPost();
+	await service.fetchAllSolicitudPEN();
+	const solicidudesPEN = await service.getSolicitudPEN();
 	table = $('#tblSolicitudes').DataTable({
-		data: solicidudes.value,
+		data: solicidudesPEN.value,
 		columns: [
 			{ data: 'solicitudId' },
 			{ data: 'solicitanteId' },

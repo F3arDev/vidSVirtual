@@ -28,8 +28,8 @@ const service = new solicitudServices();
 let table;
 
 onMounted(async () => {
-	await service.fetchAll();
-	const solicidudes = await service.getPost();
+	await service.fetchAllSolicitud();
+	const solicidudes = await service.getSolicitud();
 	table = $('#tblSolicitudRegistros').DataTable({
 		data: solicidudes.value,
 		columns: [
