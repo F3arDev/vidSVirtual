@@ -45,7 +45,7 @@
 					</div>
 					<div class="row mt-3">
 						<div class="col">
-							<TableRegistros /> 
+							<TableRegistros />
 						</div>
 					</div>
 				</div>
@@ -57,7 +57,6 @@
 <script setup>
 import TableSolicitudes from '@/components/VwAprobante/dataTables/TableSolicitudes.vue'
 import TableRegistros from '@/components/VwAprobante/dataTables/TableRegistros.vue'
-
 
 </script>
 

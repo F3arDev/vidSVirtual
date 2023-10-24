@@ -42,7 +42,7 @@ onMounted(async () => {
 			{ data: 'horaInicio' , title: 'horaInicio' },
 			{ data: 'fechaFin' , title: 'fechaFin' },
 			{ data: 'horaFin' , title: 'horaFin' },
-			{ data: 'urlSesion' , title: 'URL Sesion' },
+			{ data: 'urlSesion' , title: 'URL Sesion'},
 			{ data: 'estadoSolicitudId', title: 'Estado' }
 		],
 		columnDefs: [
