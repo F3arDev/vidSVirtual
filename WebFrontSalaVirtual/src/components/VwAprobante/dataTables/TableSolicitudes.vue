@@ -1,6 +1,6 @@
 <template>
 	<div class="table-responsive">
-		<table id="tblSolicitudes" class="table table-bordered">
+		<table id="tblSolicitudes" class="table table-bordered table-striped">
 			<thead>
 				<tr>
 					<th>ver</th>

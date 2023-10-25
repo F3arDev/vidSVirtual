@@ -30,11 +30,11 @@ public partial class Solicitud
 
     public int? EstadoRegistroId { get; set; }
 
-    //public virtual EstadoRegistro EstadoRegistro { get; set; } = null!;
+    // public virtual EstadoRegistro EstadoRegistro { get; set; } = null!;
 
-    //public virtual EstadoSolicitud EstadoSolicitud { get; set; } = null!;
+    public virtual EstadoSolicitud oEstadoSolicitud { get; set; } = null!;
 
-    //public virtual Usuario Solicitante { get; set; } = null!;
+    public virtual Usuario oUsuario { get; set; } = null!;
 
-    //public virtual VwDepMunicipio VwDepMunicipio { get; set; } = null!;
+    public virtual VwDepMunicipio oVwDepMunicipio { get; set; } = null!;
 }

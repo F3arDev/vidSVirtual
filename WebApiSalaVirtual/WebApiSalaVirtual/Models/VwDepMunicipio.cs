@@ -13,7 +13,7 @@ public partial class VwDepMunicipio
 
     public int EntidadID { get; set; }
 
-    public virtual Entidad Entidadl { get; set; } = null!;
+    public virtual Entidad oEntidad { get; set; } = null!;
 
-    public virtual ICollection<Solicitud> Solicituds { get; set; } = new List<Solicitud>();
+    // public virtual ICollection<Solicitud> Solicituds { get; set; } = new List<Solicitud>();
 }

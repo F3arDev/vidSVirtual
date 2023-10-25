@@ -8,6 +8,6 @@ public partial class UsuarioRol
 
     public string? Descripcion { get; set; } = null!;
 
-    [JsonIgnore]
-    public virtual ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
+    // [JsonIgnore]
+    // public virtual ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
 }

@@ -1,6 +1,6 @@
 <template>
 	<div class="table-responsive">
-		<table id="tblSolicitudRegistros" class="table table-bordered">
+		<table id="tblSolicitudRegistros" class="table table-bordered table-striped">
 			<thead>
 				<tr>
 					<th>#</th>

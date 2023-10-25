@@ -29,6 +29,8 @@ namespace WebApiSalaVirtual.Controllers.v1
             {
                 return NotFound();
             }
+            
+
             return await _context.Solicituds.ToListAsync();
         }
 
@@ -111,6 +113,24 @@ namespace WebApiSalaVirtual.Controllers.v1
             {
                 // Filtrar solicitudes pendientes por EstadoSolicitudId igual a un valor específico (por ejemplo, 1 para estado pendiente)
                 lista = _context.Solicituds.Where(s => s.EstadoSolicitudId == 1).ToList();
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Ok", response = lista });
+            }
+            catch (Exception error)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = error.Message, respuesta = lista });
+            }
+        }
+
+        [MapToApiVersion("1.0")]
+        [HttpGet]
+        [Route("ListaRegUsuario/{solicitanteId}")]
+        public IActionResult ListaRegUSUARIO(int solicitanteId)
+        {
+            List<Solicitud> lista = new List<Solicitud>();
+            try
+            {
+                // Filtrar solicitudes por el solicitanteId proporcionado en la URL
+                lista = _context.Solicituds.Where(s => s.SolicitanteId == solicitanteId).ToList();
                 return StatusCode(StatusCodes.Status200OK, new { mensaje = "Ok", response = lista });
             }
             catch (Exception error)

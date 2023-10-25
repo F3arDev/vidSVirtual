@@ -28,7 +28,7 @@
 							<div class="col">
 								<div class="card">
 									<div class="card-body">
-										<div class="row "> <!--justify-content-center align-items-center g-2-->
+										<div class="row ">
 											<div class="col">
 												<!-- Input Usuario -->
 												<div class="input-group mb-3">
@@ -144,26 +144,17 @@ const getDataSolicitud = async () => {
 		"fechaInicio": FechaInicio.value,
 		"fechaFin": FechaFin.value,
 		"horaInicio": HoraInicio.value + ':00',
-		"horaFin": HoraFin.value  + ':00',
+		"horaFin": HoraFin.value + ':00',
 		"vwDepMunicipioId": '1',
 		"expediente": Expediente.value,
 		"actividad": Actividad.value
 	}
-	// let jsonSendSolicitud =
-	// {
-	// 	"solicitanteId": '3',
-	// 	"fechaRegistro": "2023-09-21T00:00:00",
-	// 	"fechaInicio": "2023-09-23T00:00:00",
-	// 	"fechaFin": "2023-09-24T00:00:00",
-	// 	"horaInicio": "09:00:00",
-	// 	"horaFin": "09:00:00",
-	// 	"vwDepMunicipioId": '1',
-	// 	"expediente": "Exp002",
-	// 	"actividad": "Conferencia"
-	// }
-
 	let result = await service.sendSolicitudPEN(jsonSendSolicitud)
-	console.log(result);
+	if (result == true) {
+		alert(service.getSuccess())
+	}else{
+		alert(service.getError())
+	}
 }
 
 

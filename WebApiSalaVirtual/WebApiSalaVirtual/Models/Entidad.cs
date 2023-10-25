@@ -7,6 +7,6 @@ public partial class Entidad
 
     public string? Descripcion { get; set; } = null!;
 
-    [JsonIgnore]
-    public virtual ICollection<VwDepMunicipio> VwDepMunicipios { get; set; } = new List<VwDepMunicipio>();
+    // [JsonIgnore]
+    // public virtual ICollection<VwDepMunicipio> VwDepMunicipios { get; set; } = new List<VwDepMunicipio>();
 }

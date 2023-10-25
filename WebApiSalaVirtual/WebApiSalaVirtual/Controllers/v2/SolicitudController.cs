@@ -29,7 +29,11 @@ namespace WebApiSalaVirtual.Controllers.v2
             {
                 return NotFound();
             }
-            return await _context.Solicituds.ToListAsync();
+            return await _context.Solicituds
+                            .Include(s => s.oUsuario) // Incluye el primer objeto relacionado
+                            .Include(s => s.oVwDepMunicipio) // Incluye otro objeto relacionado
+                            .Include(s => s.oEstadoSolicitud) // Incluye otro objeto relacionado
+                            .ToListAsync();
         }
 
         // GET: api/Solicitud/5
