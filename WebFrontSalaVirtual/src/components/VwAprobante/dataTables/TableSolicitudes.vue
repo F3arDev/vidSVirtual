@@ -4,17 +4,11 @@
 			<thead>
 				<tr>
 					<th>ver</th>
-					<th>id</th>
 					<th>Solicitante</th>
 					<th>Entidad</th>
-					<th>expediente</th>
-					<!-- <th>actividad</th>
-					<th>fechaInicio</th>
-					<th>horaInicio</th> -->
-					<th>fechaFin</th>
-					<th>horaFin</th>
+					<th>Ciudad</th>
+					<th>Expediente/Asunto</th>
 					<th>Acciones</th>
-
 				</tr>
 			</thead>
 		</table>
@@ -88,15 +82,10 @@ onMounted(async () => {
 				data: null,
 				defaultContent: ''
 			},
-			{ data: 'solicitudId' },
 			{ data: 'solicitanteId' },
 			{ data: 'vwDepMunicipioId' },
-			// { data: 'expediente' },
-			// { data: 'actividad' },
-			// { data: 'fechaInicio' },
-			{ data: 'horaInicio' },
-			{ data: 'fechaFin' },
-			{ data: 'horaFin' },
+			{ data: 'vwDepMunicipioId' },
+			{ data: 'expediente' },
 			{
 				defaultContent: `<button class="btn btn-primary btn-sn btnAprobar">Aprobar</button>
 								<button class="btn btn-primary btn-sn btnRechazar">Rechazar</button>`,
@@ -134,8 +123,9 @@ onMounted(async () => {
 						'movable': false,
 						labels: { "ok": "SI", "cancel": "NO" },
 						resizable: true,
-						onok: function () {
-							console.log(data);
+						onok: async function () {
+
+
 						}
 					}
 				)
@@ -161,12 +151,89 @@ onMounted(async () => {
 	function format(data) {
 		return (
 			`
-			
-			
+			<div class="container">
+				<div class="row justify-content-center g-2">
+					<div class="col">
+						<div class="input-group mb-3">
+							<span class="input-group-text col-3">Solicitante</span>
+							<input value="${data.solicitanteId}" type="text" class="form-control" aria-label="Username"
+								aria-describedby="basic-addon1" disabled>
+						</div>
+						<div class="input-group mb-3">
+							<span class="input-group-text col-3">Numero</span>
+							<input  value="${data.solicitanteId}" type="text" class="form-control" aria-label="Username"
+								aria-describedby="basic-addon1" disabled>
+						</div>
 
+						<div class="input-group mb-3">
+							<span class="input-group-text col-3">Entidad</span>
+							<input value="${data.vwDepMunicipioId}" type="text" class="form-control" aria-label="Username"
+								aria-describedby="basic-addon1" disabled>
+						</div>
 
+						<div class="input-group mb-3">
+							<span class="input-group-text col-3">Ciudad</span>
+							<input value="${data.vwDepMunicipioId}"   type="text" class="form-control" aria-label="Username"
+								aria-describedby="basic-addon1" disabled>
+						</div>
 
-				${data.horaInicio}
+						<div class="input-group mb-3">
+							<span class="input-group-text col-3">Expediente</span>
+							<input value="${data.expediente}"  type="text" class="form-control" aria-label="Username"
+								aria-describedby="basic-addon1" disabled>
+						</div>
+					</div>
+					<div class="col">
+						<!-- Input Fechas -->
+						<div class="row">
+							<div class="col">
+								<div class="input-group mb-3">
+									<span class="input-group-text col-5">Fecha Inicio</span>
+									<input value="${data.fechaInicio}" type="text" class="form-control" aria-label="Username"
+								aria-describedby="basic-addon1" disabled>
+								</div>
+							</div>
+
+							<div class="col">
+								<div class="input-group mb-3">
+									<span class="input-group-text col-5">Fecha Final</span>
+									<input value="${data.fechaFin}" type="text" class="form-control" aria-label="Username"
+								aria-describedby="basic-addon1" disabled>
+								</div>
+							</div>
+						</div>
+						<!-- Input Horas -->
+						<div class="row">
+							<div class="col">
+								<div class="input-group mb-3">
+									<span class="input-group-text  col-5">Hora Inicio</span>
+									<input value="${data.horaInicio}" type="time" class="form-control" aria-label="Username"
+								aria-describedby="basic-addon1" disabled>
+								</div>
+							</div>
+
+							<div class="col">
+								<div class="input-group mb-3">
+									<span class="input-group-text col-5">Hora Final</span>
+									<input value="${data.horaFin}" type="time" class="form-control" aria-label="Username"
+									aria-describedby="basic-addon1" disabled>
+								</div>
+							</div>
+						</div>
+						<div class="row justify-content-center align-items-center g-2">
+							<div class="col">
+								<div class="input-group">
+									<span class="input-group-text">
+										Actividad a realizar
+									</span>
+									<textarea placeholder="${data.actividad}" type="text" class="form-control"  aria-label="Sizing example input"
+										aria-describedby="inputGroup-sizing-default" disabled></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 			`
 		);
 	}
