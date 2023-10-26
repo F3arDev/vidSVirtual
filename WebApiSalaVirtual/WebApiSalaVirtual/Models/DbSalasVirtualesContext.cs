@@ -28,6 +28,8 @@ public partial class DbSalasVirtualesContext : DbContext
 
     public virtual DbSet<VwDepMunicipio> VwDepMunicipios { get; set; }
 
+    public virtual DbSet<VwSolicitudDetalles> VwSolicitudDetalles { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Entidad>(entity =>
@@ -114,7 +116,8 @@ public partial class DbSalasVirtualesContext : DbContext
             //    .OnDelete(DeleteBehavior.ClientSetNull)
             //    .HasConstraintName("FK_ESTADOSOLICITUDID");
 
-            //entity.HasOne(d => d.Solicitante).WithMany(p => p.Solicituds)
+            //entity.HasOne(d => d.oUsuario)
+            //    .WithMany(p => p.Solicituds)
             //    .HasForeignKey(d => d.SolicitanteId)
             //    .OnDelete(DeleteBehavior.ClientSetNull)
             //    .HasConstraintName("FK_SOLICITANTEID");
@@ -179,10 +182,10 @@ public partial class DbSalasVirtualesContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.UsuarioRolId).HasColumnName("UsuarioRolID");
 
-            entity.HasOne(d => d.oRolUsuario).WithMany(p => p.Usuarios)
-                .HasForeignKey(d => d.UsuarioRolId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_USUARIOROLID");
+            //entity.HasOne(d => d.oRolUsuario).WithMany(p => p.Usuarios)
+            //    .HasForeignKey(d => d.UsuarioRolId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_USUARIOROLID");
         });
 
         modelBuilder.Entity<UsuarioRol>(entity =>
@@ -213,10 +216,15 @@ public partial class DbSalasVirtualesContext : DbContext
                 .HasMaxLength(64)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.Entidadl).WithMany(p => p.VwDepMunicipios)
-                .HasForeignKey(d => d.EntidadID)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ENTIDADID");
+            //entity.HasOne(d => d.Entidad).WithMany(p => p.VwDepMunicipios)
+            //    .HasForeignKey(d => d.EntidadID)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_ENTIDADID");
+        });
+
+        modelBuilder.Entity<VwSolicitudDetalles>(entity =>
+        {
+            entity.HasNoKey(); // Indica que esta entidad no tiene una clave primaria
         });
 
         OnModelCreatingPartial(modelBuilder);

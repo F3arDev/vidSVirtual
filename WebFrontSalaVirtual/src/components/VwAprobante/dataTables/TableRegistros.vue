@@ -34,16 +34,16 @@ onMounted(async () => {
 		data: solicidudes.value,
 		columns: [
 			{ defaultContent: `<button class="btn btn-primary btn-sn btnAgregar">Ver</button>`, title: 'ver' },
-			{ data: 'solicitudId', title: 'ID' },
-			{ data: 'solicitanteId' , title: 'Usuario' },
-			{ data: 'vwDepMunicipioId' , title: 'Entidad' },
+			{ data: 'solicitudID', title: 'ID' },
+			{ data: 'solicitanteNombre' , title: 'Usuario' },
+			{ data: 'entidad' , title: 'Entidad' },
 			{ data: 'expediente' , title: 'Expediente' },
 			{ data: 'fechaInicio' , title: 'fechaInicio' },
 			{ data: 'horaInicio' , title: 'horaInicio' },
 			{ data: 'fechaFin' , title: 'fechaFin' },
 			{ data: 'horaFin' , title: 'horaFin' },
 			{ data: 'urlSesion' , title: 'URL Sesion'},
-			{ data: 'estadoSolicitudId', title: 'Estado' }
+			{ data: 'estadoSolicitud', title: 'Estado' }
 		],
 		columnDefs: [
 			{ "className": "dt-center", "targets": "_all" }

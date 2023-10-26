@@ -80,12 +80,13 @@ onMounted(async () => {
 				className: 'dt-control',
 				orderable: false,
 				data: null,
-				defaultContent: ''
+				defaultContent: '',
+				title: 'Ver'
 			},
-			{ data: 'solicitanteId' },
-			{ data: 'vwDepMunicipioId' },
-			{ data: 'vwDepMunicipioId' },
-			{ data: 'expediente' },
+			{ data: 'solicitanteNombre', title: 'Solicitante' },
+			{ data: 'entidad', title: 'Entidad'  },
+			{ data: 'departamento', title: 'Departamento'  },
+			{ data: 'expediente', title: 'Asunto/Expediente'  },
 			{
 				defaultContent: `<button class="btn btn-primary btn-sn btnAprobar">Aprobar</button>
 								<button class="btn btn-primary btn-sn btnRechazar">Rechazar</button>`,
@@ -156,24 +157,24 @@ onMounted(async () => {
 					<div class="col">
 						<div class="input-group mb-3">
 							<span class="input-group-text col-3">Solicitante</span>
-							<input value="${data.solicitanteId}" type="text" class="form-control" aria-label="Username"
+							<input value="${data.solicitanteNombre}" type="text" class="form-control" aria-label="Username"
 								aria-describedby="basic-addon1" disabled>
 						</div>
 						<div class="input-group mb-3">
 							<span class="input-group-text col-3">Numero</span>
-							<input  value="${data.solicitanteId}" type="text" class="form-control" aria-label="Username"
+							<input  value="${data.solicitanteNombre}" type="text" class="form-control" aria-label="Username"
 								aria-describedby="basic-addon1" disabled>
 						</div>
 
 						<div class="input-group mb-3">
 							<span class="input-group-text col-3">Entidad</span>
-							<input value="${data.vwDepMunicipioId}" type="text" class="form-control" aria-label="Username"
+							<input value="${data.entidad}" type="text" class="form-control" aria-label="Username"
 								aria-describedby="basic-addon1" disabled>
 						</div>
 
 						<div class="input-group mb-3">
-							<span class="input-group-text col-3">Ciudad</span>
-							<input value="${data.vwDepMunicipioId}"   type="text" class="form-control" aria-label="Username"
+							<span class="input-group-text col-3">Departamento</span>
+							<input value="${data.departamento}"   type="text" class="form-control" aria-label="Username"
 								aria-describedby="basic-addon1" disabled>
 						</div>
 
@@ -189,7 +190,7 @@ onMounted(async () => {
 							<div class="col">
 								<div class="input-group mb-3">
 									<span class="input-group-text col-5">Fecha Inicio</span>
-									<input value="${data.fechaInicio}" type="text" class="form-control" aria-label="Username"
+									<input value="${data.fechaInicio}" type="date" class="form-control" aria-label="Username"
 								aria-describedby="basic-addon1" disabled>
 								</div>
 							</div>
@@ -197,7 +198,7 @@ onMounted(async () => {
 							<div class="col">
 								<div class="input-group mb-3">
 									<span class="input-group-text col-5">Fecha Final</span>
-									<input value="${data.fechaFin}" type="text" class="form-control" aria-label="Username"
+									<input value="${data.fechaFin}" type="date" class="form-control" aria-label="Username"
 								aria-describedby="basic-addon1" disabled>
 								</div>
 							</div>

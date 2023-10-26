@@ -30,10 +30,9 @@ namespace WebApiSalaVirtual.Controllers.v2
                 return NotFound();
             }
             return await _context.Solicituds
-                            .Include(s => s.oUsuario) // Incluye el primer objeto relacionado
-                            .Include(s => s.oVwDepMunicipio) // Incluye otro objeto relacionado
-                            .Include(s => s.oEstadoSolicitud) // Incluye otro objeto relacionado
-                            .ToListAsync();
+                            .ToListAsync(); // Incluye el primer objeto relacionado
+                                                                     // .Include(s => s.oVwDepMunicipio) // Incluye otro objeto relacionado
+                                                                     // .Include(s => s.oEstadoSolicitud) // Incluye otro objeto relacionado
         }
 
         // GET: api/Solicitud/5
@@ -53,6 +52,22 @@ namespace WebApiSalaVirtual.Controllers.v2
             }
 
             return solicitud;
+        }
+
+
+        [MapToApiVersion("2.0")]
+        [HttpGet]
+        [Route("ListaVista")]
+        public async Task<ActionResult<IEnumerable<VwSolicitudDetalles>>> GetSolicitudsVista()
+        {
+
+            if (_context.VwSolicitudDetalles == null)
+            {
+                return NotFound();
+            }
+            // Obtén los datos de la vista desde el contexto de la base de datos
+            var data = _context.VwSolicitudDetalles.ToListAsync();
+            return await data;
         }
     }
 }

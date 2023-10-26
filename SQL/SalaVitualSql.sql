@@ -116,10 +116,10 @@ INSERT INTO VwDepMunicipio (Departamento, Municipio, EntidadID) VALUES
 	('Managua', 'Managua', 1);
 
 -- Insertar valor en la tabla Solicitud
-INSERT INTO Solicitud (SolicitanteID, FechaRegistro, FechaInicio, FechaFin, HoraInicio, HoraFin, VwDepMunicipioID, Expediente, Actividad, UrlSesion, Motivo)
+INSERT INTO Solicitud (SolicitanteID, FechaRegistro, FechaInicio, FechaFin, HoraInicio, HoraFin, VwDepMunicipioID, Expediente, Actividad, Motivo)
 VALUES 
-(1, '2023-09-20', '2023-09-21', '2023-09-22', '08:00', '17:00', 1, 'Exp001', 'Reunion', 'https://ejemplo.com/sesion1', 'Reunion de trabajo'),
-(2, '2023-09-21', '2023-09-23', '2023-09-24', '09:00', '18:00', 1, 'Exp002', 'Conferencia', 'https://ejemplo.com/sesion2', 'Conferencia anual');
+(1, '2023-09-20', '2023-09-21', '2023-09-22', '08:00', '17:00', 1, 'Exp001', 'Reunion',  'Reunion de trabajo'),
+(2, '2023-09-21', '2023-09-23', '2023-09-24', '09:00', '18:00', 1, 'Exp002', 'Conferencia', 'Conferencia anual');
 
 
 select * from EstadoSolicitud;
@@ -128,3 +128,45 @@ select * from Solicitud;
 select * from SolicitudHistorial;
 select * from VwDepMunicipio;
 select * from Entidad;
+
+
+UPDATE Solicitud	
+SET 
+    EstadoSolicitudID = 2
+WHERE SolicitudID = 2;
+
+
+CREATE VIEW VwSolicitudDetalles AS
+SELECT
+    s.SolicitudID,
+    u.UsuarioID AS SolicitanteID, 
+    u.Nombre AS SolicitanteNombre,
+    s.FechaRegistro,
+    s.FechaInicio,
+    s.FechaFin,
+    s.HoraInicio,
+    s.HoraFin,
+    v.VwDepMunicipioID,
+    v.Departamento,
+    v.Municipio,
+    e.EntidadID,
+    e.descripcion AS Entidad,
+    s.Expediente,
+    s.Actividad,
+    s.UrlSesion,
+    s.Motivo,
+    es.EstadoSolicitudID,
+    es.descripcion AS EstadoSolicitud,
+    er.EstadoRegistroID,
+    er.descripcion AS EstadoRegistro
+FROM
+    Solicitud s
+INNER JOIN Usuario u ON s.SolicitanteID = u.UsuarioID
+INNER JOIN VwDepMunicipio v ON s.VwDepMunicipioID = v.VwDepMunicipioID
+INNER JOIN Entidad e ON v.EntidadID = e.EntidadID
+INNER JOIN EstadoSolicitud es ON s.EstadoSolicitudID = es.EstadoSolicitudID
+INNER JOIN EstadoRegistro er ON s.EstadoRegistroID = er.EstadoRegistroID;
+
+
+
+select * from VwSolicitudDetalles;

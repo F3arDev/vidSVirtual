@@ -19,38 +19,56 @@ namespace WebApiSalaVirtual.Controllers.v1
             _context = context;
         }
 
-        // GET: api/Solicitud
         [MapToApiVersion("1.0")]
         [HttpGet]
         [Route("Lista")]
-        public async Task<ActionResult<IEnumerable<Solicitud>>> GetSolicituds()
+        public async Task<ActionResult<IEnumerable<VwSolicitudDetalles>>> GetSolicitudsVista()
         {
-            if (_context.Solicituds == null)
+
+            if (_context.VwSolicitudDetalles == null)
             {
                 return NotFound();
             }
-            
+            // Obtén los datos de la vista desde el contexto de la base de datos
+            var lista = _context.VwSolicitudDetalles.Take(100).ToListAsync();
 
-            return await _context.Solicituds.ToListAsync();
+            return await lista;
         }
 
-        // GET: api/Solicitud/5
         [MapToApiVersion("1.0")]
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Solicitud>> GetSolicitud(int id)
+        [HttpGet]
+        [Route("ListaPEN")]
+        public IActionResult ListaPendiente()
         {
-            if (_context.Solicituds == null)
+            List<VwSolicitudDetalles> lista = new List<VwSolicitudDetalles>();
+            try
             {
-                return NotFound();
+                // Filtrar solicitudes pendientes por EstadoSolicitudId igual a un valor específico (por ejemplo, 1 para estado pendiente)
+                lista = _context.VwSolicitudDetalles.Where(s => s.EstadoSolicitudID == 1).ToList();
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Ok", response = lista });
             }
-            var solicitud = await _context.Solicituds.FindAsync(id);
-
-            if (solicitud == null)
+            catch (Exception error)
             {
-                return NotFound();
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = error.Message, respuesta = lista });
             }
+        }
 
-            return solicitud;
+        [MapToApiVersion("1.0")]
+        [HttpGet]
+        [Route("ListaRegUsuario/{solicitanteId}")]
+        public IActionResult ListaRegUSUARIO(int solicitanteId)
+        {
+            List<VwSolicitudDetalles> lista = new List<VwSolicitudDetalles>();
+            try
+            {
+                // Filtrar solicitudes por el solicitanteId proporcionado en la URL
+                lista = _context.VwSolicitudDetalles.Where(s => s.SolicitanteID == solicitanteId).ToList();
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Ok", response = lista });
+            }
+            catch (Exception error)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = error.Message, respuesta = lista });
+            }
         }
 
         [MapToApiVersion("1.0")]
@@ -103,40 +121,44 @@ namespace WebApiSalaVirtual.Controllers.v1
             }
         }
 
-        [MapToApiVersion("1.0")]
-        [HttpGet]
-        [Route("ListaPEN")]
-        public IActionResult ListaPendiente()
-        {
-            List<Solicitud> lista = new List<Solicitud>();
-            try
-            {
-                // Filtrar solicitudes pendientes por EstadoSolicitudId igual a un valor específico (por ejemplo, 1 para estado pendiente)
-                lista = _context.Solicituds.Where(s => s.EstadoSolicitudId == 1).ToList();
-                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Ok", response = lista });
-            }
-            catch (Exception error)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = error.Message, respuesta = lista });
-            }
-        }
 
-        [MapToApiVersion("1.0")]
-        [HttpGet]
-        [Route("ListaRegUsuario/{solicitanteId}")]
-        public IActionResult ListaRegUSUARIO(int solicitanteId)
-        {
-            List<Solicitud> lista = new List<Solicitud>();
-            try
-            {
-                // Filtrar solicitudes por el solicitanteId proporcionado en la URL
-                lista = _context.Solicituds.Where(s => s.SolicitanteId == solicitanteId).ToList();
-                return StatusCode(StatusCodes.Status200OK, new { mensaje = "Ok", response = lista });
-            }
-            catch (Exception error)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = error.Message, respuesta = lista });
-            }
-        }
+
+
+
+        // GET: api/Solicitud
+        //[MapToApiVersion("1.0")]
+        //[HttpGet]
+        //[Route("Lista")]
+        //public async Task<ActionResult<IEnumerable<Solicitud>>> GetSolicituds()
+        //{
+        //    if (_context.Solicituds == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+
+        //    return await _context.Solicituds.ToListAsync();
+        //}
+
+
+
+        // GET: api/Solicitud/5
+        //[MapToApiVersion("1.0")]
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Solicitud>> GetSolicitud(int id)
+        //{
+        //    if (_context.Solicituds == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    var solicitud = await _context.Solicituds.FindAsync(id);
+
+        //    if (solicitud == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return solicitud;
+        //}
     }
 }

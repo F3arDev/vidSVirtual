@@ -24,7 +24,7 @@ namespace WebApiSalaVirtual.Controllers
             {
                 return NotFound();
             }
-            return await _context.Usuarios.Include(c => c.oRolUsuario).ToListAsync();
+            return await _context.Usuarios./*Include(c => c.oRolUsuario)*/ToListAsync();
         }
 
         // GET: api/Usuario/5

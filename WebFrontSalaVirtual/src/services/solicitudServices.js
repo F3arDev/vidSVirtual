@@ -80,6 +80,7 @@ class solicitudServices {
 				body: JSON.stringify(sendSolicitud)
 			})
 			let response = await result.json();
+			debugger
 			if (response.mensaje != 'ok') {
 				this.error = 'Hubo un Error al enviar la Solicitud'
 				return false

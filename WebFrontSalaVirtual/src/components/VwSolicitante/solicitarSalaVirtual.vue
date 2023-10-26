@@ -124,6 +124,7 @@
 <script setup>
 import { ref } from 'vue';
 import solicitudServices from '@/services/solicitudServices'
+import alertify  from 'alertifyjs';
 const service = new solicitudServices();
 
 let Usuario = ref('')
@@ -151,7 +152,7 @@ const getDataSolicitud = async () => {
 	}
 	let result = await service.sendSolicitudPEN(jsonSendSolicitud)
 	if (result == true) {
-		alert(service.getSuccess())
+		alertify.success('Success notification message.'); 
 	}else{
 		alert(service.getError())
 	}
