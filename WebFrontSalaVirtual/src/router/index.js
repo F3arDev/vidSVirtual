@@ -4,6 +4,7 @@ import AprobanteView from '../views/AprobanteView.vue'
 import SolicitanteView from '../views/SolicitanteView.vue'
 import LoginView from '../views/LoginView.vue'
 const router = createRouter({
+  mode: 'history',
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
