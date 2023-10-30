@@ -2,7 +2,7 @@ import { ref } from 'vue'
 //googleApiServices
 const gClientId = '860360797051-g73fju8qep80lnr7jfrg3dq8d1cmoqq0.apps.googleusercontent.com';
 var client;
-var access_token;
+var access_token = 'ya29.a0AfB_byCphP682RhYLEFkLkv9e_27Twb750s5yUl1gInktYhh930k_XHyNKpzklxO7mlfkpSvEW0GfgjP0vy9Pp0la5sogi5afw1Oxj8LXYheaCLtO8SqeYCDOpRz-TFf9wiL2OIbJs65v_SO9cXFqb6rEfq1iX9J1QaCgYKARkSARMSFQGOcNnCeHMQxsVO1VcuYGCZisouLw0169';
 class gApiServices {
 	token
 
@@ -18,16 +18,16 @@ class gApiServices {
 		await client.requestAccessToken();
 	}
 
-	async createEventMeet(name, fInicio, hInicio, fFin, hFin) {
+	async createEventMeet() {
 		try {
 			const accessToken = access_token; // Reemplaza con tu token de acceso obtenido durante la autenticación
 			const event = {
 				"end": {
-					"dateTime": fFin + 'T' + hFin,
+					"dateTime": '2023-11-01T16:00:00',
 					"timeZone": "America/Chicago"
 				},
 				"start": {
-					"dateTime": fInicio + 'T' + hInicio,
+					"dateTime": '2023-11-01T14:00:00',
 					"timeZone": "America/Chicago"
 				},
 				"conferenceData": {
@@ -38,7 +38,7 @@ class gApiServices {
 						"requestId": "random-unique-string"
 					}
 				},
-				"summary": name
+				"summary": 'test'
 			};
 			const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events?conferenceDataVersion=1', {
 				method: 'POST',
@@ -48,7 +48,15 @@ class gApiServices {
 				},
 				body: JSON.stringify(event)
 			});
+			debugger
+			if (response.status == 401) {
 
+				return {
+					ok: false,
+					error: response.status
+				};
+			}
+			debugger
 			if (response.ok) {
 				const data = await response.json(); // data del evento
 				const eventId = data.id;
