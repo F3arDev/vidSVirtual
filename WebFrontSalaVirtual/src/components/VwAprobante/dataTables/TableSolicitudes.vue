@@ -18,17 +18,29 @@
 				<div class="mb-3">
 					<div class="row justify-content-center align-items-center g-2">
 						<div class="col">
-							<label for="exampleFormControlInput1" class="form-label">Nomb_Solicitante</label>
+							<div class="input-group input-group-sm mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-sm">Solicitante</span>
+								<input v-model="solicitante" type="text" class="form-control"
+									aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" disabled>
+							</div>
 
 						</div>
 						<div class="col">
-							<label for="exampleFormControlInput1" class="form-label">Expediente o Asunto</label>
+							<div class="input-group input-group-sm mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-sm">Entidad</span>
+								<input v-model="entidad" type="text" class="form-control" aria-label="Sizing example input"
+									aria-describedby="inputGroup-sizing-sm" disabled>
+							</div>
 						</div>
 					</div>
 
 					<div class="row justify-content-center align-items-center g-2">
 						<div class="col">
-							<label for="exampleFormControlInput1" class="form-label">Entidad Solicitante</label>
+							<div class="input-group input-group-sm mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-sm">Expediente</span>
+								<input v-model="expediente" type="text" class="form-control"
+									aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" disabled>
+							</div>
 						</div>
 					</div>
 
@@ -74,7 +86,7 @@ let table;
 
 onMounted(async () => {
 	await service.fetchAllSolicitudPEN();
-	const solicidudesPEN = await service.getSolicitudPEN();
+	let solicidudesPEN = await service.getSolicitudPEN();
 
 	table = $('#tblSolicitudes').DataTable({
 		data: solicidudesPEN.value,
@@ -134,6 +146,10 @@ onMounted(async () => {
 					}
 				)
 		}, 1500)
+
+		solicitante.value = data.solicitanteNombre
+		entidad.value = data.entidad
+		expediente.value = data.expediente
 	});
 
 	$('#tblSolicitudes').on('click', '.btnRechazar', function () {
@@ -243,11 +259,18 @@ onMounted(async () => {
 })
 
 let linkMeet = ref('')
+let solicitante = ref('')
+let entidad = ref('')
+let expediente = ref('')
+
 const btnCrearMeets = async () => {
 	console.log('hola')
-	let result = await gapi.createEventMeet(titulo);
-	console.log(result)
+	let result = await gapi.createEventMeet();
 	linkMeet.value = await result.meetLink
+	console.log(result)
+
+
+
 };
 
 onUnmounted(() => {
