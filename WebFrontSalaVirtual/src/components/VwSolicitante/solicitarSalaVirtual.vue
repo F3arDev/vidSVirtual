@@ -151,6 +151,10 @@ const getDataSolicitud = async () => {
 		"actividad": Actividad.value
 	}
 	let result = await service.sendSolicitudPEN(jsonSendSolicitud)
+
+
+	
+
 	if (result == true) {
 		alertify.success('Success notification message.'); 
 	}else{

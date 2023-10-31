@@ -36,9 +36,10 @@
 						<div class="col">
 							<label for="exampleFormControlInput1" class="form-label">URL GOOGLE MEETS</label>
 							<div class="input-group mb-3">
-								<input type="text" class="form-control" placeholder="Ingrese el Url de google Meets"
-									aria-label="Recipient's username" aria-describedby="button-addon2">
-								<button class="btn btn-outline-secondary" type="button" id="button-addon2">Generar
+								<input v-model="linkMeet" type="text" class="form-control"
+									placeholder="Ingrese el Url de google Meets" aria-label="Recipient's username"
+									aria-describedby="button-addon2" disabled>
+								<button @click="btnCrearMeets()" class="btn btn-outline-secondary" type="button">Generar
 									Link</button>
 							</div>
 						</div>
@@ -61,10 +62,12 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import $ from 'jquery';
 import alertify from 'alertifyjs';
-import solicitudServices from '@/services/solicitudServices'
+import solicitudServices from '@/services/solicitudServices.js'
+import googleApiServices from '@/services/googleApiServices.js'
+const gapi = new googleApiServices();
 const service = new solicitudServices();
 let table;
 // const rowData = ref(null);
@@ -84,9 +87,9 @@ onMounted(async () => {
 				title: 'Ver'
 			},
 			{ data: 'solicitanteNombre', title: 'Solicitante' },
-			{ data: 'entidad', title: 'Entidad'  },
-			{ data: 'departamento', title: 'Departamento'  },
-			{ data: 'expediente', title: 'Asunto/Expediente'  },
+			{ data: 'entidad', title: 'Entidad' },
+			{ data: 'departamento', title: 'Departamento' },
+			{ data: 'expediente', title: 'Asunto/Expediente' },
 			{
 				defaultContent: `<button class="btn btn-primary btn-sn btnAprobar">Aprobar</button>
 								<button class="btn btn-primary btn-sn btnRechazar">Rechazar</button>`,
@@ -110,8 +113,8 @@ onMounted(async () => {
 
 	let modalDetallSolicitud = $('#modalDetallSolicitud')[0];
 	$('#tblSolicitudes').on('click', '.btnAprobar', function () {
+		const data = table.row($(this).closest('tr')).data();
 		setTimeout(function () {
-			const data = table.row($(this).closest('tr')).data();
 			// Lógica para aprobar el elemento, por ejemplo:
 			alertify.confirm('')
 				.setHeader('<div style="text-align: center; font-size: 1.2em; font-weight: bold">Detalles Solicitud</div>')
@@ -122,7 +125,7 @@ onMounted(async () => {
 					{
 						'closable': false,
 						'movable': false,
-						labels: { "ok": "SI", "cancel": "NO" },
+						labels: { "ok": "Aprobar", "cancel": "Cancelar" },
 						resizable: true,
 						onok: async function () {
 
@@ -134,7 +137,6 @@ onMounted(async () => {
 	});
 
 	$('#tblSolicitudes').on('click', '.btnRechazar', function () {
-
 	});
 
 	//ChildRow - detalles
@@ -238,8 +240,15 @@ onMounted(async () => {
 			`
 		);
 	}
-
 })
+
+let linkMeet = ref('')
+const btnCrearMeets = async () => {
+	console.log('hola')
+	let result = await gapi.createEventMeet(titulo);
+	console.log(result)
+	linkMeet.value = await result.meetLink
+};
 
 onUnmounted(() => {
 	// Destruye la tabla cuando el componente se desmonta para evitar pérdidas de memoria
