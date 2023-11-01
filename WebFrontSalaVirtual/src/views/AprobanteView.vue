@@ -31,7 +31,7 @@
 					</div>
 					<div class="row mt-3">
 						<div class="col">
-							<TableSolicitudes />
+							<TableSolicitudes @update="manejarSenalDesdeHijo1" />
 						</div>
 					</div>
 
@@ -45,7 +45,7 @@
 					</div>
 					<div class="row mt-3">
 						<div class="col">
-							<TableRegistros />
+							<TableRegistros ref="componente" />
 						</div>
 					</div>
 				</div>
@@ -58,6 +58,17 @@
 import TableSolicitudes from '@/components/VwAprobante/dataTables/TableSolicitudes.vue'
 import TableRegistros from '@/components/VwAprobante/dataTables/TableRegistros.vue'
 // import TestModalAlerty from '@/components/VwAprobante/TestModalAlerty.vue';
+import { ref } from 'vue'
+
+const componente = ref(null);
+const manejarSenalDesdeHijo1 = () => {
+	console.log('Recepcion de Hijo1');
+	// Emitir señal al Hijo2
+
+	componente.value.updateTblSoliRegistro();
+};
+
+
 </script>
 
 <style scoped></style>

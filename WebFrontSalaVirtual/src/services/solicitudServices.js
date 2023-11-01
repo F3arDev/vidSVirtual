@@ -95,8 +95,27 @@ class solicitudServices {
 		return this.solicidudesPOST
 	}
 
-
-
+	async putSolicitud(putSolicitud) {
+		try {
+			let result = await fetch('http://localhost:5172/api/v1/Solicitud/Editar', {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(putSolicitud)
+			})
+			let response = await result.json();
+			debugger
+			if (response.mensaje != 'ok') {
+				this.error = 'Hubo un Error al Guardar Cambios a la Solicitud'
+				return false
+			}
+			this.success = 'Se Guardaron Cambios Correctamente'
+			return true;
+		} catch (error) {
+			console.log(error)
+		}
+	}
 }
 
 export default solicitudServices

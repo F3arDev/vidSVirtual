@@ -1,6 +1,6 @@
 <template>
   <NavBar />
-  <googleAuth />
+
 
   <!-- PruebasUbuntu server -->
   <div class="container my-4">
@@ -11,7 +11,7 @@
 <script setup>
 import { RouterView } from 'vue-router'
 import NavBar from './components/NavBar.vue';
-import googleAuth from './components/googleAuth.vue';
+
 
 import alertify from 'alertifyjs';
 import { onMounted } from 'vue';

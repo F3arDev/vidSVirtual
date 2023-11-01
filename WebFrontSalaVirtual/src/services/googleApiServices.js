@@ -16,7 +16,6 @@ class gApiServices {
 		return this.token = access_token
 	}
 
-
 	async createEventMeet(name) {
 		if (TokenValide) {
 			try {

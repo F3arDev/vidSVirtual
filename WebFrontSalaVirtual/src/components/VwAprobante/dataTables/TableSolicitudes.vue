@@ -61,7 +61,7 @@
 						<div class="col">
 							<div class="mb-3">
 								<label for="exampleFormControlInput1" class="form-label">Observacion</label>
-								<input type="email" class="form-control" id="exampleFormControlInput1"
+								<input v-model="Motivo" type="text" class="form-control"
 									placeholder="Ejm: Ingrese correctamente su nombre">
 							</div>
 						</div>
@@ -74,21 +74,21 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref, defineEmits } from 'vue';
 import $ from 'jquery';
 import alertify from 'alertifyjs';
 import solicitudServices from '@/services/solicitudServices.js'
 import googleApiServices from '@/services/googleApiServices.js'
 const gapi = new googleApiServices();
 const service = new solicitudServices();
-let table;
-// const rowData = ref(null);
+let tblsoliPEN;
+let solicidudesPEN
+const emit = defineEmits(['update']);
 
 onMounted(async () => {
 	await service.fetchAllSolicitudPEN();
-	let solicidudesPEN = await service.getSolicitudPEN();
-
-	table = $('#tblSolicitudes').DataTable({
+	solicidudesPEN = await service.getSolicitudPEN();
+	tblsoliPEN = $('#tblSolicitudes').DataTable({
 		data: solicidudesPEN.value,
 		columns: [
 			{
@@ -118,14 +118,15 @@ onMounted(async () => {
 			search: 'Buscar',
 			zeroRecords: 'No hay registros para mostrar',
 			info: 'Mostrando del _START_ a _END_ de _TOTAL_ registros',
-			infoFiltered: '(Filtrados de _Max_ registros.)',
 			paginate: { first: 'Primero', previous: 'Anterior', next: 'Siguiente', last: 'Ultimo' }
 		}
 	});
 
 	let modalDetallSolicitud = $('#modalDetallSolicitud')[0];
 	$('#tblSolicitudes').on('click', '.btnAprobar', function () {
-		const data = table.row($(this).closest('tr')).data();
+		const data = tblsoliPEN.row($(this).closest('tr')).data();
+
+
 		setTimeout(function () {
 			// Lógica para aprobar el elemento, por ejemplo:
 			alertify.confirm('')
@@ -140,8 +141,19 @@ onMounted(async () => {
 						labels: { "ok": "Aprobar", "cancel": "Cancelar" },
 						resizable: true,
 						onok: async function () {
-
-
+							let jsonPutSolicitud = {
+								"solicitudId": data.solicitudID,
+								"urlSesion": linkMeet.value,
+								"motivo": Motivo.value,
+								"estadoSolicitudId": 2,
+							}
+							let result = await service.putSolicitud(jsonPutSolicitud)
+							if (result == true) {
+								await updateTables();
+								alertify.success('Success notification message.');
+							} else {
+								alert(service.getError())
+							}
 						}
 					}
 				)
@@ -150,6 +162,7 @@ onMounted(async () => {
 		solicitante.value = data.solicitanteNombre
 		entidad.value = data.entidad
 		expediente.value = data.expediente
+		linkMeet.value = '';
 	});
 
 	$('#tblSolicitudes').on('click', '.btnRechazar', function () {
@@ -157,7 +170,7 @@ onMounted(async () => {
 
 	//ChildRow - detalles
 	$('#tblSolicitudes').on('click', 'td.dt-control', function () {
-		const row = table.row($(this).closest('tr'));
+		const row = tblsoliPEN.row($(this).closest('tr'));
 		if (row.child.isShown()) {
 			// This row is already open - close it
 			row.child.hide();
@@ -256,31 +269,40 @@ onMounted(async () => {
 			`
 		);
 	}
+
+	async function updateTables() {
+		await service.fetchAllSolicitudPEN();
+		await service.fetchAllSolicitud();
+		solicidudesPEN = await service.getSolicitudPEN();
+		tblsoliPEN.clear().rows.add(solicidudesPEN.value).draw();
+		emit('update');
+	}
 })
 
 let linkMeet = ref('')
 let solicitante = ref('')
 let entidad = ref('')
 let expediente = ref('')
+let Motivo = ref('')
 
 const btnCrearMeets = async () => {
-	console.log('hola')
-	let result = await gapi.createEventMeet();
-	linkMeet.value = await result.meetLink
-	console.log(result)
-
-
-
+	if (linkMeet.value == '') {
+		try {
+			let result = await gapi.createEventMeet();
+			linkMeet.value = await result.meetLink
+			alertify.success('Link de Meet Creado Correctamente')
+		} catch (error) {
+			alertify.error('Necesita que Inicie Sesion con Google')
+		}
+	}
 };
 
 onUnmounted(() => {
 	// Destruye la tabla cuando el componente se desmonta para evitar pérdidas de memoria
-	if (table) {
-		table.destroy();
+	if (tblsoliPEN) {
+		tblsoliPEN.destroy();
 	}
 });
 </script>
 
 <style scoped></style>
-
-
