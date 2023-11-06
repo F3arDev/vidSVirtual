@@ -35,13 +35,13 @@ import { RouterLink } from 'vue-router';
 </script>
 
 <style scoped>
-a {
+/* a {
 	color: #ffffff;
-	/* Cambia #00ff00 al código de color que desees */
+	
 }
 
 .bg-custom {
-	background-color: #4285f4;
-	/* Reemplaza 'tu-color-preferido' con tu código de color personalizado */
-}
+	background-color: #1C4C96;
+	
+} */
 </style>

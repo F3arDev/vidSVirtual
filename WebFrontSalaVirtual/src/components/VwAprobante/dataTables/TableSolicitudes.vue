@@ -15,7 +15,7 @@
 		<!-- Modal -->
 		<div style="display: none;">
 			<form id="modalDetallSolicitud" action="submint">
-				<div class="mb-3">
+				<div class="my-2">
 					<div class="row justify-content-center align-items-center g-2">
 						<div class="col">
 							<div class="input-group input-group-sm mb-3">
@@ -34,7 +34,7 @@
 						</div>
 					</div>
 
-					<div class="row justify-content-center align-items-center g-2">
+					<div class="row justify-content-center align-items-center">
 						<div class="col">
 							<div class="input-group input-group-sm mb-3">
 								<span class="input-group-text" id="inputGroup-sizing-sm">Expediente</span>
@@ -44,12 +44,12 @@
 						</div>
 					</div>
 
-					<div class="row justify-content-center align-items-center g-2">
+					<div id="divMeet" class="row justify-content-center align-items-center">
 						<div class="col">
-							<label for="exampleFormControlInput1" class="form-label">URL GOOGLE MEETS</label>
+							<label class="form-label">URL GOOGLE MEETS</label>
 							<div class="input-group mb-3">
 								<input v-model="linkMeet" type="text" class="form-control"
-									placeholder="Ingrese el Url de google Meets" aria-label="Recipient's username"
+									placeholder="https://meet.google.com/Example" aria-label="Recipient's username"
 									aria-describedby="button-addon2" disabled>
 								<button @click="btnCrearMeets()" class="btn btn-outline-secondary" type="button">Generar
 									Link</button>
@@ -57,10 +57,10 @@
 						</div>
 					</div>
 
-					<div class="row justify-content-center align-items-center g-2">
+					<div class="row justify-content-center align-items-cente">
 						<div class="col">
-							<div class="mb-3">
-								<label for="exampleFormControlInput1" class="form-label">Observacion</label>
+							<div>
+								<label class="form-label">Observacion</label>
 								<input v-model="Motivo" type="text" class="form-control"
 									placeholder="Ejm: Ingrese correctamente su nombre">
 							</div>
@@ -74,16 +74,26 @@
 </template>
 
 <script setup>
-import { onMounted, onUnmounted, ref, defineEmits } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import $ from 'jquery';
 import alertify from 'alertifyjs';
 import solicitudServices from '@/services/solicitudServices.js'
 import googleApiServices from '@/services/googleApiServices.js'
+//Instancias
 const gapi = new googleApiServices();
 const service = new solicitudServices();
+// Variables
 let tblsoliPEN;
 let solicidudesPEN
+//Emits
 const emit = defineEmits(['update']);
+
+//Variables Vacias ref()
+let linkMeet = ref('')
+let solicitante = ref('')
+let entidad = ref('')
+let expediente = ref('')
+let Motivo = ref('')
 
 onMounted(async () => {
 	await service.fetchAllSolicitudPEN();
@@ -104,7 +114,7 @@ onMounted(async () => {
 			{ data: 'expediente', title: 'Asunto/Expediente' },
 			{
 				defaultContent: `<button class="btn btn-primary btn-sn btnAprobar">Aprobar</button>
-								<button class="btn btn-primary btn-sn btnRechazar">Rechazar</button>`,
+								<button class="btn btn-danger btn-sn btnRechazar">Rechazar</button>`,
 				title: 'Acciones'
 			}
 		],
@@ -125,21 +135,17 @@ onMounted(async () => {
 	let modalDetallSolicitud = $('#modalDetallSolicitud')[0];
 	$('#tblSolicitudes').on('click', '.btnAprobar', function () {
 		const data = tblsoliPEN.row($(this).closest('tr')).data();
-
-
+		$('#divMeet').show();
 		setTimeout(function () {
 			// Lógica para aprobar el elemento, por ejemplo:
 			alertify.confirm('')
 				.setHeader('<div style="text-align: center; font-size: 1.2em; font-weight: bold">Detalles Solicitud</div>')
 				.setContent(modalDetallSolicitud)
-				.set('resizable', true)
-				.resizeTo('70%', '65%')
 				.set(
 					{
 						'closable': false,
 						'movable': false,
 						labels: { "ok": "Aprobar", "cancel": "Cancelar" },
-						resizable: true,
 						onok: async function () {
 							let jsonPutSolicitud = {
 								"solicitudId": data.solicitudID,
@@ -166,6 +172,37 @@ onMounted(async () => {
 	});
 
 	$('#tblSolicitudes').on('click', '.btnRechazar', function () {
+		const data = tblsoliPEN.row($(this).closest('tr')).data();
+		$('#divMeet').hide();
+		setTimeout(function () {
+			// Lógica para aprobar el elemento, por ejemplo:
+			alertify.confirm('')
+				.setHeader('<div style="text-align: center; font-size: 1.2em; font-weight: bold">Detalles Solicitud</div>')
+				.setContent(modalDetallSolicitud)
+				.set(
+					{
+						'closable': false,
+						'movable': false,
+						labels: { "ok": "Rechazar", "cancel": "Cancelar" },
+						onok: async function () {
+							let jsonPutSolicitud = {
+								"solicitudId": data.solicitudID,
+								"urlSesion": linkMeet.value,
+								"motivo": Motivo.value,
+								"estadoSolicitudId": 2,
+							}
+							let result = await service.putSolicitud(jsonPutSolicitud)
+							if (result == true) {
+								await updateTables();
+								alertify.success('Success notification message.');
+							} else {
+								alert(service.getError())
+							}
+						}
+					}
+				)
+		}, 1500)
+		console.log(data)
 	});
 
 	//ChildRow - detalles
@@ -279,20 +316,17 @@ onMounted(async () => {
 	}
 })
 
-let linkMeet = ref('')
-let solicitante = ref('')
-let entidad = ref('')
-let expediente = ref('')
-let Motivo = ref('')
 
 const btnCrearMeets = async () => {
-	if (linkMeet.value == '') {
+	if (linkMeet.value == '' || linkMeet.value == 'Inicie Sesion con Google') {
 		try {
+			linkMeet.value = 'Creando Link de Google Meet...'
 			let result = await gapi.createEventMeet();
 			linkMeet.value = await result.meetLink
 			alertify.success('Link de Meet Creado Correctamente')
 		} catch (error) {
-			alertify.error('Necesita que Inicie Sesion con Google')
+			linkMeet.value = 'Inicie Sesion con Google'
+			alertify.error('Necesita que inicie sesion con Google')
 		}
 	}
 };
@@ -304,5 +338,3 @@ onUnmounted(() => {
 	}
 });
 </script>
-
-<style scoped></style>

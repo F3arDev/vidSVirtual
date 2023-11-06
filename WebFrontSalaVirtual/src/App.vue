@@ -1,7 +1,5 @@
 <template>
   <NavBar />
-
-
   <!-- PruebasUbuntu server -->
   <div class="container my-4">
     <RouterView />
@@ -9,12 +7,12 @@
 </template>
 
 <script setup>
-import { RouterView } from 'vue-router'
-import NavBar from './components/NavBar.vue';
 
-
+import NavBar from '@/components/NavBar.vue';
+import { RouterView } from 'vue-router';
+import { onBeforeMount } from 'vue';
 import alertify from 'alertifyjs';
-import { onMounted } from 'vue';
+
 
 alertify.defaults.transition = "fade";
 alertify.defaults.theme.ok = "btn btn-primary";
@@ -25,7 +23,7 @@ import googleApiServices from './services/googleApiServices';
 
 const gapi = new googleApiServices();
 
-onMounted(async () => {
+onBeforeMount(async () => {
   await gapi.initClient();
 })
 

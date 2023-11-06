@@ -16,33 +16,18 @@
 						type="button" role="tab" aria-controls="nav-profile" aria-selected="false">
 						Registros de Solicitudes
 					</button>
-
 				</div>
 			</nav>
-
 			<div class="tab-content" id="nav-tabContent">
 				<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
 					tabindex="0">
 					<div class="row mt-3">
 						<div class="col">
-							<button type="button" name="" id="" class="btn btn-primary">Exportar</button>
-						</div>
-
-					</div>
-					<div class="row mt-3">
-						<div class="col">
 							<TableSolicitudes @update="manejarSenalDesdeHijo1" />
 						</div>
 					</div>
-
 				</div>
 				<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-
-					<div class="row mt-3">
-						<div class="col">
-							<button type="button" name="" id="" class="btn btn-primary">Exportar</button>
-						</div>
-					</div>
 					<div class="row mt-3">
 						<div class="col">
 							<TableRegistros ref="componente" />
@@ -57,7 +42,6 @@
 <script setup>
 import TableSolicitudes from '@/components/VwAprobante/dataTables/TableSolicitudes.vue'
 import TableRegistros from '@/components/VwAprobante/dataTables/TableRegistros.vue'
-// import TestModalAlerty from '@/components/VwAprobante/TestModalAlerty.vue';
 import { ref } from 'vue'
 
 const componente = ref(null);

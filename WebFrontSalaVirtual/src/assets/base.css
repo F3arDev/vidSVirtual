@@ -1,4 +1,29 @@
-
-body{
-  background-color: cornflowerblue;
+body {
+  background-color: #3c7bbb;
 }
+
+h3{
+  color: white;
+}
+
+.navbar {
+  background-color: #4285f4;
+}
+.navbar a{
+  color: white;
+}
+
+.nav-link {
+  background: #ffffffa2;
+  color: #000000;
+  border-bottom: 1px solid grey !important;
+  border-color: none !important;
+}
+
+.nav-link.active {
+  background: #ffffff;
+  border-bottom: 2px solid blue !important;
+  color: #000000 !important;
+  
+}
+
