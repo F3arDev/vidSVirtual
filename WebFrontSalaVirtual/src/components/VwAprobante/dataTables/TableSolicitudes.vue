@@ -19,7 +19,7 @@
 					<div class="row justify-content-center align-items-center g-2">
 						<div class="col">
 							<div class="input-group input-group-sm mb-3">
-								<span class="input-group-text" id="inputGroup-sizing-sm">Solicitante</span>
+								<span class="input-group-text">Solicitante</span>
 								<input v-model="solicitante" type="text" class="form-control"
 									aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" disabled>
 							</div>
@@ -27,7 +27,7 @@
 						</div>
 						<div class="col">
 							<div class="input-group input-group-sm mb-3">
-								<span class="input-group-text" id="inputGroup-sizing-sm">Entidad</span>
+								<span class="input-group-text">Entidad</span>
 								<input v-model="entidad" type="text" class="form-control" aria-label="Sizing example input"
 									aria-describedby="inputGroup-sizing-sm" disabled>
 							</div>
@@ -37,14 +37,14 @@
 					<div class="row justify-content-center align-items-center">
 						<div class="col">
 							<div class="input-group input-group-sm mb-3">
-								<span class="input-group-text" id="inputGroup-sizing-sm">Expediente</span>
+								<span class="input-group-text">Expediente</span>
 								<input v-model="expediente" type="text" class="form-control"
 									aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" disabled>
 							</div>
 						</div>
 					</div>
 
-					<div id="divMeet" class="row justify-content-center align-items-center">
+					<div v-show="isVisible" id="divMeet" class="row justify-content-center align-items-center">
 						<div class="col">
 							<label class="form-label">URL GOOGLE MEETS</label>
 							<div class="input-group mb-3">
@@ -79,9 +79,12 @@ import $ from 'jquery';
 import alertify from 'alertifyjs';
 import solicitudServices from '@/services/solicitudServices.js'
 import googleApiServices from '@/services/googleApiServices.js'
+import customAlertify from '@/assets/customAlertify'
+
 //Instancias
 const gapi = new googleApiServices();
 const service = new solicitudServices();
+const ac = new customAlertify();
 // Variables
 let tblsoliPEN;
 let solicidudesPEN
@@ -89,11 +92,12 @@ let solicidudesPEN
 const emit = defineEmits(['update']);
 
 //Variables Vacias ref()
-let linkMeet = ref('')
-let solicitante = ref('')
-let entidad = ref('')
-let expediente = ref('')
-let Motivo = ref('')
+let linkMeet = ref('');
+let solicitante = ref('');
+let entidad = ref('');
+let expediente = ref('');
+let Motivo = ref('');
+let isVisible = ref();
 
 onMounted(async () => {
 	await service.fetchAllSolicitudPEN();
@@ -132,11 +136,13 @@ onMounted(async () => {
 		}
 	});
 
-	let modalDetallSolicitud = $('#modalDetallSolicitud')[0];
+	var modalDetallSolicitud = $('#modalDetallSolicitud')[0];
 	$('#tblSolicitudes').on('click', '.btnAprobar', function () {
-		const data = tblsoliPEN.row($(this).closest('tr')).data();
-		$('#divMeet').show();
-		setTimeout(function () {
+		let data = tblsoliPEN.row($(this).closest('tr')).data();
+		isVisible.value = ref(true);
+
+		ac.alertifyWaitingOpen();
+		setTimeout(() => {
 			// Lógica para aprobar el elemento, por ejemplo:
 			alertify.confirm('')
 				.setHeader('<div style="text-align: center; font-size: 1.2em; font-weight: bold">Detalles Solicitud</div>')
@@ -162,7 +168,7 @@ onMounted(async () => {
 							}
 						}
 					}
-				)
+				).closeOthers();
 		}, 1500)
 
 		solicitante.value = data.solicitanteNombre
@@ -172,9 +178,10 @@ onMounted(async () => {
 	});
 
 	$('#tblSolicitudes').on('click', '.btnRechazar', function () {
-		const data = tblsoliPEN.row($(this).closest('tr')).data();
-		$('#divMeet').hide();
-		setTimeout(function () {
+		let data = tblsoliPEN.row($(this).closest('tr')).data();
+		isVisible.value = false;
+		ac.alertifyWaitingOpen();
+		setTimeout(() => {
 			// Lógica para aprobar el elemento, por ejemplo:
 			alertify.confirm('')
 				.setHeader('<div style="text-align: center; font-size: 1.2em; font-weight: bold">Detalles Solicitud</div>')
@@ -198,9 +205,10 @@ onMounted(async () => {
 							} else {
 								alert(service.getError())
 							}
-						}
+						},
 					}
-				)
+				).closeOthers();
+
 		}, 1500)
 		console.log(data)
 	});

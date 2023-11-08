@@ -18,17 +18,18 @@
 					</button>
 				</div>
 			</nav>
+
 			<div class="tab-content" id="nav-tabContent">
 				<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
 					tabindex="0">
-					<div class="row mt-3">
+					<div class="row">
 						<div class="col">
-							<TableSolicitudes @update="manejarSenalDesdeHijo1" />
+							<TableSolicitudes @update="eventUpdate" />
 						</div>
 					</div>
 				</div>
 				<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
-					<div class="row mt-3">
+					<div class="row">
 						<div class="col">
 							<TableRegistros ref="componente" />
 						</div>
@@ -43,16 +44,15 @@
 import TableSolicitudes from '@/components/VwAprobante/dataTables/TableSolicitudes.vue'
 import TableRegistros from '@/components/VwAprobante/dataTables/TableRegistros.vue'
 import { ref } from 'vue'
-
 const componente = ref(null);
-const manejarSenalDesdeHijo1 = () => {
+
+
+const eventUpdate = () => {
 	console.log('Recepcion de Hijo1');
 	// Emitir señal al Hijo2
 
 	componente.value.updateTblSoliRegistro();
 };
-
-
 </script>
 
 <style scoped></style>

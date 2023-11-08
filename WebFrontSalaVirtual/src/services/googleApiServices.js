@@ -4,7 +4,8 @@ const gClientId = '860360797051-g73fju8qep80lnr7jfrg3dq8d1cmoqq0.apps.googleuser
 var client;
 var access_token;
 var TokenValide;
-
+import customAlertify from '@/assets/customAlertify'
+const ac = new customAlertify();
 class gApiServices {
 	token
 
@@ -18,6 +19,7 @@ class gApiServices {
 
 	async createEventMeet(name) {
 		if (TokenValide) {
+			ac.alertifyWaitingOpen();
 			try {
 				const accessToken = access_token;
 				// Reemplaza con tu token de acceso obtenido durante la autenticación
@@ -48,6 +50,7 @@ class gApiServices {
 					},
 					body: JSON.stringify(event)
 				});
+				ac.alertifyWaitingClose();
 
 				if (response.ok) {
 					const data = await response.json(); // data del evento
@@ -58,7 +61,7 @@ class gApiServices {
 						const meetLink = conferenceData.entryPoints.find(entry => entry.entryPointType === 'video').uri;
 						console.log(meetLink);
 						//=========retorno de meets========//
-						return { ok: true, meetLink: meetLink}; //, eventId: eventId  
+						return { ok: true, meetLink: meetLink }; //, eventId: eventId  
 					} else {
 						throw new Error('Error al crear el enlace de Google Meet.');
 					}

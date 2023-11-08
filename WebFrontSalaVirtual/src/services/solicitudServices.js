@@ -1,5 +1,7 @@
 import { ref } from 'vue'
 
+import customAlertify from '@/assets/customAlertify'
+const ac = new customAlertify();
 class solicitudServices {
 	error	//Alamacena El error para metodos post y Put
 	success	//Almacena la Respuesta para metodos post y Put
@@ -37,9 +39,14 @@ class solicitudServices {
 	}
 
 	async fetchAllSolicitud() {
+
 		try {
 			const url = 'http://localhost:5172/api/v1/Solicitud/Lista';
+
+			ac.alertifyWaitingOpen();
 			const result = await fetch(url)
+			ac.alertifyWaitingClose();
+
 			const json = await result.json();
 			this.SolicitudesREGISTRO.value = await json;
 		} catch (error) {
@@ -48,9 +55,12 @@ class solicitudServices {
 	}
 
 	async fetchAllSolicitudPEN() {
+
 		try {
 			const url = 'http://localhost:5172/api/v1/Solicitud/ListaPEN';
+			ac.alertifyWaitingOpen();
 			const result = await fetch(url)
+			ac.alertifyWaitingClose();
 			const json = await result.json();
 			this.solicidudesPEN.value = await json.response;
 		} catch (error) {
@@ -59,9 +69,12 @@ class solicitudServices {
 	}
 
 	async fetchAllSolicitudRegUSUARIO(id) {
+		
 		try {
 			const url = `http://localhost:5172/api/v1/Solicitud/ListaRegUsuario/${id}`;
+			ac.alertifyWaitingOpen();
 			const result = await fetch(url)
+			ac.alertifyWaitingClose();
 			const json = await result.json();
 			this.SolicitudesRegUSUARIO.value = await json.response;
 		} catch (error) {
@@ -71,6 +84,7 @@ class solicitudServices {
 
 	//POST
 	async sendSolicitudPEN(sendSolicitud) {
+		ac.alertifyWaiting();
 		try {
 			let result = await fetch('http://localhost:5172/api/v1/Solicitud/Guardar', {
 				method: 'POST',
@@ -80,7 +94,6 @@ class solicitudServices {
 				body: JSON.stringify(sendSolicitud)
 			})
 			let response = await result.json();
-			debugger
 			if (response.mensaje != 'ok') {
 				this.error = 'Hubo un Error al enviar la Solicitud'
 				return false
@@ -91,11 +104,13 @@ class solicitudServices {
 			console.log(error)
 		}
 	}
+
 	postSolicitudPEN() {
 		return this.solicidudesPOST
 	}
 
 	async putSolicitud(putSolicitud) {
+		ac.alertifyWaiting();
 		try {
 			let result = await fetch('http://localhost:5172/api/v1/Solicitud/Editar', {
 				method: 'PUT',
@@ -105,7 +120,7 @@ class solicitudServices {
 				body: JSON.stringify(putSolicitud)
 			})
 			let response = await result.json();
-			debugger
+
 			if (response.mensaje != 'ok') {
 				this.error = 'Hubo un Error al Guardar Cambios a la Solicitud'
 				return false
