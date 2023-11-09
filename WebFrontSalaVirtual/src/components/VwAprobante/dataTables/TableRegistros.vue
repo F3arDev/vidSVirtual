@@ -69,8 +69,9 @@
 					<div class="col">
 						<div>
 							<label class="form-label">Observacion</label>
-							<input v-model="Motivo" type="text" class="form-control"
-								placeholder="Ejm: Ingrese correctamente su nombre">
+							<textarea v-model="Motivo" class="form-control"
+								placeholder="Ejm: Ingrese correctamente su nombre" disabled>
+							</textarea>
 						</div>
 					</div>
 				</div>
@@ -85,8 +86,10 @@ import $ from 'jquery';
 import alertify from 'alertifyjs';
 import solicitudServices from '@/services/solicitudServices'
 import customAlertify from '@/assets/customAlertify'
+
 const service = new solicitudServices();
 const ac = new customAlertify();
+
 let tblSoliRegistros;
 let solicidudes
 
@@ -104,7 +107,7 @@ onMounted(async () => {
 	tblSoliRegistros = $('#tblSolicitudRegistros').DataTable({
 		data: solicidudes.value,
 		columns: [
-			{ defaultContent: `<button class="btn btn-primary btn-sm btnVer">+</button>`, title: '+' },
+			{ defaultContent: `<button class="btn btn-primary btn-sm btnVer">+</button>`, title: '+', orderable: false, },
 			{ data: 'solicitudID', title: 'ID' },
 			{ data: 'solicitanteNombre', title: 'Solicitante' },
 			{ data: 'entidad', title: 'Entidad' },
@@ -119,6 +122,7 @@ onMounted(async () => {
 		columnDefs: [
 			{ "className": "dt-center", "targets": "_all" }
 		],
+		order: [[1, 'asc']],
 		responsive: true,
 		autoWidth: false,
 		dom: 'Bfrtip',
@@ -131,8 +135,10 @@ onMounted(async () => {
 		},
 
 	});
+
 	let modalDetallSoRegistros = $('#modalDetallSoRegistros')[0];
-	$('#tblSolicitudRegistros').on('click', '.btnVer', function () {
+
+	tblSoliRegistros.on('click', '.btnVer', function () {
 		const data = tblSoliRegistros.row($(this).parents('tr')).data();
 		ac.alertifyWaitingOpen();
 		setTimeout(() => {
@@ -146,6 +152,12 @@ onMounted(async () => {
 					}
 				}).closeOthers();
 		}, 1500)
+
+		solicitante.value = data.solicitanteNombre
+		entidad.value = data.entidad
+		expediente.value = data.expediente
+		linkMeet.value = data.urlSesion;
+		Motivo.value = data.motivo
 	})
 })
 
@@ -157,9 +169,8 @@ const updateTblSoliRegistro = async () => {
 defineExpose({ updateTblSoliRegistro }) //expone la funcion para que sea utilizada por el componente padre
 
 onUnmounted(() => {
-	// Destruye la tabla cuando el componente se desmonta para evitar pérdidas de memoria
 	if (tblSoliRegistros) {
-		tblSoliRegistros.destroy();
+		tblSoliRegistros.destroy();// Destruye la tabla cuando el componente se desmonta para evitar pérdidas de memoria
 	}
 });
 </script>

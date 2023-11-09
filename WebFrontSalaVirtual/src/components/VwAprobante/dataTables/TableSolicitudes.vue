@@ -112,16 +112,18 @@ onMounted(async () => {
 				defaultContent: '',
 				title: 'Ver'
 			},
-			{ data: 'solicitanteNombre', title: 'Solicitante' },
+			{ data: 'solicitanteNombre', title: 'Solicitante'},
 			{ data: 'entidad', title: 'Entidad' },
 			{ data: 'departamento', title: 'Departamento' },
 			{ data: 'expediente', title: 'Asunto/Expediente' },
 			{
 				defaultContent: `<button class="btn btn-primary btn-sn btnAprobar">Aprobar</button>
 								<button class="btn btn-danger btn-sn btnRechazar">Rechazar</button>`,
-				title: 'Acciones'
+				title: 'Acciones',
+				orderable: false,
 			}
 		],
+		order: [[1, 'asc']],
 		columnDefs: [
 			{ "className": "dt-center", "targets": "_all" }
 		],
@@ -157,7 +159,7 @@ onMounted(async () => {
 								"solicitudId": data.solicitudID,
 								"urlSesion": linkMeet.value,
 								"motivo": Motivo.value,
-								"estadoSolicitudId": 2,
+								"estadoSolicitudId": 2,//Estado Aprobado
 							}
 							let result = await service.putSolicitud(jsonPutSolicitud)
 							if (result == true) {
@@ -196,7 +198,7 @@ onMounted(async () => {
 								"solicitudId": data.solicitudID,
 								"urlSesion": linkMeet.value,
 								"motivo": Motivo.value,
-								"estadoSolicitudId": 2,
+								"estadoSolicitudId": 3, //Estado Rechazado
 							}
 							let result = await service.putSolicitud(jsonPutSolicitud)
 							if (result == true) {
@@ -208,9 +210,11 @@ onMounted(async () => {
 						},
 					}
 				).closeOthers();
-
 		}, 1500)
-		console.log(data)
+		solicitante.value = data.solicitanteNombre
+		entidad.value = data.entidad
+		expediente.value = data.expediente
+		linkMeet.value = '';
 	});
 
 	//ChildRow - detalles

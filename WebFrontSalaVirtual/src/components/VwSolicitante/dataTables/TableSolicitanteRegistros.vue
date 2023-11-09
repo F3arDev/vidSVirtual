@@ -34,7 +34,7 @@ onMounted(async () => {
 	table = $('#tbSolicitudRegUsuario').DataTable({
 		data: solicidudes.value,
 		columns: [
-			{ defaultContent: `<button class="btn btn-primary btn-sn btnAgregar">Ver</button>`, title: 'ver' },
+			{ defaultContent: `<button class="btn btn-primary btn-sn btnAgregar">Ver</button>`, title: 'ver', orderable: false, },
 			{ data: 'solicitudID', title: 'ID' },
 			{ data: 'solicitanteID', title: 'Usuario' },
 			{ data: 'vwDepMunicipioID', title: 'Entidad' },
@@ -49,6 +49,7 @@ onMounted(async () => {
 		columnDefs: [
 			{ "className": "dt-center", "targets": "_all" }
 		],
+		order: [[1, 'asc']],
 		responsive: true,
 		autoWidth: false,
 		dom: 'Bfrtip',

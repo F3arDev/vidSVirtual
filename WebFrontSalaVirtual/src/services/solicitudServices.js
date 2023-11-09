@@ -69,7 +69,7 @@ class solicitudServices {
 	}
 
 	async fetchAllSolicitudRegUSUARIO(id) {
-		
+
 		try {
 			const url = `http://localhost:5172/api/v1/Solicitud/ListaRegUsuario/${id}`;
 			ac.alertifyWaitingOpen();
@@ -84,8 +84,10 @@ class solicitudServices {
 
 	//POST
 	async sendSolicitudPEN(sendSolicitud) {
-		ac.alertifyWaiting();
+
 		try {
+
+			ac.alertifyWaitingOpen();
 			let result = await fetch('http://localhost:5172/api/v1/Solicitud/Guardar', {
 				method: 'POST',
 				headers: {
@@ -93,6 +95,7 @@ class solicitudServices {
 				},
 				body: JSON.stringify(sendSolicitud)
 			})
+			ac.alertifyWaitingClose();
 			let response = await result.json();
 			if (response.mensaje != 'ok') {
 				this.error = 'Hubo un Error al enviar la Solicitud'
@@ -110,8 +113,8 @@ class solicitudServices {
 	}
 
 	async putSolicitud(putSolicitud) {
-		ac.alertifyWaiting();
 		try {
+			ac.alertifyWaitingOpen();
 			let result = await fetch('http://localhost:5172/api/v1/Solicitud/Editar', {
 				method: 'PUT',
 				headers: {
@@ -120,7 +123,7 @@ class solicitudServices {
 				body: JSON.stringify(putSolicitud)
 			})
 			let response = await result.json();
-
+			ac.alertifyWaitingClose();
 			if (response.mensaje != 'ok') {
 				this.error = 'Hubo un Error al Guardar Cambios a la Solicitud'
 				return false

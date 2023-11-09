@@ -12,14 +12,18 @@ import './assets/datatablesConfig';
 import './assets/main.css'
 
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+
+//plugins VueJs
 import App from './App.vue'
 import router from './router'
 
-
-const app = createApp(App);
-app.use(router);
+const app = createApp(App)
 
 
+//usa los plugins
+app.use(createPinia())
+app.use(router)
 
-
+//Monta en index #app
 app.mount('#app')

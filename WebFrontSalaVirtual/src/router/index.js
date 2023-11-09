@@ -20,7 +20,10 @@ const router = createRouter({
     {
       path: '/Aprobante',
       name: 'Aprobante',
-      component: AprobanteView
+      component: AprobanteView,
+      meta: {
+        requireAuth: true
+      }
     },
     {
       path: '/Solicitante',
@@ -28,6 +31,21 @@ const router = createRouter({
       component: SolicitanteView
     }
   ]
+})
+
+//Antes de acceder a las rutas, Que ejecute lo que queremos y si no se ejecuta no permite entrar
+
+//to: hacia donde quiere el usuario
+//from: de donde viene el usuario
+//Next: Hacia donde va el usuario
+router.beforeEach((to, from, next) => {
+  const auth = false //obtiene jwt Auth del backend
+  const needAuth = to.meta.requireAuth
+  if (needAuth && !auth) {
+    next('/')
+  } else {
+    next()
+  }
 })
 
 export default router
