@@ -25,8 +25,8 @@
 			<div class="tab-content" id="nav-tabContent">
 				<div class="tab-pane fade show active" id="nav-EnvSolicitud" role="tabpanel"
 					aria-labelledby="nav-EnvSolicitud-tab" tabindex="0">
-					<div class="row mt-3 justify-content-center g-2">
-						<div class="col-10">
+					<div class="row mt-0 justify-content-center g-2">
+						<div class="col-10 mx-2 mb-2">
 							<solicitarSalaVirtual />
 						</div>
 					</div>
@@ -35,8 +35,8 @@
 
 				<div class="tab-pane fade" id="nav-RegSolicitante" role="tabpanel" aria-labelledby="nav-RegSolicitante-tab"
 					tabindex="0">
-					<div class="row mt-3">
-						<div class="col">
+					<div class="row mt-0">
+						<div class="col mx-2 mb-2">
 							<TableSolicitanteRegistros />
 						</div>
 					</div>

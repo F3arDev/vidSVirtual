@@ -30,18 +30,4 @@
 
 <script setup>
 import { RouterLink } from 'vue-router';
-
-
 </script>
-
-<style scoped>
-/* a {
-	color: #ffffff;
-	
-}
-
-.bg-custom {
-	background-color: #1C4C96;
-	
-} */
-</style>

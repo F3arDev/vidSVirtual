@@ -26,9 +26,4 @@ const gapi = new googleApiServices();
 onBeforeMount(async () => {
   await gapi.initClient();
 })
-
-
-
-
-
 </script>

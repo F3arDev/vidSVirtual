@@ -45,12 +45,15 @@ class solicitudServices {
 
 			ac.alertifyWaitingOpen();
 			const result = await fetch(url)
+			
 			ac.alertifyWaitingClose();
 
 			const json = await result.json();
+			
 			this.SolicitudesREGISTRO.value = await json;
 		} catch (error) {
 			console.log(error)
+			ac.alertifyWaitingClose();
 		}
 	}
 
@@ -64,12 +67,12 @@ class solicitudServices {
 			const json = await result.json();
 			this.solicidudesPEN.value = await json.response;
 		} catch (error) {
-			console.log(error)
+			console.error(error)
+			ac.alertifyWaitingClose();
 		}
 	}
 
 	async fetchAllSolicitudRegUSUARIO(id) {
-
 		try {
 			const url = `http://localhost:5172/api/v1/Solicitud/ListaRegUsuario/${id}`;
 			ac.alertifyWaitingOpen();
@@ -79,14 +82,13 @@ class solicitudServices {
 			this.SolicitudesRegUSUARIO.value = await json.response;
 		} catch (error) {
 			console.log(error)
+			ac.alertifyWaitingClose();
 		}
 	}
 
 	//POST
 	async sendSolicitudPEN(sendSolicitud) {
-
 		try {
-
 			ac.alertifyWaitingOpen();
 			let result = await fetch('http://localhost:5172/api/v1/Solicitud/Guardar', {
 				method: 'POST',
@@ -105,6 +107,7 @@ class solicitudServices {
 			return true;
 		} catch (error) {
 			console.log(error)
+			ac.alertifyWaitingClose();
 		}
 	}
 
@@ -132,6 +135,7 @@ class solicitudServices {
 			return true;
 		} catch (error) {
 			console.log(error)
+			ac.alertifyWaitingClose();
 		}
 	}
 }

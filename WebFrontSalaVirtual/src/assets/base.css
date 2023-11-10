@@ -1,22 +1,29 @@
 body {
-  background-color: #3c7bbb;
+  background-color: #4e73df;
 }
 
-h3{
+h3 {
   color: white;
 }
 
 .navbar {
   background-color: #4285f4;
 }
-.navbar a{
+
+.navbar a {
   color: white;
+}
+
+.nav-tabs {
+
+  border-color: transparent;
+
 }
 
 .nav-link {
   background: #ffffffa2;
   color: #000000;
-  border-bottom: 1px solid grey !important;
+  border-bottom: 1px solid #808080 !important;
   border-color: none !important;
 }
 
@@ -24,6 +31,10 @@ h3{
   background: #ffffff;
   border-bottom: 2px solid blue !important;
   color: #000000 !important;
-  
+
 }
 
+.tab-content {
+  background: #d4deff;
+  border-radius: 0px 5px 5px 5px;
+}

@@ -39,12 +39,12 @@ const router = createRouter({
 //from: de donde viene el usuario
 //Next: Hacia donde va el usuario
 router.beforeEach((to, from, next) => {
-  const auth = false //obtiene jwt Auth del backend
+  const auth = true //obtiene jwt Auth del backend
   const needAuth = to.meta.requireAuth
   if (needAuth && !auth) {
     next('/')
   } else {
-    next()
+    next()                                                 
   }
 })
 

@@ -4,6 +4,7 @@
 			<h3>Vista Aprobante</h3>
 		</div>
 	</div>
+
 	<div class="row">
 		<div class="col">
 			<nav>
@@ -23,19 +24,20 @@
 				<div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab"
 					tabindex="0">
 					<div class="row">
-						<div class="col">
+						<div class="col m-2">
 							<TableSolicitudes @update="eventUpdate" />
 						</div>
 					</div>
 				</div>
 				<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
 					<div class="row">
-						<div class="col">
+						<div class="col m-2">
 							<TableRegistros ref="componente" />
 						</div>
 					</div>
 				</div>
 			</div>
+
 		</div>
 	</div>
 </template>

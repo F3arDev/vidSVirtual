@@ -14,14 +14,12 @@ export const useCounterStore = defineStore('counter', () => {
 	return { count, doubleCount, increment }
 })
 
-export const useDataUserStore = defineStore('DataUser', () => {
-	const count = ref(0)
+export const useAuthUserStore = defineStore('AuthUser', () => {
+	let authUser = false;
 
-	const doubleCount = computed(() => count.value * 2)
-
-	function increment() {
-		count.value++
+	async function getAuthUser() {
+		authUser = true;
 	}
 
-	return { count, doubleCount, increment }
+	return { authUser, getAuthUser }
 })
