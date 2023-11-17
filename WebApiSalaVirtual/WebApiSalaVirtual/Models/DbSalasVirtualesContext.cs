@@ -29,7 +29,7 @@ public partial class DbSalasVirtualesContext : DbContext
     public virtual DbSet<VwDepMunicipio> VwDepMunicipios { get; set; }
 
     public virtual DbSet<VwSolicitudDetalles> VwSolicitudDetalles { get; set; }
-
+    public virtual DbSet<VwUsuarioDetalles> VwUsuarioDetalles { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Entidad>(entity =>
@@ -223,6 +223,11 @@ public partial class DbSalasVirtualesContext : DbContext
         });
 
         modelBuilder.Entity<VwSolicitudDetalles>(entity =>
+        {
+            entity.HasNoKey(); // Indica que esta entidad no tiene una clave primaria
+        });
+
+        modelBuilder.Entity<VwUsuarioDetalles>(entity =>
         {
             entity.HasNoKey(); // Indica que esta entidad no tiene una clave primaria
         });

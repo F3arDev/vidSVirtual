@@ -95,7 +95,7 @@ namespace WebApiSalaVirtual.Controllers.v1
         {
             try
             {
-                // Busca el producto existente en la base de datos por su IdProducto
+                // Busca la solicitud existente en la base de datos por su solicitudId
                 var objeto = _context.Solicituds.Find(oSolicitud.SolicitudId);
 
                 // Si el producto no existe, devuelve un BadRequest
@@ -104,15 +104,17 @@ namespace WebApiSalaVirtual.Controllers.v1
                     return BadRequest("Solicitud  no encontrado");
                 }
 
-                // Actualiza las propiedades del producto existente con los valores del producto actualizado
+                // Actualiza las propiedades del solicitud existente con los valores del solicitud actualizado
+                objeto.UrlSesion = oSolicitud.UrlSesion is null ? objeto.UrlSesion : oSolicitud.UrlSesion;
                 objeto.EstadoSolicitudId = oSolicitud.EstadoSolicitudId is null ? objeto.EstadoSolicitudId : oSolicitud.EstadoSolicitudId;
+                objeto.Motivo = oSolicitud.Motivo is null ? objeto.Motivo : oSolicitud.Motivo;
                 objeto.EstadoRegistroId = oSolicitud.EstadoRegistroId is null ? objeto.EstadoRegistroId : oSolicitud.EstadoRegistroId;
 
                 // Guarda los cambios en la base de datos   
                 _context.SaveChanges();
 
                 // Devuelve una respuesta exitosa
-                return Ok(new { mensaje = "Estado Solicitud actualizado correctamente" });
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok" });
             }
             catch (Exception ex)
             {
