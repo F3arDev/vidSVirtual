@@ -1,14 +1,8 @@
 <template>
-  <NavBar />
-  <!-- PruebasUbuntu server -->
-  <div class="container my-4">
-    <RouterView />
-  </div>
+  <RouterView />
 </template>
 
 <script setup>
-
-import NavBar from '@/components/NavBar.vue';
 import { RouterView } from 'vue-router';
 import { onBeforeMount } from 'vue';
 import alertify from 'alertifyjs';

@@ -1,66 +1,95 @@
 <template>
-	<div class="row justify-content-center align-items-center g-2">
-		<div class="col-6">
-			<div class="row">
-				<div class="card text-start">
-					<div class="d-flex justify-content-center align-items-center mt-3">
-						<svg xmlns="http://www.w3.org/2000/svg" width="125" height="125" fill="currentColor"
-							class="bi bi-person-circle bi-4x d-flex justify-content-center align-items-center mt-3"
-							viewBox="0 0 16 16">
-							<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-							<path fill-rule="evenodd"
-								d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-						</svg>
-					</div>
-					<div class="card-body ">
-						<h2 class="card-title">Inicio de Sesion</h2>
-						<form>
-							<div class="mb-3">
-								<label for="exampleInputEmail1" class="form-label">Email address</label>
-								<input v-model="Usuario" type="email" class="form-control">
-							</div>
-							<div class="mb-3">
-								<label for="exampleInputPassword1" class="form-label">Password</label>
-								<input v-model="pass" type="password" class="form-control" id="exampleInputPassword1">
-							</div>
-
-							<button @click="login" type="submit" class="btn btn-primary">Submit</button>
-							{{ Usuario }}
-							{{ pass }}
-
-						</form>
-					</div>
+	<main class="form-signin w-100 m-auto">
+		<div class="container-fluid">
+			<form>
+				<div class="text-center">
+					<i class="bi bi-person-circle mb-4"></i>
+					<h1 class="h3 mb-3 fw-normal">INICIAR SESION</h1>
 				</div>
-			</div>
+
+				<div class="form-floating">
+					<input v-model="usuario" type="text" class="form-control" id="inputUser" placeholder="Usuario">
+					<label for="floatingInput">Usuario</label>
+				</div>
+				<div class="form-floating">
+					<input v-model="pass" type="password" class="form-control" id="inputPass" placeholder="Contraseña">
+					<label for="floatingPassword">Contraseña</label>
+				</div>
+				<button @click="login()" class="btn btn-primary w-100 py-2" type="submit">Ingresar</button>
+			</form>
 		</div>
-	</div>
+	</main>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-let Usuario = ref('');
+let usuario = ref('');
 let pass = ref('');
 
 const router = useRouter();
 
 const login = () => {
 	// Simulación del inicio de sesión, verifica las credenciales aquí
-	if (Usuario.value == 'admin' && pass.value == '123') {
+	if (usuario.value == 'admin' && pass.value == '123') {
 		// Redirigir a la ruta principal después del inicio de sesi ón
 		router.push('/Aprobante');
 	}
-	else if (Usuario.value == 'usuario' && pass.value == '123') {
+	else if (usuario.value == 'usuario' && pass.value == '123') {
 		// Redirigir a la ruta principal después del inicio de sesi ón
 		router.push('/Solicitante');
 	}
-	else{
+	else {
 		alert('Erro con las credenciales');
 	}
 };
 </script>
 
+<style scoped>
+main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	/* Color de fondo */
+}
 
+form {
+	width: 100%;
+	max-width: 330px;
+	padding: 15px 30px 25px 30px;
 
+	margin: auto;
+	background-color: #fff;
+	/* Color de fondo del formulario */
+	border-radius: 10px;
+	/* Bordes redondeados */
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	/* Sutil sombra */
+}
 
+.form-floating {
+	margin-bottom: 15px;
+}
+
+.btn-primary {
+	background-color: #3498db;
+	/* Color principal para botones */
+	border-color: #3498db;
+	/* Borde del botón */
+}
+
+.btn-primary:hover {
+	background-color: #2980b9;
+	/* Color al pasar el mouse sobre el botón */
+	border-color: #2980b9;
+}
+
+.bi-person-circle {
+	font-size: 102px;
+	color: #2e92cc;
+	/* Color del icono de usuario */
+}
+</style>

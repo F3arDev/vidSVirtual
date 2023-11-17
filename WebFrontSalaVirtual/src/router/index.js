@@ -1,35 +1,47 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import AprobanteView from '../views/AprobanteView.vue'
-import SolicitanteView from '../views/SolicitanteView.vue'
+
+import AprobanteView from '@/views/AprobanteViews/AprobanteView.vue'
+import ApInicioView from '@/views/AprobanteViews/InicioView.vue'
+import ApSolicitudes from '@/views/AprobanteViews/SolicitudesView.vue'
+import ApRegistros from '@/views/AprobanteViews/RegistrosView.vue'
+
+
+// import SolicitanteView from '../views/SolicitanteView.vue'
+
 import LoginView from '../views/LoginView.vue'
+
+
 const router = createRouter({
   mode: 'history',
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    //Login
     {
       path: '/',
-      name: 'Login',
+      name: 'login',
       component: LoginView
     },
+    //Aprobante Views y sus hijos
     {
-      path: '/home',
-      name: 'home',
-      component: HomeView
-    },
-    {
-      path: '/Aprobante',
-      name: 'Aprobante',
+      path: '/aprobante',
+      name: 'aprobante',
       component: AprobanteView,
+      redirect: '/aprobante/inicio',
+      children: [
+        { path: 'inicio', name: 'inicio', component: ApInicioView },
+        { path: 'solicitudes', name: 'solicitudes', component: ApSolicitudes },
+        { path: 'registros', name: 'registros', component: ApRegistros }
+      ],
       meta: {
         requireAuth: true
       }
     },
-    {
-      path: '/Solicitante',
-      name: 'Solicitante',
-      component: SolicitanteView
-    }
+    //Solicitante Views y  sus hijos
+    // {
+    //   path: '/solicitante',
+    //   name: 'solicitante',
+    //   component: SolicitanteView
+    // }
   ]
 })
 
@@ -44,7 +56,7 @@ router.beforeEach((to, from, next) => {
   if (needAuth && !auth) {
     next('/')
   } else {
-    next()                                                 
+    next()
   }
 })
 
