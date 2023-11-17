@@ -2,78 +2,82 @@
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 		<h1 class="h2">solicitudes</h1>
 	</div>
-	<div class="table-responsive">
-		<table id="tblSolicitudes" class="table table-bordered table-striped">
-			<thead>
-				<tr>
-					<th>ver</th>
-					<th>Solicitante</th>
-					<th>Entidad</th>
-					<th>Ciudad</th>
-					<th>Expediente/Asunto</th>
-					<th>Acciones</th>
-				</tr>
-			</thead>
-		</table>
-		<!-- Modal -->
-		<div style="display: none;">
-			<form id="modalDetallSolicitud" action="submint">
-				<div class="my-2">
-					<div class="row justify-content-center align-items-center g-2">
-						<div class="col">
-							<div class="input-group input-group-sm mb-3">
-								<span class="input-group-text">Solicitante</span>
-								<input v-model="solicitante" type="text" class="form-control"
-									aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" disabled>
-							</div>
 
+
+	<div class="divCard">
+		<div class="table-responsive">
+			<table id="tblSolicitudes" class="table table-bordered table-striped">
+				<thead>
+					<tr>
+						<th>ver</th>
+						<th>Solicitante</th>
+						<th>Entidad</th>
+						<th>Ciudad</th>
+						<th>Expediente/Asunto</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+	<!-- Modal -->
+	<div style="display: none;">
+		<form id="modalDetallSolicitud" action="submint">
+			<div class="my-2">
+				<div class="row justify-content-center align-items-center g-2">
+					<div class="col">
+						<div class="input-group input-group-sm mb-3">
+							<span class="input-group-text">Solicitante</span>
+							<input v-model="solicitante" type="text" class="form-control" aria-label="Sizing example input"
+								aria-describedby="inputGroup-sizing-sm" disabled>
 						</div>
-						<div class="col">
-							<div class="input-group input-group-sm mb-3">
-								<span class="input-group-text">Entidad</span>
-								<input v-model="entidad" type="text" class="form-control" aria-label="Sizing example input"
-									aria-describedby="inputGroup-sizing-sm" disabled>
-							</div>
-						</div>
+
 					</div>
-
-					<div class="row justify-content-center align-items-center">
-						<div class="col">
-							<div class="input-group input-group-sm mb-3">
-								<span class="input-group-text">Expediente</span>
-								<input v-model="expediente" type="text" class="form-control"
-									aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" disabled>
-							</div>
-						</div>
-					</div>
-
-					<div v-show="isVisible" id="divMeet" class="row justify-content-center align-items-center">
-						<div class="col">
-							<label class="form-label">URL GOOGLE MEETS</label>
-							<div class="input-group mb-3">
-								<input v-model="linkMeet" type="text" class="form-control"
-									placeholder="https://meet.google.com/Example" aria-label="Recipient's username"
-									aria-describedby="button-addon2" disabled>
-								<button @click="btnCrearMeets()" class="btn btn-outline-secondary" type="button">Generar
-									Link</button>
-							</div>
-						</div>
-					</div>
-
-					<div class="row justify-content-center align-items-cente">
-						<div class="col">
-							<div>
-								<label class="form-label">Observacion</label>
-								<input v-model="Motivo" type="text" class="form-control"
-									placeholder="Ejm: Ingrese correctamente su nombre">
-							</div>
+					<div class="col">
+						<div class="input-group input-group-sm mb-3">
+							<span class="input-group-text">Entidad</span>
+							<input v-model="entidad" type="text" class="form-control" aria-label="Sizing example input"
+								aria-describedby="inputGroup-sizing-sm" disabled>
 						</div>
 					</div>
 				</div>
-			</form>
-		</div>
 
+				<div class="row justify-content-center align-items-center">
+					<div class="col">
+						<div class="input-group input-group-sm mb-3">
+							<span class="input-group-text">Expediente</span>
+							<input v-model="expediente" type="text" class="form-control" aria-label="Sizing example input"
+								aria-describedby="inputGroup-sizing-sm" disabled>
+						</div>
+					</div>
+				</div>
+
+				<div v-show="isVisible" id="divMeet" class="row justify-content-center align-items-center">
+					<div class="col">
+						<label class="form-label">URL GOOGLE MEETS</label>
+						<div class="input-group mb-3">
+							<input v-model="linkMeet" type="text" class="form-control"
+								placeholder="https://meet.google.com/Example" aria-label="Recipient's username"
+								aria-describedby="button-addon2" disabled>
+							<button @click="btnCrearMeets()" class="btn btn-outline-secondary" type="button">Generar
+								Link</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="row justify-content-center align-items-cente">
+					<div class="col">
+						<div>
+							<label class="form-label">Observacion</label>
+							<input v-model="Motivo" type="text" class="form-control"
+								placeholder="Ejm: Ingrese correctamente su nombre">
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
 	</div>
+
 	<!-- <TableSolicitudes @update="eventUpdate" /> -->
 </template>
 
@@ -132,6 +136,7 @@ onMounted(async () => {
 		columnDefs: [
 			{ "className": "dt-center", "targets": "_all" }
 		],
+		pageLength: 5,
 		responsive: true,
 		autoWidth: false,
 		dom: 'Bfrtip',

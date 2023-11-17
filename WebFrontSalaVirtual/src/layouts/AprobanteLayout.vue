@@ -1,19 +1,13 @@
 <template>
-	<header class="navbar sticky-top bg-primary flex-md-nowrap p-0 shadow">
-		<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white">
-			CSJ - DGTIC
-		</a>
-		<!-- 
-		<ul class="navbar-nav flex-row d-md-none">
-			<li class="nav-item text-nowrap">
-
-			</li>
-
-			<li class="nav-item text-nowrap">
-
-			</li>
-
-		</ul> -->
+	<header>
+		<nav class="sticky-top bg-primary d-flex flex-nowrap p-0 shadow">
+			<a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white">
+				CSJ - DGTIC
+			</a>
+			<a class="text-white col-md-3 col-lg-2 align-self-center mx-4 ">
+				CSJ - DGTIC - Aprobador
+			</a>
+		</nav>
 	</header>
 
 	<div class="container-fluid">
@@ -123,10 +117,9 @@ const isRouteActive = (route) => {
 	box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
 }
 
-.navbar .form-control {
+.navbar {
 	padding: .75rem 1rem;
 }
-
 
 .dropdown-toggle {
 	outline: 0;

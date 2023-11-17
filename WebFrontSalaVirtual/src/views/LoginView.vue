@@ -60,7 +60,6 @@ form {
 	width: 100%;
 	max-width: 330px;
 	padding: 15px 30px 25px 30px;
-
 	margin: auto;
 	background-color: #fff;
 	/* Color de fondo del formulario */

@@ -2,9 +2,11 @@
 	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 		<h1 class="h2">Registros</h1>
 	</div>
-	<div class="table-responsive">
-		<table id="tblSolicitudRegistros" class="table table-bordered table-striped">
-			<!-- <thead>
+
+	<div class="divCard">
+		<div class="table-responsive">
+			<table id="tblSolicitudRegistros" class="table table-bordered table-striped">
+				<!-- <thead>
 				<tr>
 					<th>#</th>
 					<th>ID</th>
@@ -35,8 +37,10 @@
 					<td>1</td>
 				</tr>
 			</tbody> -->
-		</table>
+			</table>
+		</div>
 	</div>
+
 
 
 	<!-- Modal -->
@@ -140,11 +144,11 @@ onMounted(async () => {
 		columnDefs: [
 			{ "className": "dt-center", "targets": "_all" }
 		],
+		pageLength: 5,
 		order: [[1, 'asc']],
 		responsive: true,
 		autoWidth: false,
 		dom: 'Bfrtip',
-
 		language: {
 			search: 'Buscar',
 			zeroRecords: 'No hay registros para mostrar',

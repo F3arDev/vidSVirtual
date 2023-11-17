@@ -28,9 +28,9 @@ const router = createRouter({
       component: AprobanteView,
       redirect: '/aprobante/inicio',
       children: [
-        { path: 'inicio', name: 'inicio', component: ApInicioView },
-        { path: 'solicitudes', name: 'solicitudes', component: ApSolicitudes },
-        { path: 'registros', name: 'registros', component: ApRegistros }
+        { path: 'inicio', name: 'ApInicio', component: ApInicioView },
+        { path: 'solicitudes', name: 'ApSolicitudes', component: ApSolicitudes },
+        { path: 'registros', name: 'ApRegistros', component: ApRegistros }
       ],
       meta: {
         requireAuth: true
