@@ -536,3 +536,4 @@ C:\Users\Developer\Documents\Vs Code\agenda-videoconferencia\WebApiSalaVirtual\W
 C:\Users\Developer\Documents\Vs Code\agenda-videoconferencia\WebApiSalaVirtual\WebApiSalaVirtual\obj\Debug\net6.0\WebApiSalaVirtual.pdb
 C:\Users\Developer\Documents\Vs Code\agenda-videoconferencia\WebApiSalaVirtual\WebApiSalaVirtual\obj\Debug\net6.0\WebApiSalaVirtual.genruntimeconfig.cache
 C:\Users\Developer\Documents\Vs Code\agenda-videoconferencia\WebApiSalaVirtual\WebApiSalaVirtual\obj\Debug\net6.0\ref\WebApiSalaVirtual.dll
+C:\Users\Developer\Documents\Vs Code\agenda-videoconferencia\WebApiSalaVirtual\WebApiSalaVirtual\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
