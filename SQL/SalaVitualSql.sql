@@ -172,9 +172,6 @@ from Entidad;
 DELETE FROM Solicitud;
 DBCC CHECKIDENT ('Solicitud', RESEED, 1);
 
-
-
-
 UPDATE Solicitud	
 SET 
     EstadoSolicitudID = 2
@@ -219,7 +216,7 @@ AS
 	SELECT
 		u.UsuarioID,
 		u.Nombre,
-		ur.descripcion AS Descripcion
+		ur.descripcion AS Rol
 	FROM
 		Usuario AS u
 		INNER JOIN UsuarioRol AS ur ON u.UsuarioID = ur.UsuarioRolID
@@ -227,7 +224,6 @@ GO
 
 
 
-select *
-from VwSolicitudDetalles;
+select * from VwSolicitudDetalles;
 select * from VwUsuarioDetalles;
 
