@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using WebApiSalaVirtual.Models;
+using WebApiSalaVirtual.Models.Auth;
 
 
 
@@ -17,8 +18,7 @@ namespace WebApiSalaVirtual.Controllers.v1
     {
         private readonly string secretKey;
         private readonly DbSalasVirtualesContext _context;
-
-
+        
         public AuthController(IConfiguration config, DbSalasVirtualesContext context)
         {
             secretKey = config.GetSection("settings").GetSection("secretKey").ToString();
@@ -27,7 +27,7 @@ namespace WebApiSalaVirtual.Controllers.v1
 
         [HttpPost]
         [Route("Validar")]
-        public IActionResult Validar([FromBody] AuthRuta request)
+        public IActionResult Validar([FromBody] AuthUser request)
         {
             try
             {
@@ -46,13 +46,15 @@ namespace WebApiSalaVirtual.Controllers.v1
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = claims,
-                    Expires = DateTime.UtcNow.AddMinutes(5),
+                    Expires = DateTime.UtcNow.AddMinutes(240),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature)
                 };
+
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var tokenConfig = tokenHandler.CreateToken(tokenDescriptor);
                 string tokencreado = tokenHandler.WriteToken(tokenConfig);
-                return StatusCode(StatusCodes.Status200OK, new { user, token = tokencreado });
+
+                return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok", response = new { user, token = tokencreado } });
             }
             catch (System.Exception)
             {

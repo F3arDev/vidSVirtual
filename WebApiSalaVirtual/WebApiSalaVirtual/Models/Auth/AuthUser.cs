@@ -1,4 +1,4 @@
-﻿namespace WebApiSalaVirtual.Models
+﻿namespace WebApiSalaVirtual.Models.Auth
 {
     public class AuthUser
     {

@@ -71,28 +71,22 @@ builder.Services.AddAuthentication(config =>
     // Establecer el esquema de autenticación predeterminado para la autenticación con JWT
     config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(config =>
-{
+})
+.AddJwtBearer(config => {
     // Configuración del proveedor de autenticación JWT Bearer
-
     // Deshabilitar la validación HTTPS para desarrollo (puede ser configurado de manera diferente en producción)
     config.RequireHttpsMetadata = false;
-
     // Indicar si se debe guardar el token en el contexto de la aplicación
     config.SaveToken = false;
-
     // Configurar los parámetros de validación del token
     config.TokenValidationParameters = new TokenValidationParameters
     {
         // Habilitar la validación de la clave de firma
         ValidateIssuerSigningKey = true,
-
         // Establecer la clave de firma utilizada para validar el token
         IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
-
         // Deshabilitar la validación del emisor (issuer) del token
         ValidateIssuer = false,
-
         // Deshabilitar la validación del destinatario (audience) del token
         ValidateAudience = false
     };
@@ -100,9 +94,6 @@ builder.Services.AddAuthentication(config =>
 
 
 var app = builder.Build();
-
-
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
