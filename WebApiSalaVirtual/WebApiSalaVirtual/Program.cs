@@ -55,25 +55,49 @@ builder.Services.AddControllers().AddJsonOptions(opt =>
     opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
 
+
+// Agregar la configuración de la aplicación desde el archivo appsettings.json
 builder.Configuration.AddJsonFile("appsettings.json");
+
+// Obtener la clave secreta para firmar y verificar los JWT desde la sección "settings" en appsettings.json
 var secretKey = builder.Configuration.GetSection("settings").GetSection("secretKey").ToString();
+
+// Convertir la clave secreta a bytes, ya que la SymmetricSecurityKey requiere un array de bytes
 var keyBytes = Encoding.UTF8.GetBytes(secretKey);
 
-builder.Services.AddAuthentication(config => {
-
+// Configurar la autenticación en el servicio de la aplicación
+builder.Services.AddAuthentication(config =>
+{
+    // Establecer el esquema de autenticación predeterminado para la autenticación con JWT
     config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(config => {
+}).AddJwtBearer(config =>
+{
+    // Configuración del proveedor de autenticación JWT Bearer
+
+    // Deshabilitar la validación HTTPS para desarrollo (puede ser configurado de manera diferente en producción)
     config.RequireHttpsMetadata = false;
+
+    // Indicar si se debe guardar el token en el contexto de la aplicación
     config.SaveToken = false;
+
+    // Configurar los parámetros de validación del token
     config.TokenValidationParameters = new TokenValidationParameters
     {
+        // Habilitar la validación de la clave de firma
         ValidateIssuerSigningKey = true,
+
+        // Establecer la clave de firma utilizada para validar el token
         IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
+
+        // Deshabilitar la validación del emisor (issuer) del token
         ValidateIssuer = false,
+
+        // Deshabilitar la validación del destinatario (audience) del token
         ValidateAudience = false
     };
 });
+
 
 var app = builder.Build();
 

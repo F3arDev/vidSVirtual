@@ -8,8 +8,13 @@ public partial class Usuario
     public string? Nombre { get; set; } = null!;
     public int? UsuarioRolId { get; set; }
 
-    //[JsonIgnore]
-    //public virtual UsuarioRol? oRolUsuario { get; set; } = null!;
+    public static implicit operator Usuario(string v)
+    {
+        throw new NotImplementedException();
+    }
+
+    // [JsonIgnore]
+    // public virtual UsuarioRol? oRolUsuario { get; set; } = null!;
 
     // public virtual ICollection<SolicitudHistorial>? SolicitudHistorials { get; set; } = new List<SolicitudHistorial>();
     //[JsonIgnore]
