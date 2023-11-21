@@ -1,0 +1,10 @@
+{
+  "id": "1",
+  "nombre": "Fredd",
+  "contraseña": "123",
+  "roles": ["admin", "empleado"],
+  "permisos": {
+    "admin": ["/admin/dashboard", "/admin/usuarios"],
+    "empleado": ["/empleado/dashboard", "/empleado/tareas"]
+  }
+}

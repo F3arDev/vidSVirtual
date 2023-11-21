@@ -1,0 +1,6 @@
+{
+  "permisos": {
+    "admin": ["/admin/dashboard", "/admin/usuarios"],
+    "empleado": ["/empleado/dashboard", "/empleado/tareas"]
+  }
+}

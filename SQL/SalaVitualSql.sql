@@ -31,6 +31,17 @@ CREATE TABLE Usuario
 	CONSTRAINT FK_USUARIOROLID FOREIGN KEY (UsuarioRolID) REFERENCES UsuarioRol(UsuarioRolID)
 );
 
+CREATE TABLE RolesRutas
+(
+	RutaID int PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	UsuarioRolID int,
+	NombreRuta varchar(255),
+	-- Ajusta el tamaño según tus necesidades
+
+	-- Agrega la clave foránea para la relación con UsuarioRol
+	FOREIGN KEY (UsuarioRolID) REFERENCES UsuarioRol(UsuarioRolID)
+);
+
 --Simular VwDepMunicipio PJN
 CREATE TABLE Entidad
 (
@@ -154,13 +165,22 @@ VALUES
 	(1, '2023-09-20', '2023-09-21', '2023-09-22', '08:00:00', '17:00:00', 1, 'Exp001', 'Reunion', 'Reunion de trabajo'),
 	(2, '2023-09-21', '2023-09-23', '2023-09-24', '09:00:00', '18:00:00', 1, 'Exp002', 'Conferencia', 'Conferencia anual');
 
+INSERT INTO RolesRutas
+	(UsuarioRolID, NombreRuta)
+VALUES
+	(1, '/aprobante'),
+	(1, '/aprobante/inicio'),
+	(1, '/admin/dashboard')
+	GO
+
+
 
 select *
 from EstadoSolicitud;
 select *
 from EstadoRegistro;
 select *
-from Solicitud;
+from Usuario;
 select *
 from SolicitudHistorial;
 select *
@@ -216,6 +236,7 @@ AS
 	SELECT
 		u.UsuarioID,
 		u.Nombre,
+		ur.UsuarioRolID AS RolId,
 		ur.descripcion AS Rol
 	FROM
 		Usuario AS u
@@ -223,7 +244,16 @@ AS
 GO
 
 
+CREATE TABLE GuardRutas
+(
+	RutaID int PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	Nombre VARCHAR(50),
+	_URL VARCHAR(255)
+)
 
-select * from VwSolicitudDetalles;
-select * from VwUsuarioDetalles;
+
+select *
+from VwSolicitudDetalles;
+select *
+from VwUsuarioDetalles;
 
