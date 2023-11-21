@@ -1,7 +1,7 @@
 <template>
 	<main class="form-signin w-100 m-auto">
 		<div class="container-fluid">
-			<form>
+			<div class="form">
 				<div class="text-center">
 					<i class="bi bi-person-circle mb-4"></i>
 					<h1 class="h3 mb-3 fw-normal">INICIAR SESION</h1>
@@ -15,34 +15,22 @@
 					<input v-model="pass" type="password" class="form-control" id="inputPass" placeholder="Contraseña">
 					<label for="floatingPassword">Contraseña</label>
 				</div>
-				<button @click="login()" class="btn btn-primary w-100 py-2" type="submit">Ingresar</button>
-			</form>
+				<button class="btn btn-primary w-100 py-2" @click="onSubmit">Ingresar</button>
+			</div>
 		</div>
 	</main>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-
+import { useAuthStore } from '@/stores';
 let usuario = ref('');
 let pass = ref('');
-
-const router = useRouter();
-
-const login = () => {
-	// Simulación del inicio de sesión, verifica las credenciales aquí
-	if (usuario.value == 'admin' && pass.value == '123') {
-		// Redirigir a la ruta principal después del inicio de sesi ón
-		router.push('/Aprobante');
-	}
-	else if (usuario.value == 'usuario' && pass.value == '123') {
-		// Redirigir a la ruta principal después del inicio de sesi ón
-		router.push('/Solicitante');
-	}
-	else {
-		alert('Erro con las credenciales');
-	}
+const onSubmit = async () => {
+	const authStore = useAuthStore();
+	await authStore.login(usuario.value, pass.value);
+	debugger
+	console.log('first');
 };
 </script>
 
@@ -56,7 +44,7 @@ main {
 	/* Color de fondo */
 }
 
-form {
+.form {
 	width: 100%;
 	max-width: 330px;
 	padding: 15px 30px 25px 30px;

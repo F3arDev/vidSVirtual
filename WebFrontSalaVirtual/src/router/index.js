@@ -1,5 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import { useAuthStore } from '@/stores';
+
+
+
 import AprobanteView from '@/views/AprobanteViews/AprobanteView.vue'
 import ApInicioView from '@/views/AprobanteViews/InicioView.vue'
 import ApSolicitudes from '@/views/AprobanteViews/SolicitudesView.vue'
@@ -50,14 +54,16 @@ const router = createRouter({
 //to: hacia donde quiere el usuario
 //from: de donde viene el usuario
 //Next: Hacia donde va el usuario
-router.beforeEach((to, from, next) => {
-  const auth = true //obtiene jwt Auth del backend
-  const needAuth = to.meta.requireAuth
-  if (needAuth && !auth) {
-    next('/')
-  } else {
-    next()
+router.beforeEach(async (to) => {
+  // clear alert on route change
+  // redirect to login page if not logged in and trying to access a restricted page
+  const publicPages = ['/'];
+  const authRequired = !publicPages.includes(to.path);
+  const authStore = useAuthStore();
+  if (authRequired && !authStore.user) {
+    authStore.returnUrl = to.fullPath;
+    return '/';
   }
-})
+});
 
 export default router
