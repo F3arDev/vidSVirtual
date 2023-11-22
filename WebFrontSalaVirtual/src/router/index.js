@@ -2,68 +2,51 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import { useAuthStore } from '@/stores';
 
-
-
-import AprobanteView from '@/views/AprobanteViews/AprobanteView.vue'
-import ApInicioView from '@/views/AprobanteViews/InicioView.vue'
-import ApSolicitudes from '@/views/AprobanteViews/SolicitudesView.vue'
-import ApRegistros from '@/views/AprobanteViews/RegistrosView.vue'
-
-
-// import SolicitanteView from '../views/SolicitanteView.vue'
-
+import aprobanteRouter from './aprobante.router'
 import LoginView from '../views/LoginView.vue'
 
 
 const router = createRouter({
-  mode: 'history',
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    //Login
-    {
-      path: '/',
-      name: 'login',
-      component: LoginView
-    },
-    //Aprobante Views y sus hijos
-    {
-      path: '/aprobante',
-      name: 'aprobante',
-      component: AprobanteView,
-      redirect: '/aprobante/inicio',
-      children: [
-        { path: 'inicio', name: 'ApInicio', component: ApInicioView },
-        { path: 'solicitudes', name: 'ApSolicitudes', component: ApSolicitudes },
-        { path: 'registros', name: 'ApRegistros', component: ApRegistros }
-      ],
-      meta: {
-        requireAuth: true
-      }
-    },
-    //Solicitante Views y  sus hijos
-    // {
-    //   path: '/solicitante',
-    //   name: 'solicitante',
-    //   component: SolicitanteView
-    // }
-  ]
+    mode: 'history',
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes: [
+        //Login
+        { ...aprobanteRouter },
+        {
+            path: '/',
+            name: 'login',
+            component: LoginView
+        },
+    ]
 })
 
 //Antes de acceder a las rutas, Que ejecute lo que queremos y si no se ejecuta no permite entrar
-
 //to: hacia donde quiere el usuario
 //from: de donde viene el usuario
 //Next: Hacia donde va el usuario
-router.beforeEach(async (to) => {
-  // clear alert on route change
-  // redirect to login page if not logged in and trying to access a restricted page
-  const publicPages = ['/'];
-  const authRequired = !publicPages.includes(to.path);
-  const authStore = useAuthStore();
-  if (authRequired && !authStore.user) {
-    authStore.returnUrl = to.fullPath;
-    return '/';
-  }
+router.beforeEach(async (to, from, next) => {
+    const authStore = useAuthStore();
+    let auth = authStore.auth;  // Simulando que el usuario está autenticado
+    // eslint-disable-next-line no-debugger
+    debugger
+    if (to.name !== 'login') {
+        if (!auth) {
+            next({ name: 'login' });
+        } else {
+            let userRole = authStore.rol;
+            // Realizar la validacion contra el backend antes de permitir el acceso
+            let authbacken = await authStore.AuthRuta();
+            if (!authbacken) {
+                // Si no tiene permiso segun el backend, redirigir al "home" del rol actual
+                let homeRoute = `/${userRole}`;
+                next(homeRoute);
+            } else {
+                next();
+            }
+        }
+    } else {
+        next();
+    }
 });
 
 export default router

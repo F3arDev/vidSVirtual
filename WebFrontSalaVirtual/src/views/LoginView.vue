@@ -6,7 +6,6 @@
 					<i class="bi bi-person-circle mb-4"></i>
 					<h1 class="h3 mb-3 fw-normal">INICIAR SESION</h1>
 				</div>
-
 				<div class="form-floating">
 					<input v-model="usuario" type="text" class="form-control" id="inputUser" placeholder="Usuario">
 					<label for="floatingInput">Usuario</label>
@@ -29,8 +28,6 @@ let pass = ref('');
 const onSubmit = async () => {
 	const authStore = useAuthStore();
 	await authStore.login(usuario.value, pass.value);
-	debugger
-	console.log('first');
 };
 </script>
 
