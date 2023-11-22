@@ -73,15 +73,19 @@ JOIN Permisos P ON RP.permiso_id = P.id;
 
 CREATE VIEW VistaRolesPermisos AS
 SELECT
-    RP.rol_id,
+    UR.usuario_id,
+    U.nombre AS nombre_usuario,
     R.nombre AS nombre_rol,
     RP.permiso_id,
     P.nombre AS nombre_permiso,
     P.ruta
-FROM RolesPermisos RP
+FROM UsuariosRoles UR
+JOIN RolesPermisos RP ON UR.rol_id = RP.rol_id
 JOIN Roles R ON RP.rol_id = R.id
-JOIN Permisos P ON RP.permiso_id = P.id;
+JOIN Permisos P ON RP.permiso_id = P.id
+JOIN Usuarios U ON UR.usuario_id = U.id;
 
 
+select * from RolesPermisos
 select * from VistaRolesPermisos
 select * from VistaRolesUsuarios
