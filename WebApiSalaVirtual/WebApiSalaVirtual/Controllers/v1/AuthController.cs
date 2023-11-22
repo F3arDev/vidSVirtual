@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using WebApiSalaVirtual.Models;
 using WebApiSalaVirtual.Models.Auth;
+using WebApiSalaVirtual.Models.Auth.VwAuth;
 
 
 
@@ -18,7 +19,6 @@ namespace WebApiSalaVirtual.Controllers.v1
     {
         private readonly string secretKey;
         private readonly DbSalasVirtualesContext _context;
-        
         public AuthController(IConfiguration config, DbSalasVirtualesContext context)
         {
             secretKey = config.GetSection("settings").GetSection("secretKey").ToString();
@@ -38,8 +38,6 @@ namespace WebApiSalaVirtual.Controllers.v1
                 {
                     return StatusCode(StatusCodes.Status401Unauthorized, new { Auth = "Usuario sin Autorizacion" });
                 }
-
-
                 var keyBytes = Encoding.ASCII.GetBytes(secretKey);
                 var claims = new ClaimsIdentity();
                 claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, request.Nombre));
@@ -66,28 +64,17 @@ namespace WebApiSalaVirtual.Controllers.v1
 
         [HttpPost]
         [Route("ValidarRuta")]
-        public IActionResult ValidarRuta([FromBody] AuthUser request)
+        public IActionResult ValidarRuta([FromBody] AuthRuta request)
         {
-            var user = null as VwUsuarioDetalles;
-            try
+            var user = null as VwRolesRutas;
+            user = _context.VwRolesRutas.FirstOrDefault(obj => obj.Rol == request.Rol && obj.NombreRuta == request.Ruta);
+
+            if (user == null)
             {
-                user = _context.VwUsuarioDetalles.FirstOrDefault(obj => obj.Nombre == request.Nombre && obj.Rol == request.Rol);
-                if (user == null)
-                {
-                    // El usuario no fue encontrado, asignar un valor indicativo
-                    user = "Usuario no encontrado";
-                    return StatusCode(StatusCodes.Status401Unauthorized, new { user });
-                }
-                else
-                {
-                }
-                return StatusCode(StatusCodes.Status401Unauthorized, new { token = "", user });
-            }
-            catch (System.Exception)
-            {
-                throw;
+                return StatusCode(StatusCodes.Status401Unauthorized, new { mensaje = "Usuario sin Autorizacion de la Ruta", response = new { auth = false } });
             }
 
+            return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok", response = new { auth = true } });
         }
 
     }

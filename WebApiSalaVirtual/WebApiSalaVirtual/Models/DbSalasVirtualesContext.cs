@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebApiSalaVirtual.Models.Auth.VwAuth;
 namespace WebApiSalaVirtual.Models;
 
 public partial class DbSalasVirtualesContext : DbContext
@@ -30,6 +31,7 @@ public partial class DbSalasVirtualesContext : DbContext
 
     public virtual DbSet<VwSolicitudDetalles> VwSolicitudDetalles { get; set; }
     public virtual DbSet<VwUsuarioDetalles> VwUsuarioDetalles { get; set; }
+    public virtual DbSet<VwRolesRutas> VwRolesRutas { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Entidad>(entity =>
@@ -228,6 +230,11 @@ public partial class DbSalasVirtualesContext : DbContext
         });
 
         modelBuilder.Entity<VwUsuarioDetalles>(entity =>
+        {
+            entity.HasNoKey(); // Indica que esta entidad no tiene una clave primaria
+        });
+
+        modelBuilder.Entity<VwRolesRutas>(entity =>
         {
             entity.HasNoKey(); // Indica que esta entidad no tiene una clave primaria
         });
