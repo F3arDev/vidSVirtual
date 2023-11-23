@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -14,6 +15,7 @@ using WebApiSalaVirtual.Models.Auth.VwAuth;
 namespace WebApiSalaVirtual.Controllers.v1
 {
     [Route("api/[controller]")]
+    [EnableCors("ReglasCors")]
     [ApiController]
     public class AuthController : ControllerBase
     {
