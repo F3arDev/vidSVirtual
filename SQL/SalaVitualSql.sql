@@ -196,10 +196,13 @@ VALUES
 INSERT INTO
 	RolesRutas (UsuarioRolID, NombreRuta)
 VALUES
-	(1, '/aprobante'),
-	(1, '/aprobante/inicio'),
-	(1, '/aprobante/solicitudes'),
-	(1, '/aprobante/registros') GO
+	(2, '/solicitante'),
+	(2, '/solicitante/inicio'),
+	(2, '/solicitante/solicitar'),
+	(2, '/solicitante/registros') 
+	GO
+
+
 SELECT
 	*
 FROM
