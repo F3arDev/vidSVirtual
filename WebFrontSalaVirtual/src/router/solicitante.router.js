@@ -1,15 +1,16 @@
-// import { Layout, Inicio, Registros, Solicitudes } from '../views/Aprobante';
+import { Layout, Inicio, Registros, Solicitar } from '../views/Solicitante';
 
-// export default {
-// 	path: '/aprobante',
-// 	component: Layout,
-// 	redirect: '/aprobante/inicio',
-// 	children: [
-// 		{ path: 'inicio', name: 'ApInicio', component: Inicio },
-// 		{ path: 'solicitudes', name: 'ApSolicitudes', component: Solicitudes },
-// 		{ path: 'registros', name: 'ApRegistros', component: Registros }
-// 	],
-// 	meta: {
-// 		requireAuth: true
-// 	}
-// };
+export default {
+	path: '/solicitante',
+	component: Layout,
+	name: 'solicitante',
+	redirect: '/solicitante/inicio',
+	children: [
+		{ path: 'inicio', name: 'so Inicio', component: Inicio },
+		{ path: 'solicitar', name: 'so solicitar', component: Solicitar },
+		{ path: 'registros', name: 'so Registros', component: Registros }
+	],
+	meta: {
+		requireAuth: true
+	}
+};

@@ -3,6 +3,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores';
 
 import aprobanteRouter from './aprobante.router'
+import solicitanteRouter from './solicitante.router'
+
 import LoginView from '../views/LoginView.vue'
 
 
@@ -12,6 +14,7 @@ const router = createRouter({
     routes: [
         //Login
         { ...aprobanteRouter },
+        { ...solicitanteRouter },
         {
             path: '/',
             name: 'login',
@@ -26,16 +29,17 @@ const router = createRouter({
 //Next: Hacia donde va el usuario
 router.beforeEach(async (to, from, next) => {
     const authStore = useAuthStore();
-    let auth = authStore.auth;  // Simulando que el usuario está autenticado
+    let auth = authStore.user;  // Simulando que el usuario está autenticado
     // eslint-disable-next-line no-debugger
     debugger
     if (to.name !== 'login') {
         if (!auth) {
             next({ name: 'login' });
         } else {
-            let userRole = authStore.rol;
+            let userRole = authStore.user.rol;
             // Realizar la validacion contra el backend antes de permitir el acceso
-            let authbacken = await authStore.AuthRuta();
+            debugger
+            let authbacken = await authStore.AuthRuta(userRole, to.path);
             if (!authbacken) {
                 // Si no tiene permiso segun el backend, redirigir al "home" del rol actual
                 let homeRoute = `/${userRole}`;

@@ -10,10 +10,7 @@ export const useAuthStore = defineStore({
 	state: () => ({
 		// initialize state from local storage to enable user to stay logged in
 		// JSON.parse(localStorage.getItem('usuario'))
-		usuario: '',
-		jwt: '',
-		rol: '',
-		auth: false
+		user: JSON.parse(localStorage.getItem('user')),
 	}),
 	actions: {
 		async login(username, password) {
@@ -38,39 +35,36 @@ export const useAuthStore = defineStore({
 					return false;
 				}
 				this.user = await json.response.user;
-				this.jwt = await json.token;
-				this.rol = this.user.rol
-				this.auth = true
+				localStorage.setItem('user', JSON.stringify(this.user));
 				// localStorage.setItem('usuario', JSON.stringify(json.response));
-				router.push({ name: this.rol });
+				router.push({ name: this.user.rol });
 			} catch (error) {
 				console.log(error)
 			}
 		},
-		async AuthRuta() {
-			// try {
-			// 	// let respuesta = await fetch('http://localhost:5172/api/Auth/Validar', {
-			// 	// 	method: 'POST',
-			// 	// 	headers: {
-			// 	// 		'Content-Type': 'application/json'
-			// 	// 	},
-			// 	// 	body: JSON.stringify(
-			// 	// 		{
-			// 	// 			"rol": rol,
-			// 	// 			"ruta": ruta
-			// 	// 		}
-			// 	// 	)
-			// 	// })
-			// 	// let json = await respuesta.json();
-			// 	// if (json.mensaje !== 'ok') {
-			// 	// 	router.push({ name: 'login' });
-			// 	// 	return false;
-			// 	// }
+		async AuthRuta(rol, ruta) {
+			try {
+				let respuesta = await fetch('http://localhost:5172/api/Auth/ValidarRuta', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(
+						{
+							"rol": rol,
+							"ruta": ruta
+						}
+					)
+				})
+				let json = await respuesta.json();
+				if (json.mensaje !== 'ok') {
+					return false;
+				}
 
-			// } catch (error) {
-			// 	console.log(error)
-			// }
-			return true
+				return json.response.auth
+			} catch (error) {
+				console.log(error)
+			}
 		},
 		logout() {
 			this.user = null;
@@ -78,4 +72,6 @@ export const useAuthStore = defineStore({
 			// router.push('/');
 		}
 	}
+
+
 });

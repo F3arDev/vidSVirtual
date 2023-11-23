@@ -1,4 +1,4 @@
-<template>
+<!-- <templat 
 	<main>
 		<div class="container">
 			<div class="row">
@@ -48,12 +48,22 @@
 				</div>
 			</div>
 		</div>
-	</main>
+	</main> -->
+
+<!-- 
+</template> --> 
+
+<template>
+	<SolicitanteLayout>
+		<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+			<Router-View></Router-View>
+		</main>
+	</SolicitanteLayout>
 </template>
 
-<script setup>
-import TableSolicitanteRegistros from '@/components/VwSolicitante/dataTables/TableSolicitanteRegistros.vue';
-import solicitarSalaVirtual from '@/components/VwSolicitante/solicitarSalaVirtual.vue';
-</script>
 
+<script setup>
+import { SolicitanteLayout } from '@/layouts';
+
+</script>
 <style scoped></style>

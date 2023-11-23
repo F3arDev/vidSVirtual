@@ -5,7 +5,7 @@
 				CSJ - DGTIC
 			</a>
 			<a class="text-white col-md-3 col-lg-2 align-self-center mx-4 ">
-				CSJ - DGTIC - Aprobador
+				CSJ - DGTIC - Solicitante
 			</a>
 		</nav>
 	</header>
@@ -19,7 +19,7 @@
 							<a class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
 								data-bs-toggle="dropdown" aria-expanded="false">
 								<img src="../assets/imgIcon.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
-								<strong>Aprobador</strong>
+								<strong>Solicitante</strong>
 							</a>
 							<ul class="dropdown-menu text-small shadow">
 								<li><a class="dropdown-item">Config</a></li>
@@ -33,23 +33,22 @@
 						<hr>
 						<ul class="nav nav-pills flex-column mb-auto" id="pills-tab" role="tablist">
 							<li class="nav-item" role="presentation">
-
-								<router-link to="/aprobante/inicio" class="nav-link"
-									:class="{ 'active': isRouteActive('/aprobante/inicio') }" exact>
+								<router-link :to="{ name: 'so Inicio' }" class="nav-link"
+									:class="{ 'active': isRouteActive('so Inicio') }" exact>
 									<i class="bi bi-house mx-1"></i>
 									Inicio
 								</router-link>
 							</li>
 							<li class="nav-item" role="presentation">
-								<router-link to="/aprobante/solicitudes" class="nav-link"
-									:class="{ 'active': isRouteActive('/aprobante/solicitudes') }">
+								<router-link :to="{ name: 'so solicitar' }" class="nav-link"
+									:class="{ 'active': isRouteActive('so solicitar') }">
 									<i class="bi bi-file-earmark-text mx-1"></i>
-									Solicitudes
+									Solicitar
 								</router-link>
 							</li>
 							<li class="nav-item" role="presentation">
-								<router-link to="/aprobante/registros" class="nav-link"
-									:class="{ 'active': isRouteActive('/aprobante/registros') }">
+								<router-link :to="{ name: 'so Registros' }" class="nav-link"
+									:class="{ 'active': isRouteActive('so Registros') }">
 									<i class="bi bi-file-earmark-text mx-1"></i>
 									Registros
 								</router-link>
@@ -67,10 +66,11 @@
 
 <script setup>
 import { useRoute } from 'vue-router';
-//simple funcion que ocupa para verificar y pintar un estilo dependido donde se encuentre
-const isRouteActive = (route) => {
+
+// Modifica la función para comparar el nombre de la ruta
+const isRouteActive = (routeName) => {
 	const currentRoute = useRoute();
-	return currentRoute.path == route;
+	return currentRoute.name === routeName;
 };
 </script>
 
