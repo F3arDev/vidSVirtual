@@ -124,10 +124,14 @@
 <script setup>
 import { ref } from 'vue';
 import solicitudServices from '@/services/solicitudServices'
-import alertify  from 'alertifyjs';
+import alertify from 'alertifyjs';
 const service = new solicitudServices();
 
-let Usuario = ref('')
+
+import { useAuthStore } from '@/stores';
+let userStore = new useAuthStore()
+
+let Usuario = ref(userStore.user.UsuarioID)
 let FechaInicio = ref('')
 let FechaFin = ref('')
 let HoraInicio = ref('')
@@ -150,14 +154,12 @@ const getDataSolicitud = async () => {
 		"expediente": Expediente.value,
 		"actividad": Actividad.value
 	}
+
 	let result = await service.sendSolicitudPEN(jsonSendSolicitud)
 
-
-	
-
 	if (result == true) {
-		alertify.success('Success notification message.'); 
-	}else{
+		alertify.success('Success notification message.');
+	} else {
 		alert(service.getError())
 	}
 }

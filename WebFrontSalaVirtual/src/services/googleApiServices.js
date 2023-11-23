@@ -17,7 +17,7 @@ class gApiServices {
 		return this.token = access_token
 	}
 
-	async createEventMeet(name) {
+	async createEventMeet(hFin, dFin, hInicio, dInicio, titulo) {
 		if (TokenValide) {
 			ac.alertifyWaitingOpen();
 			try {
@@ -25,11 +25,11 @@ class gApiServices {
 				// Reemplaza con tu token de acceso obtenido durante la autenticación
 				const event = {
 					"end": {
-						"dateTime": '2023-11-01T16:00:00',
+						"dateTime": dFin + 'T' + hFin,
 						"timeZone": "America/Managua"
 					},
 					"start": {
-						"dateTime": '2023-11-01T14:00:00',
+						"dateTime": dInicio + 'T' + hInicio,
 						"timeZone": "America/Managua"
 					},
 					"conferenceData": {
@@ -40,7 +40,7 @@ class gApiServices {
 							"requestId": "random-unique-string"
 						}
 					},
-					"summary": name
+					"summary": titulo
 				};
 				const response = await fetch('https://www.googleapis.com/calendar/v3/calendars/primary/events?conferenceDataVersion=1', {
 					method: 'POST',

@@ -15,21 +15,7 @@
 			<div class="sidebar-fluid border border-right col-md-3 col-lg-2  bg-body-tertiary">
 				<div tabindex="-1" id="sidebarMenu">
 					<div class="d-flex flex-column p-0 pt-lg-3 ">
-						<div class="dropdown">
-							<a class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
-								data-bs-toggle="dropdown" aria-expanded="false">
-								<img src="../assets/imgIcon.jpg" alt="" width="32" height="32" class="rounded-circle me-2">
-								<strong>Aprobador</strong>
-							</a>
-							<ul class="dropdown-menu text-small shadow">
-								<li><a class="dropdown-item">Config</a></li>
-								<li><a class="dropdown-item">Perfil</a></li>
-								<li>
-									<hr class="dropdown-divider">
-								</li>
-								<li><a class="dropdown-item">Sign out</a></li>
-							</ul>
-						</div>
+						<DropDownAccount />
 						<hr>
 						<ul class="nav nav-pills flex-column mb-auto" id="pills-tab" role="tablist">
 							<li class="nav-item" role="presentation">
@@ -67,6 +53,8 @@
 
 <script setup>
 import { useRoute } from 'vue-router';
+import { DropDownAccount } from '@/components/common';
+
 //simple funcion que ocupa para verificar y pintar un estilo dependido donde se encuentre
 const isRouteActive = (route) => {
 	const currentRoute = useRoute();

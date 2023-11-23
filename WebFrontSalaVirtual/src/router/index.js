@@ -38,7 +38,6 @@ router.beforeEach(async (to, from, next) => {
         } else {
             let userRole = authStore.user.rol;
             // Realizar la validacion contra el backend antes de permitir el acceso
-            debugger
             let authbacken = await authStore.AuthRuta(userRole, to.path);
             if (!authbacken) {
                 // Si no tiene permiso segun el backend, redirigir al "home" del rol actual

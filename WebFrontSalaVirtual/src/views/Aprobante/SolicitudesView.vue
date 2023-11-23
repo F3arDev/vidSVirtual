@@ -107,7 +107,7 @@ let entidad = ref('');
 let expediente = ref('');
 let Motivo = ref('');
 let isVisible = ref();
-
+let dataforMeet = ref();
 onMounted(async () => {
 	await service.fetchAllSolicitudPEN();
 	solicidudesPEN = await service.getSolicitudPEN();
@@ -152,7 +152,7 @@ onMounted(async () => {
 	$('#tblSolicitudes').on('click', '.btnAprobar', function () {
 		let data = tblsoliPEN.row($(this).closest('tr')).data();
 		isVisible.value = ref(true);
-
+		dataforMeet.value = data;
 		ac.alertifyWaitingOpen();
 		setTimeout(() => {
 			// Lógica para aprobar el elemento, por ejemplo:
@@ -343,8 +343,20 @@ const btnCrearMeets = async () => {
 	if (linkMeet.value == '' || linkMeet.value == 'Inicie Sesion con Google') {
 		try {
 			linkMeet.value = 'Creando Link de Google Meet...'
-			let result = await gapi.createEventMeet();
+
+
+			let result = await gapi.createEventMeet(
+				dataforMeet.value.horaFin,
+				dataforMeet.value.fechaFin,
+				dataforMeet.value.horaInicio,
+				dataforMeet.value.fechaInicio,
+				dataforMeet.value.expediente
+
+			);
 			linkMeet.value = await result.meetLink
+
+
+
 			alertify.success('Link de Meet Creado Correctamente')
 		} catch (error) {
 			linkMeet.value = 'Inicie Sesion con Google'
