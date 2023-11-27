@@ -36,7 +36,7 @@
 														Usuario
 													</span>
 													<input v-model="Usuario" type="text" class="form-control"
-														aria-label="Sizing example input"
+														aria-label="Sizing example input" disabled
 														aria-describedby="inputGroup-sizing-default">
 												</div>
 												<!-- Input Fechas -->
@@ -111,9 +111,7 @@
 									</div>
 								</div>
 							</div>
-
 						</div>
-
 					</div>
 				</div>
 			</div>
@@ -122,29 +120,30 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import solicitudServices from '@/services/solicitudServices'
 import alertify from 'alertifyjs';
 const service = new solicitudServices();
 
 
 import { useAuthStore } from '@/stores';
-let userStore = new useAuthStore()
 
-let Usuario = ref(userStore.user.UsuarioID)
+
+let Usuario = ref('');
 let FechaInicio = ref('')
 let FechaFin = ref('')
 let HoraInicio = ref('')
 let HoraFin = ref('')
-let VwDepMunicipioId = ref('')
+// let VwDepMunicipioId = ref('')
 let Expediente = ref('')
 let Actividad = ref('')
 
 
 const getDataSolicitud = async () => {
+	let userStore = new useAuthStore()
 	let jsonSendSolicitud =
 	{
-		"solicitanteId": Usuario.value,
+		"solicitanteId": userStore.user.usuarioID,
 		"fechaRegistro": FechaInicio.value,
 		"fechaInicio": FechaInicio.value,
 		"fechaFin": FechaFin.value,
@@ -164,7 +163,11 @@ const getDataSolicitud = async () => {
 	}
 }
 
+onMounted(() => {
+	let userStore = new useAuthStore()
 
+	Usuario.value = userStore.user.nombre
+}) 
 </script>
 
 <style scoped></style>
