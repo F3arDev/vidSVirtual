@@ -26,8 +26,12 @@ import $ from 'jquery';
 
 import solicitudServices from '@/services/solicitudServices'
 const service = new solicitudServices();
+
+import { useAuthStore } from '@/stores';
+const userStore = new useAuthStore();
+
 let table;
-let Usuario = 1;
+let Usuario = userStore.user.usuarioID;
 onMounted(async () => {
 	await service.fetchAllSolicitudRegUSUARIO(Usuario);
 	const solicidudes = await service.getSolicitudRegUSUARIO();
