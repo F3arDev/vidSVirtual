@@ -38,6 +38,7 @@ export const useAuthStore = defineStore({
 				localStorage.setItem('user', JSON.stringify(this.user));
 				// localStorage.setItem('usuario', JSON.stringify(json.response));
 				router.push({ name: this.user.rol });
+				return true;
 			} catch (error) {
 				console.log(error)
 			}
