@@ -1,21 +1,28 @@
 <template>
 	<main class="form-signin w-100 m-auto">
 		<div class="container-fluid">
-			<div class="form">
+			<form class="form" @submit.prevent="onSubmit">
 				<div class="text-center">
 					<i class="bi bi-person-circle mb-4"></i>
 					<h1 class="h3 mb-3 fw-normal">INICIAR SESION</h1>
 				</div>
+				<div v-if="loginError" class="alert alert-danger" role="alert">
+					Usuario y contraseña son inválidos.
+				</div>
 				<div class="form-floating">
-					<input v-model="usuario" type="text" class="form-control" id="inputUser" placeholder="Usuario">
+					<input v-model="usuario" type="text" class="form-control" placeholder="Usuario"
+						:class="{ 'is-invalid': errors.usuario }">
 					<label for="floatingInput">Usuario</label>
+					<div class="invalid-feedback">{{ errors.usuario }}</div>
 				</div>
 				<div class="form-floating">
-					<input v-model="pass" type="password" class="form-control" id="inputPass" placeholder="Contraseña">
+					<input v-model="pass" type="password" class="form-control" placeholder="Contraseña"
+						:class="{ 'is-invalid': errors.pass }">
 					<label for="floatingPassword">Contraseña</label>
+					<div class="invalid-feedback">{{ errors.pass }}</div>
 				</div>
-				<button class="btn btn-primary w-100 py-2" @click="onSubmit">Ingresar</button>
-			</div>
+				<button class="btn btn-primary w-100 py-2" type="submit">Ingresar</button>
+			</form>
 		</div>
 	</main>
 </template>
@@ -23,12 +30,35 @@
 <script setup>
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores';
-let usuario = ref('');
-let pass = ref('');
+
+const usuario = ref('');
+const pass = ref('');
+const errors = ref({});
+const loginError = ref(false);
+
 const onSubmit = async () => {
-	const authStore = useAuthStore();
-	await authStore.login(usuario.value, pass.value);
+	valForm();
+	if (Object.keys(errors.value).length == 0) {
+		const authStore = useAuthStore();
+		const response = await authStore.login(usuario.value, pass.value);
+		if (!response) {
+			loginError.value = true;
+			return;
+		}
+	}
 };
+
+const valForm = () => {
+	errors.value = {};
+	loginError.value = false;
+	if (!usuario.value) {
+		errors.value.usuario = 'El campo Usuario es obligatorio.';
+	}
+	if (!pass.value) {
+		errors.value.pass = 'El campo Contraseña es obligatorio.';
+	}
+}
+
 </script>
 
 <style scoped>
