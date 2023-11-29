@@ -86,7 +86,7 @@
 import { onMounted, onUnmounted, ref } from 'vue';
 import $ from 'jquery';
 import alertify from 'alertifyjs';
-import solicitudServices from '@/services/solicitudServices.js'
+import { solicitudServices } from '@/services'
 import googleApiServices from '@/services/googleApiServices.js'
 import customAlertify from '@/assets/customAlertify'
 

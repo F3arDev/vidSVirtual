@@ -39,7 +39,7 @@ export const useAlertifyStore = defineStore({
 			if (alertify.alert().isOpen()) {
 				setTimeout(() => {
 					alertify.alert().close();
-				}, 500);
+				}, 2000);
 			}
 		}
 	}

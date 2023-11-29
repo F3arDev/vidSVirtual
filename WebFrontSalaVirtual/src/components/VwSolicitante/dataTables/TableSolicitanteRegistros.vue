@@ -24,11 +24,14 @@
 import { onMounted, onUnmounted } from 'vue';
 import $ from 'jquery';
 
-import solicitudServices from '@/services/solicitudServices'
+import { solicitudServices } from '@/services'
 const service = new solicitudServices();
+
+
 
 import { useAuthStore } from '@/stores';
 const userStore = new useAuthStore();
+
 
 let table;
 let Usuario = userStore.user.usuarioID;

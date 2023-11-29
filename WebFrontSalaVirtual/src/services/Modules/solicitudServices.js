@@ -2,6 +2,9 @@ import { ref } from 'vue'
 
 import customAlertify from '@/assets/customAlertify'
 const ac = new customAlertify();
+
+import { axios } from '@/services';
+
 class solicitudServices {
 	error	//Alamacena El error para metodos post y Put
 	success	//Almacena la Respuesta para metodos post y Put
@@ -45,11 +48,11 @@ class solicitudServices {
 
 			ac.alertifyWaitingOpen();
 			const result = await fetch(url)
-			
+
 			ac.alertifyWaitingClose();
 
 			const json = await result.json();
-			
+
 			this.SolicitudesREGISTRO.value = await json;
 		} catch (error) {
 			console.log(error)
@@ -74,15 +77,11 @@ class solicitudServices {
 
 	async fetchAllSolicitudRegUSUARIO(id) {
 		try {
-			const url = `http://localhost:5172/api/v1/Solicitud/ListaRegUsuario/${id}`;
-			ac.alertifyWaitingOpen();
-			const result = await fetch(url)
-			ac.alertifyWaitingClose();
-			const json = await result.json();
-			this.SolicitudesRegUSUARIO.value = await json.response;
+			const url = `/api/v1/Solicitud/ListaRegUsuario/${id}`;
+			const response = await axios.get(url)
+			this.SolicitudesRegUSUARIO.value = await response.data.response;
 		} catch (error) {
 			console.log(error)
-			ac.alertifyWaitingClose();
 		}
 	}
 
@@ -140,4 +139,6 @@ class solicitudServices {
 	}
 }
 
-export default solicitudServices
+// export default solicitudServices
+
+export { solicitudServices }

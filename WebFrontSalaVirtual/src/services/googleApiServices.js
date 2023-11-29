@@ -118,7 +118,7 @@ class gApiServices {
 			callback: (tokenResponse) => {
 				access_token = tokenResponse.access_token;
 				this.getInitClient(true); //verifica que se haya creado un nuevo Token
-				console.log(access_token)
+				// console.log(access_token)
 				return { ok: true }
 			},
 		});

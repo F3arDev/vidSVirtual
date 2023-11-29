@@ -107,7 +107,7 @@
 import { onMounted, onUnmounted, ref } from 'vue';
 import $ from 'jquery';
 import alertify from 'alertifyjs';
-import solicitudServices from '@/services/solicitudServices'
+import { solicitudServices } from '@/services'
 import customAlertify from '@/assets/customAlertify'
 
 const service = new solicitudServices();

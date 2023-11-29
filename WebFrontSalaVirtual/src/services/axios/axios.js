@@ -1,7 +1,7 @@
 import Axios from 'axios';
 import { useAlertifyStore } from '@/stores';
 
-const axios = Axios.create({// Crea una instancia de Axios
+export const axios = Axios.create({// Crea una instancia de Axios y se Exporta
 	baseURL: 'http://localhost:5172/',
 	timeout: 30000,	// 30 segundos
 	headers: {
@@ -23,8 +23,6 @@ axios.interceptors.request.use(function (config) {
 axios.interceptors.response.use(function (response) {
 	const alertifyStore = useAlertifyStore();
 	alertifyStore.alertifyWaitingClose()
-
-
 	return response;
 }, function (error) {
 
@@ -44,5 +42,3 @@ axios.interceptors.response.use(function (response) {
 	}
 	return Promise.reject(error);
 });
-
-export { axios };

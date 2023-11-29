@@ -1,3 +1,3 @@
 // export * from './auth.store.js'
-// export * from './alertify.store.js'
-export { axios } from './axios/axios';	
+export { solicitudServices } from './Modules/solicitudServices.js'
+export { axios } from './axios/axios.js';

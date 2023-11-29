@@ -77,9 +77,13 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
-import solicitudServices from '@/services/solicitudServices'
-import alertify from 'alertifyjs';
+
+
+import { solicitudServices } from '@/services'
 const service = new solicitudServices();
+
+import alertify from 'alertifyjs';
+
 
 
 import { useAuthStore } from '@/stores';
