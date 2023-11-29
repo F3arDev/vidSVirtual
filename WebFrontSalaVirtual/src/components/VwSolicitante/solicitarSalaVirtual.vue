@@ -146,6 +146,7 @@ const getDataSolicitud = async () => {
 			alert(service.getError())
 		}
 	}
+
 }
 
 onMounted(() => {
