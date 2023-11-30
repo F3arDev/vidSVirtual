@@ -2,7 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApiSalaVirtual.Models;
-using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+
+
+
 namespace WebApiSalaVirtual.Controllers.v1
 {
     [EnableCors("ReglasCors")]
@@ -19,8 +22,8 @@ namespace WebApiSalaVirtual.Controllers.v1
             _context = context;
         }
 
-        [MapToApiVersion("1.0")]
         [HttpGet]
+        [Authorize]
         [Route("Lista")]
         public async Task<ActionResult<IEnumerable<VwSolicitudDetalles>>> GetSolicitudsVista()
         {
@@ -35,7 +38,7 @@ namespace WebApiSalaVirtual.Controllers.v1
             return await lista;
         }
 
-        [MapToApiVersion("1.0")]
+
         [HttpGet]
         [Route("ListaPEN")]
         public IActionResult ListaPendiente()
@@ -53,7 +56,7 @@ namespace WebApiSalaVirtual.Controllers.v1
             }
         }
 
-        [MapToApiVersion("1.0")]
+
         [HttpGet]
         [Route("ListaRegUsuario/{solicitanteId}")]
         public IActionResult ListaRegUSUARIO(int solicitanteId)
@@ -71,7 +74,6 @@ namespace WebApiSalaVirtual.Controllers.v1
             }
         }
 
-        [MapToApiVersion("1.0")]
         [HttpPost]
         [Route("Guardar")]
         public IActionResult Guardar([FromBody] Solicitud objeto)
@@ -88,7 +90,7 @@ namespace WebApiSalaVirtual.Controllers.v1
             }
         }
 
-        [MapToApiVersion("1.0")]
+
         [HttpPut]
         [Route("Editar")]
         public IActionResult Editar([FromBody] Solicitud oSolicitud)
@@ -122,45 +124,6 @@ namespace WebApiSalaVirtual.Controllers.v1
                 return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = ex.Message });
             }
         }
-
-
-
-
-
-        // GET: api/Solicitud
-        //[MapToApiVersion("1.0")]
-        //[HttpGet]
-        //[Route("Lista")]
-        //public async Task<ActionResult<IEnumerable<Solicitud>>> GetSolicituds()
-        //{
-        //    if (_context.Solicituds == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-
-        //    return await _context.Solicituds.ToListAsync();
-        //}
-
-
-
-        // GET: api/Solicitud/5
-        //[MapToApiVersion("1.0")]
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Solicitud>> GetSolicitud(int id)
-        //{
-        //    if (_context.Solicituds == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    var solicitud = await _context.Solicituds.FindAsync(id);
-
-        //    if (solicitud == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return solicitud;
-        //}
+     
     }
 }
