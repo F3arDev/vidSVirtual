@@ -251,9 +251,9 @@ select
 from
 	Entidad;
 
-DELETE FROM UsuarioRol;
+DELETE FROM Solicitud;
+DBCC CHECKIDENT ('Solicitud', RESEED, 0);
 
-DBCC CHECKIDENT ('UsuarioRol', RESEED, 0);
 
 UPDATE Solicitud
 SET
