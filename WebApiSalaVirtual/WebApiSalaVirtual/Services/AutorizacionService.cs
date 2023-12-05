@@ -38,7 +38,7 @@ namespace WebApiSalaVirtual.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = claims, // Asigna el objeto ClaimsIdentity al descriptor
-                Expires = DateTime.UtcNow.AddMinutes(480), // Establece la fecha de expiración del token
+                Expires = DateTime.UtcNow.AddMinutes(1), // Establece la fecha de expiración del token
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature) // Asigna las credenciales de firma usando la clave secreta
             };
             // Crea un manejador de tokens JWT
@@ -50,7 +50,7 @@ namespace WebApiSalaVirtual.Services
             return tokencreado;
         }
 
-        private string GenerarRefreshToken()
+        private static string GenerarRefreshToken()
         {
             var byteArray = new byte[64];
             var refreshToken = "";
@@ -58,7 +58,6 @@ namespace WebApiSalaVirtual.Services
             {
                 rng.GetBytes(byteArray);
                 refreshToken = Convert.ToBase64String(byteArray);
-
             }
             return refreshToken;
         }
@@ -98,7 +97,7 @@ namespace WebApiSalaVirtual.Services
                 {
                     return await Task.FromResult<AuthReponse>(null);
                 }
-                string Token = GenerarToken(autorizacion.Nombre);
+                string Token = GenerarToken(user.UsuarioID.ToString());
 
                 string RefreshToken = GenerarRefreshToken();
 

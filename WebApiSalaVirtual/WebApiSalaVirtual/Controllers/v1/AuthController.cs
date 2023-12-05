@@ -36,7 +36,6 @@ namespace WebApiSalaVirtual.Controllers.v1
                 return Unauthorized();
 
             return Ok(resultado_autorizacion);
-
         }
 
         [HttpPost]
@@ -51,7 +50,17 @@ namespace WebApiSalaVirtual.Controllers.v1
                 return BadRequest(new AuthReponse { Resultado = false, Msg = "Token no ha Expidaro" });
             }
 
-            
+
+            string UsuarioID = TokenExpiradoSupuestamente.Claims.First(x =>
+                x.Type == JwtRegisteredClaimNames.NameId).Value.ToString();
+
+            // var autorizacionResponse = await _autorizacionService.DevolverRefreshToken(request, int.Parse(UsuarioID));
+            var autorizacionResponse = await _autorizacionService.DevolverRefreshToken(request, int.Parse(UsuarioID));
+            if (autorizacionResponse == null)
+            {
+                return Unauthorized();
+            }
+            return Ok(autorizacionResponse);
         }
 
         //[HttpPost]

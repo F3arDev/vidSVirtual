@@ -8,6 +8,5 @@ namespace WebApiSalaVirtual.Models.Auth
 		public string RefreshToken { get; set; } = null!;
 		public DateTime FechaCreacion { get; set; }
 		public DateTime FechaExpiracion { get; set; }
-		public int Estado { get; set; }
 	}
 }
