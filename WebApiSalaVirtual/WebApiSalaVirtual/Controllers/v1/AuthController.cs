@@ -33,12 +33,26 @@ namespace WebApiSalaVirtual.Controllers.v1
         {
             var resultado_autorizacion = await _autorizacionService.DevolverToken(autorizacion);
             if (resultado_autorizacion == null)
-            return Unauthorized();
+                return Unauthorized();
 
             return Ok(resultado_autorizacion);
 
         }
 
+        [HttpPost]
+        [Route("ObtenerRefreshToken")]
+        public async Task<IActionResult> ObtenerRefreshToken([FromBody] RefreshTokenRequest request)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var TokenExpiradoSupuestamente = tokenHandler.ReadJwtToken(request.TokenExpirado);
+
+            if (TokenExpiradoSupuestamente.ValidTo > DateTime.UtcNow)
+            {
+                return BadRequest(new AuthReponse { Resultado = false, Msg = "Token no ha Expidaro" });
+            }
+
+            
+        }
 
         //[HttpPost]
         //[Route("ValidarRuta")]

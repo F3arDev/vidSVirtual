@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebApiSalaVirtual.Models.Auth;
 using WebApiSalaVirtual.Models.Auth.VwAuth;
 namespace WebApiSalaVirtual.Models;
 
@@ -32,8 +33,12 @@ public partial class DbSalasVirtualesContext : DbContext
     public virtual DbSet<VwSolicitudDetalles> VwSolicitudDetalles { get; set; }
     public virtual DbSet<VwUsuarioDetalles> VwUsuarioDetalles { get; set; }
     public virtual DbSet<VwRolesRutas> VwRolesRutas { get; set; }
+
+    public virtual DbSet<LogRefreshToken> LogRefreshToken { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        //Tablas db
         modelBuilder.Entity<Entidad>(entity =>
         {
             entity.HasKey(e => e.EntidadId).HasName("PK__Entidad__68D4A4D899D75D30");
@@ -179,9 +184,9 @@ public partial class DbSalasVirtualesContext : DbContext
             entity.ToTable("Usuario");
 
             entity.Property(e => e.UsuarioId).HasColumnName("UsuarioID");
-            entity.Property(e => e.Nombre)
-                .HasMaxLength(64)
-                .IsUnicode(false);
+
+            entity.Property(e => e.Nombre).HasMaxLength(64).IsUnicode(false);
+
             entity.Property(e => e.UsuarioRolId).HasColumnName("UsuarioRolID");
 
             //entity.HasOne(d => d.oRolUsuario).WithMany(p => p.Usuarios)
@@ -203,6 +208,13 @@ public partial class DbSalasVirtualesContext : DbContext
                 .HasColumnName("descripcion");
         });
 
+        modelBuilder.Entity<LogRefreshToken>(entity =>
+        {
+            entity.HasKey(e => e.LogRefreshTokenID).HasName("PK_LogRefreshTokenID"); // Indica que esta entidad no tiene una clave primaria
+            entity.ToTable("LogRefreshToken");
+        });
+
+        // vistas
         modelBuilder.Entity<VwDepMunicipio>(entity =>
         {
             entity.HasKey(e => e.VwDepMunicipioId).HasName("PK__VwDepMun__8EB13FC12DE43154");
