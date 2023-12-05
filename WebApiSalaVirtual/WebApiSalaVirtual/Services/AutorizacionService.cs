@@ -71,9 +71,10 @@ namespace WebApiSalaVirtual.Services
                     UsuarioID = UsuarioID,
                     Token = Token,
                     RefreshToken = RefreshToken,
-                    FechaCreacion = DateTime.UtcNow,
-                    FechaExpiracion = DateTime.UtcNow.AddMinutes(2)
+                    // FechaCreacion = DateTime.Now,
+                    // FechaExpiracion = DateTime.Now.AddMinutes(2)
                 };
+
                 await _context.LogRefreshToken.AddAsync(LogRefreshToken);
                 await _context.SaveChangesAsync();
 
