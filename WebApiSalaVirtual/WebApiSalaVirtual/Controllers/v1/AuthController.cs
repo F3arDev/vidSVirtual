@@ -45,11 +45,10 @@ namespace WebApiSalaVirtual.Controllers.v1
             var tokenHandler = new JwtSecurityTokenHandler();
             var TokenExpiradoSupuestamente = tokenHandler.ReadJwtToken(request.TokenExpirado);
 
-            if (TokenExpiradoSupuestamente.ValidTo > DateTime.UtcNow)
+            if (TokenExpiradoSupuestamente.ValidTo > DateTime.Now)
             {
                 return BadRequest(new AuthReponse { Resultado = false, Msg = "Token no ha Expidaro" });
             }
-
 
             string UsuarioID = TokenExpiradoSupuestamente.Claims.First(x =>
                 x.Type == JwtRegisteredClaimNames.NameId).Value.ToString();

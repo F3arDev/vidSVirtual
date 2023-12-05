@@ -6,7 +6,7 @@ namespace WebApiSalaVirtual.Models.Auth
 		public int UsuarioID { get; set; }
 		public string Token { get; set; } = null!;
 		public string RefreshToken { get; set; } = null!;
-		public DateTime FechaCreacion { get; set; }
-		public DateTime FechaExpiracion { get; set; }
+		// public DateTime FechaCreacion { get; set; }
+		// public DateTime FechaExpiracion { get; set; }
 	}
 }
