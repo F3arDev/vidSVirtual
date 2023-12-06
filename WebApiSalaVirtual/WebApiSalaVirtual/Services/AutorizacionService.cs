@@ -78,7 +78,7 @@ namespace WebApiSalaVirtual.Services
                 await _context.LogRefreshToken.AddAsync(LogRefreshToken);
                 await _context.SaveChangesAsync();
 
-                return new AuthReponse { Token = Token, RefreshToken = RefreshToken, Resultado = true, Msg = "ok" };
+                return new AuthReponse { Token = Token, RefreshToken = RefreshToken, Resultado = true, Msg = "Ok" };
             }
             catch (System.Exception)
             {
@@ -88,7 +88,7 @@ namespace WebApiSalaVirtual.Services
         }
 
 
-        public async Task<AuthReponse> DevolverToken(AuthUser autorizacion)
+        public async Task<object> DevolverToken(AuthUser autorizacion)
         {
             try
             {
@@ -96,14 +96,16 @@ namespace WebApiSalaVirtual.Services
                 user = _context.VwUsuarioDetalles.FirstOrDefault(obj => obj.Nombre == autorizacion.Nombre && obj.Rol == autorizacion.Rol);
                 if (user == null)
                 {
-                    return await Task.FromResult<AuthReponse>(null);
+                    return await Task.FromResult<object>(null);
                 }
                 string Token = GenerarToken(user.UsuarioID.ToString());
-
                 string RefreshToken = GenerarRefreshToken();
-
-                // return new AuthReponse() { Token = Token, Resultado = true, Msg = "OK" };
-                return await GuardarLogRefreshToken(user.UsuarioID, Token, RefreshToken);
+                var TokenReponse = await GuardarLogRefreshToken(user.UsuarioID, Token, RefreshToken);
+                return new
+                {
+                    User = user,
+                    TokenReponse
+                };
             }
             catch (System.Exception)
             {
@@ -120,17 +122,17 @@ namespace WebApiSalaVirtual.Services
             );
 
             if (refreshTokenEncontrado == null)
-                return new AuthReponse
-                {
-                    Resultado = false,
-                    Msg = "No Existe RefreshToken"
-                };
+            {
+                return new AuthReponse { Resultado = false, Msg = "No Existe RefreshToken" };
+            }
+
 
             var RefreshToken = GenerarRefreshToken();
             var Token = GenerarToken(UsuarioID.ToString());
 
             return await GuardarLogRefreshToken(UsuarioID, Token, RefreshToken);
         }
+
 
     }
 }

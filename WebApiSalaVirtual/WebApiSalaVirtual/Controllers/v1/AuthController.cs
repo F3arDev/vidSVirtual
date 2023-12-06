@@ -10,32 +10,39 @@ using System.Text;
 using WebApiSalaVirtual.Models;
 using WebApiSalaVirtual.Models.Auth;
 using WebApiSalaVirtual.Models.Auth.VwAuth;
+using Microsoft.AspNetCore.Authorization;
 
 
 
 namespace WebApiSalaVirtual.Controllers.v1
 {
-    [Route("api/[controller]")]
     [EnableCors("ReglasCors")]
     [ApiController]
+    [Route("api/v{version:apiVersion}/[controller]")] // Crea una instancia Unica para la version de la API
+    //[Route("api/[controller]")] --- manda de manera general una instancia de las funciones de la API
+    [ApiVersion("1.0")]
     public class AuthController : ControllerBase
     {
         private readonly IAutorizacionService _autorizacionService;
-
-        public AuthController(IAutorizacionService autorizacionService)
+        private readonly DbSalasVirtualesContext _context;
+        public AuthController(IAutorizacionService autorizacionService, DbSalasVirtualesContext context)
         {
             _autorizacionService = autorizacionService;
+            _context = context;
         }
 
         [HttpPost]
         [Route("Autenticar")]
         public async Task<IActionResult> Autenticar([FromBody] AuthUser autorizacion)
         {
-            var resultado_autorizacion = await _autorizacionService.DevolverToken(autorizacion);
-            if (resultado_autorizacion == null)
-                return Unauthorized();
+            var Response = await _autorizacionService.DevolverToken(autorizacion);
 
-            return Ok(resultado_autorizacion);
+            if (Response == null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok(new { Response });
         }
 
         [HttpPost]
@@ -45,7 +52,7 @@ namespace WebApiSalaVirtual.Controllers.v1
             var tokenHandler = new JwtSecurityTokenHandler();
             var TokenExpiradoSupuestamente = tokenHandler.ReadJwtToken(request.TokenExpirado);
 
-            if (TokenExpiradoSupuestamente.ValidTo > DateTime.Now)
+            if (TokenExpiradoSupuestamente.ValidTo > DateTime.UtcNow)
             {
                 return BadRequest(new AuthReponse { Resultado = false, Msg = "Token no ha Expidaro" });
             }
@@ -53,26 +60,28 @@ namespace WebApiSalaVirtual.Controllers.v1
             string UsuarioID = TokenExpiradoSupuestamente.Claims.First(x =>
                 x.Type == JwtRegisteredClaimNames.NameId).Value.ToString();
 
-            // var autorizacionResponse = await _autorizacionService.DevolverRefreshToken(request, int.Parse(UsuarioID));
             var autorizacionResponse = await _autorizacionService.DevolverRefreshToken(request, int.Parse(UsuarioID));
+
             if (autorizacionResponse == null)
             {
                 return Unauthorized();
             }
+
             return Ok(autorizacionResponse);
         }
 
-        //[HttpPost]
-        //[Route("ValidarRuta")]
-        //public IActionResult ValidarRuta([FromBody] AuthRuta request)
-        //{
-        //    var user = null as VwRolesRutas;
-        //    user = _context.VwRolesRutas.FirstOrDefault(obj => obj.Rol == request.Rol && obj.NombreRuta == request.Ruta);
-        //    if (user == null)
-        //    {
-        //        return StatusCode(StatusCodes.Status401Unauthorized, new { mensaje = "Usuario sin Autorizacion de la Ruta", response = new { auth = false } });
-        //    }
-        //    return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok", response = new { auth = true } });
-        //}
+        [HttpPost]
+        [Authorize]
+        [Route("ValidarRuta")]
+        public IActionResult ValidarRuta([FromBody] AuthRuta request)
+        {
+            var user = null as VwRolesRutas;
+            user = _context.VwRolesRutas.FirstOrDefault(obj => obj.Rol == request.Rol && obj.NombreRuta == request.Ruta);
+            if (user == null)
+            {
+                return StatusCode(StatusCodes.Status401Unauthorized, new { mensaje = "Usuario sin Autorizacion de la Ruta", response = new { auth = false } });
+            }
+            return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok", response = new { auth = true } });
+        }
     }
 }

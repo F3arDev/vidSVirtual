@@ -10,4 +10,4 @@ CREATE TABLE LogRefreshToken (
 );
 select * from LogRefreshToken
 
-DROP TABLE LogRefreshToken;
+--DROP TABLE LogRefreshToken;

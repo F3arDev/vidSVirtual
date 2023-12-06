@@ -6,6 +6,5 @@ namespace WebApiSalaVirtual.Models.Auth.VwAuth
 		public string Rol { get; set; } = null!;
 		public int RutaID { get; set; }
 		public string NombreRuta { get; set; } = null!;
-
 	}
 }
