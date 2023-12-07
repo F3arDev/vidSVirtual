@@ -35,14 +35,12 @@ namespace WebApiSalaVirtual.Controllers.v1
         [Route("Autenticar")]
         public async Task<IActionResult> Autenticar([FromBody] AuthUser autorizacion)
         {
-            var Response = await _autorizacionService.DevolverToken(autorizacion);
-
-            if (Response == null)
+            var Respuesta = await _autorizacionService.DevolverToken(autorizacion);
+            if (Respuesta == null)
             {
                 return Unauthorized();
             }
-
-            return Ok(new { Response });
+            return Ok(new { Mensaje = "ok", Respuesta });
         }
 
         [HttpPost]
@@ -54,7 +52,7 @@ namespace WebApiSalaVirtual.Controllers.v1
 
             if (TokenExpiradoSupuestamente.ValidTo > DateTime.UtcNow)
             {
-                return BadRequest(new AuthReponse { Resultado = false, Msg = "Token no ha Expidaro" });
+                return BadRequest(new  { Respuesta = false, Mensaje = "Token no ha Expidaro" });
             }
 
             string UsuarioID = TokenExpiradoSupuestamente.Claims.First(x =>

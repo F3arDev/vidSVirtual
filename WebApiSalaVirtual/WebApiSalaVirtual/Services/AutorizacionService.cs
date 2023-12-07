@@ -78,7 +78,7 @@ namespace WebApiSalaVirtual.Services
                 await _context.LogRefreshToken.AddAsync(LogRefreshToken);
                 await _context.SaveChangesAsync();
 
-                return new AuthReponse { Token = Token, RefreshToken = RefreshToken, Resultado = true, Msg = "Ok" };
+                return new AuthReponse { Token = Token, RefreshToken = RefreshToken };
             }
             catch (System.Exception)
             {
@@ -92,20 +92,16 @@ namespace WebApiSalaVirtual.Services
         {
             try
             {
-                var user = null as VwUsuarioDetalles;
-                user = _context.VwUsuarioDetalles.FirstOrDefault(obj => obj.Nombre == autorizacion.Nombre && obj.Rol == autorizacion.Rol);
-                if (user == null)
+                var usuario = null as VwUsuarioDetalles;
+                usuario = _context.VwUsuarioDetalles.FirstOrDefault(obj => obj.Nombre == autorizacion.Nombre && obj.Rol == autorizacion.Rol);
+                if (usuario == null)
                 {
                     return await Task.FromResult<object>(null);
                 }
-                string Token = GenerarToken(user.UsuarioID.ToString());
+                string Token = GenerarToken(usuario.UsuarioID.ToString());
                 string RefreshToken = GenerarRefreshToken();
-                var TokenReponse = await GuardarLogRefreshToken(user.UsuarioID, Token, RefreshToken);
-                return new
-                {
-                    User = user,
-                    TokenReponse
-                };
+                var Tokens = await GuardarLogRefreshToken(usuario.UsuarioID, Token, RefreshToken);
+                return new { usuario, Tokens };
             }
             catch (System.Exception)
             {
@@ -123,7 +119,7 @@ namespace WebApiSalaVirtual.Services
 
             if (refreshTokenEncontrado == null)
             {
-                return new AuthReponse { Resultado = false, Msg = "No Existe RefreshToken" };
+                return new AuthReponse { Token = "null", RefreshToken = "null" };
             }
 
 
@@ -132,7 +128,6 @@ namespace WebApiSalaVirtual.Services
 
             return await GuardarLogRefreshToken(UsuarioID, Token, RefreshToken);
         }
-
 
     }
 }
