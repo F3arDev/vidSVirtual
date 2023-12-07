@@ -29,14 +29,14 @@ const router = createRouter({
 //Next: Hacia donde va el usuario
 router.beforeEach(async (to, from, next) => {
     const authStore = useAuthStore();
-    let auth = authStore.user;  // Simulando que el usuario está autenticado
+    let auth = authStore.usuario;  // Simulando que el usuario está autenticado
     // eslint-disable-next-line no-debugger
     debugger
     if (to.name !== 'login') {
         if (!auth) {
             next({ name: 'login' });
         } else {
-            let userRole = authStore.user.rol;
+            let userRole = authStore.usuario.rol;
             // Realizar la validacion contra el backend antes de permitir el acceso
             let authbacken = await authStore.AuthRuta(userRole, to.path);
             if (!authbacken) {

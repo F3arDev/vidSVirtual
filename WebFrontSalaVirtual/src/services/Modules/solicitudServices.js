@@ -41,6 +41,8 @@ class solicitudServices {
 		return this.SolicitudesRegUSUARIO
 	}
 
+
+
 	async fetchAllSolicitud() {
 
 		try {

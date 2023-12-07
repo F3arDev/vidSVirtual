@@ -1,19 +1,47 @@
 import { defineStore } from 'pinia';
-import { axios } from '@/services/index';
+import { axios, axiosJwt } from '@/services/index';
 
-import router from '../router/index.js';
+import router from '@/router/index.js';
+
 export const useAuthStore = defineStore({
 	id: 'usuario',
 	state: () => ({
-		user: JSON.parse(localStorage.getItem('user')),
+		usuario: JSON.parse(localStorage.getItem('usuario')),
+		tokens: JSON.parse(localStorage.getItem('tokens')),
 	}),
 	actions: {
-		async login(username, password) {
+		async login(usuario, clave) {
+			try {
+				let res = await axios.post('/api/v1/Auth/Autenticar', {
+					"nombre": usuario,
+					"rol": clave
+				})
+
+				// eslint-disable-next-line no-debugger
+				debugger;
+				if (res.status !== 200) {
+					router.push({ name: 'login' });
+					return false;
+				}
+
+				this.user = await res.data.respuesta.usuario;
+				this.tokens = await res.tokens.respuesta.tokens;
+
+				localStorage.setItem('usuario', JSON.stringify(this.usuario));
+				localStorage.setItem('tokens', JSON.stringify(this.tokens));
+
+				router.push({ name: this.user.rol });
+				return true;
+			} catch (error) {
+				console.log(error)
+			}
+		},
+		async RequestRefreshToken(jwtExpire, refreshTkoen) {
 			try {
 				let respuesta = await axios.post('/api/Auth/Validar',
 					{
-						"nombre": username,
-						"rol": password
+						"nombre": jwtExpire,
+						"rol": refreshTkoen
 					})
 				let json = await respuesta.data;
 				if (json.mensaje !== 'ok') {
@@ -31,32 +59,24 @@ export const useAuthStore = defineStore({
 		},
 		async AuthRuta(rol, ruta) {
 			try {
-				let respuesta = await fetch('http://localhost:5172/api/Auth/ValidarRuta', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify(
-						{
-							"rol": rol,
-							"ruta": ruta
-						}
-					)
+				let res = await axiosJwt.post('/api/Auth/ValidarRuta', {
+					"rol": rol,
+					"ruta": ruta
 				})
-				let json = await respuesta.json();
-				if (json.mensaje !== 'ok') {
+				if (res.status !== 200) {
 					return false;
 				}
-
-				return json.response.auth
+				return res.response.auth
 			} catch (error) {
 				console.log(error)
 			}
 		},
 		logout() {
 			this.user = null;
-			localStorage.removeItem('user');
+			this.tokens = null;
+			localStorage.removeItem('usuario');
+			localStorage.removeItem('tokens');
 			router.push({ name: 'login' });
-		}
+		},
 	}
 });

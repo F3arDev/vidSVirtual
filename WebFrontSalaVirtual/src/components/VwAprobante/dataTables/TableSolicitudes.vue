@@ -98,7 +98,7 @@ let entidad = ref('');
 let expediente = ref('');
 let Motivo = ref('');
 let isVisible = ref();
-let dataforMeet = ref();
+// let dataforMeet = ref();
 
 
 onMounted(async () => {
