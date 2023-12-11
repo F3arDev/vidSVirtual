@@ -5,7 +5,7 @@ import router from '@/router/index.js';
 
 export const useAuthStore = defineStore({
 	id: 'usuario',
-	state: () => ({
+	state: async () => ({
 		usuario: JSON.parse(localStorage.getItem('usuario')),
 		tokens: JSON.parse(localStorage.getItem('tokens')),
 	}),
@@ -24,13 +24,13 @@ export const useAuthStore = defineStore({
 					return false;
 				}
 
-				this.user = await res.data.respuesta.usuario;
-				this.tokens = await res.tokens.respuesta.tokens;
+				this.usuario = await res.data.respuesta.usuario;
+				this.tokens = await res.data.respuesta.tokens;
 
 				localStorage.setItem('usuario', JSON.stringify(this.usuario));
 				localStorage.setItem('tokens', JSON.stringify(this.tokens));
 
-				router.push({ name: this.user.rol });
+				router.push({ name: this.usuario.rol });
 				return true;
 			} catch (error) {
 				console.log(error)
@@ -59,14 +59,16 @@ export const useAuthStore = defineStore({
 		},
 		async AuthRuta(rol, ruta) {
 			try {
-				let res = await axiosJwt.post('/api/Auth/ValidarRuta', {
+				debugger
+				let res = await axiosJwt.post('/api/v1/Auth/ValidarRuta', {
 					"rol": rol,
 					"ruta": ruta
 				})
+				debugger
 				if (res.status !== 200) {
 					return false;
 				}
-				return res.response.auth
+				return res.data.response.auth
 			} catch (error) {
 				console.log(error)
 			}

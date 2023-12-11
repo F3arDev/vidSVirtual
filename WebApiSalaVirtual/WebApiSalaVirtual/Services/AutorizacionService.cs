@@ -38,7 +38,7 @@ namespace WebApiSalaVirtual.Services
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = claims, // Asigna el objeto ClaimsIdentity al descriptor
-                Expires = DateTime.UtcNow.AddMinutes(1), // Establece la fecha de expiración del token
+                Expires = DateTime.UtcNow.AddMinutes(120), // Establece la fecha de expiración del token
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes), SecurityAlgorithms.HmacSha256Signature) // Asigna las credenciales de firma usando la clave secreta
             };
             // Crea un manejador de tokens JWT

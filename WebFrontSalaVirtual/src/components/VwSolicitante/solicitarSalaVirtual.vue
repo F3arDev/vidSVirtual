@@ -155,7 +155,7 @@ const getDataSolicitud = async () => {
 
 onMounted(() => {
 	let userStore = new useAuthStore()
-	Usuario.value = userStore.user.nombre
+	Usuario.value = userStore.usuario.nombre
 }) 
 </script>
 

@@ -48,7 +48,6 @@ builder.Services.AddCors(opt =>
     {
         builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
     });
-
 });
 
 builder.Services.AddControllers().AddJsonOptions(opt =>

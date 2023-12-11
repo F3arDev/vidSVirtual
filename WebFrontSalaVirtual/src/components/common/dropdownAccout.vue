@@ -21,7 +21,7 @@ import { useAuthStore } from '@/stores';
 let userStore = new useAuthStore()
 
 
-let nomUser = ref(userStore.user.nombre)
+let nomUser = ref(userStore.usuario.nombre)
 </script>
 
 <style scoped></style>

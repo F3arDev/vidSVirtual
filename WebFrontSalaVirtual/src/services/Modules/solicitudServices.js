@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import customAlertify from '@/assets/customAlertify'
 const ac = new customAlertify();
 
-import { axios } from '@/services';
+import { axios, axiosJwt } from '@/services';
 
 class solicitudServices {
 	error	//Alamacena El error para metodos post y Put
@@ -80,7 +80,7 @@ class solicitudServices {
 	async fetchAllSolicitudRegUSUARIO(id) {
 		try {
 			const url = `/api/v1/Solicitud/ListaRegUsuario/${id}`;
-			const response = await axios.get(url)
+			const response = await axiosJwt.get(url)
 			this.SolicitudesRegUSUARIO.value = await response.data.response;
 		} catch (error) {
 			console.log(error)

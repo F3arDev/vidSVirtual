@@ -52,7 +52,7 @@ namespace WebApiSalaVirtual.Controllers.v1
 
             if (TokenExpiradoSupuestamente.ValidTo > DateTime.UtcNow)
             {
-                return BadRequest(new  { Respuesta = false, Mensaje = "Token no ha Expidaro" });
+                return BadRequest(new { Respuesta = false, Mensaje = "Token no ha Expidaro" });
             }
 
             string UsuarioID = TokenExpiradoSupuestamente.Claims.First(x =>
@@ -69,7 +69,6 @@ namespace WebApiSalaVirtual.Controllers.v1
         }
 
         [HttpPost]
-        [Authorize]
         [Route("ValidarRuta")]
         public IActionResult ValidarRuta([FromBody] AuthRuta request)
         {
