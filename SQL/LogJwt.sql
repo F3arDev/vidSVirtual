@@ -5,7 +5,7 @@ CREATE TABLE LogRefreshToken (
     Token VARCHAR(500),
     RefreshToken VARCHAR(200),
     FechaCreacion DATETIME DEFAULT GETDATE(),
-    FechaExpiracion DATETIME DEFAULT DATEADD(MINUTE, 2, GETDATE()),
+    FechaExpiracion DATETIME DEFAULT DATEADD(MINUTE, 240, GETDATE()),
     Estado AS (IIF(FechaExpiracion < GETDATE(), CONVERT(BIT, 0), CONVERT(BIT, 1))),
 );
 select * from LogRefreshToken
