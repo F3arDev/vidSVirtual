@@ -5,7 +5,7 @@ import router from '@/router/index.js';
 
 export const useAuthStore = defineStore({
 	id: 'usuario',
-	state: async () => ({
+	state: () => ({
 		usuario: JSON.parse(localStorage.getItem('usuario')),
 		tokens: JSON.parse(localStorage.getItem('tokens')),
 	}),

@@ -46,19 +46,12 @@ class solicitudServices {
 	async fetchAllSolicitud() {
 
 		try {
-			const url = 'http://localhost:5172/api/v1/Solicitud/Lista';
 
-			ac.alertifyWaitingOpen();
-			const result = await fetch(url)
-
-			ac.alertifyWaitingClose();
-
-			const json = await result.json();
-
-			this.SolicitudesREGISTRO.value = await json;
+			const res = await axiosJwt.get('/api/v1/Solicitud/Lista')
+			debugger
+			this.SolicitudesREGISTRO.value = res.data
 		} catch (error) {
 			console.log(error)
-			ac.alertifyWaitingClose();
 		}
 	}
 
@@ -66,11 +59,9 @@ class solicitudServices {
 
 		try {
 			const url = 'http://localhost:5172/api/v1/Solicitud/ListaPEN';
-			ac.alertifyWaitingOpen();
-			const result = await fetch(url)
-			ac.alertifyWaitingClose();
-			const json = await result.json();
-			this.solicidudesPEN.value = await json.response;
+			const res = await axiosJwt.get(url)
+			debugger
+			this.solicidudesPEN.value = await res.data.response;
 		} catch (error) {
 			console.error(error)
 			ac.alertifyWaitingClose();
@@ -80,8 +71,8 @@ class solicitudServices {
 	async fetchAllSolicitudRegUSUARIO(id) {
 		try {
 			const url = `/api/v1/Solicitud/ListaRegUsuario/${id}`;
-			const response = await axiosJwt.get(url)
-			this.SolicitudesRegUSUARIO.value = await response.data.response;
+			const res = await axiosJwt.get(url)
+			this.SolicitudesRegUSUARIO.value = await res.data.response;
 		} catch (error) {
 			console.log(error)
 		}

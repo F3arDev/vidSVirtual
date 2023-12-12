@@ -34,7 +34,7 @@ const userStore = new useAuthStore();
 
 
 let table;
-let Usuario = userStore.user.usuarioID;
+let Usuario = userStore.usuario.usuarioID;
 onMounted(async () => {
 	await service.fetchAllSolicitudRegUSUARIO(Usuario);
 	const solicidudes = await service.getSolicitudRegUSUARIO();

@@ -2,9 +2,6 @@ import Axios from 'axios';
 import { useAlertifyStore, useAuthStore } from '@/stores';
 
 var token;
-
-// var RefreshToken;
-
 const getToken = () => {
 	const AuthStore = useAuthStore();
 	token = AuthStore.tokens.token;
@@ -12,7 +9,6 @@ const getToken = () => {
 export const axiosJwt = Axios.create({
 	baseURL: 'http://localhost:5172',
 	timeout: 30000, // 30 segundos
-	// withCredentials: true,
 });
 
 // Interceptador de peticiones
