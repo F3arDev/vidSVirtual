@@ -16,14 +16,10 @@ export const useAuthStore = defineStore({
 					"nombre": usuario,
 					"rol": clave
 				})
-
-				// eslint-disable-next-line no-debugger
-				debugger;
 				if (res.status !== 200) {
 					router.push({ name: 'login' });
 					return false;
 				}
-
 				this.usuario = await res.data.respuesta.usuario;
 				this.tokens = await res.data.respuesta.tokens;
 
@@ -36,22 +32,22 @@ export const useAuthStore = defineStore({
 				console.log(error)
 			}
 		},
-		async RequestRefreshToken(jwtExpire, refreshTkoen) {
+		async RequestRefreshToken() {
 			try {
-				let respuesta = await axios.post('/api/Auth/Validar',
+				let res = await axios.post('/api/v1/Auth/ObtenerRefreshToken',
 					{
-						"nombre": jwtExpire,
-						"rol": refreshTkoen
-					})
-				let json = await respuesta.data;
-				if (json.mensaje !== 'ok') {
+						"tokenExpirado": this.tokens.token,
+						"refreshToken": this.tokens.refreshToken
+					}
+				)
+
+				if (res.status !== 200) {
 					router.push({ name: 'login' });
 					return false;
 				}
-				this.user = await json.response.user;
-				localStorage.setItem('user', JSON.stringify(this.user));
-				// localStorage.setItem('usuario', JSON.stringify(json.response));
-				router.push({ name: this.user.rol });
+				this.tokens = await res.data;
+				localStorage.setItem('tokens', JSON.stringify(this.tokens));
+
 				return true;
 			} catch (error) {
 				console.log(error)
@@ -59,12 +55,10 @@ export const useAuthStore = defineStore({
 		},
 		async AuthRuta(rol, ruta) {
 			try {
-				debugger
 				let res = await axiosJwt.post('/api/v1/Auth/ValidarRuta', {
 					"rol": rol,
 					"ruta": ruta
 				})
-				debugger
 				if (res.status !== 200) {
 					return false;
 				}
