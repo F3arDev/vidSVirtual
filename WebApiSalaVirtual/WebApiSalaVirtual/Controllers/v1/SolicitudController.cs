@@ -8,8 +8,10 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace WebApiSalaVirtual.Controllers.v1
 {
-    [EnableCors("ReglasCors")]
+    // [EnableCors("ReglasCors")]
+    [EnableCors]
     [ApiController]
+    [Authorize]
     [Route("api/v{version:apiVersion}/[controller]")] // Crea una instancia Unica para la version de la API
     //[Route("api/[controller]")] --- manda de manera general una instancia de las funciones de la API
     [ApiVersion("1.0")] //Deprecate, Indica que la version de la API Sera Descontinuada
@@ -23,7 +25,7 @@ namespace WebApiSalaVirtual.Controllers.v1
         }
 
         [HttpGet]
-        [Authorize]
+
         [Route("Lista")]
         public async Task<ActionResult<IEnumerable<VwSolicitudDetalles>>> GetSolicitudsVista()
         {
@@ -124,6 +126,6 @@ namespace WebApiSalaVirtual.Controllers.v1
                 return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = ex.Message });
             }
         }
-     
+
     }
 }

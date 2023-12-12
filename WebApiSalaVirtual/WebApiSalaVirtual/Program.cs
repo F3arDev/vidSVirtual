@@ -41,14 +41,6 @@ builder.Services.AddVersionedApiExplorer(setup =>
     setup.SubstituteApiVersionInUrl = true;
 });
 
-var misReglasCors = "ReglasCors";
-builder.Services.AddCors(opt =>
-{
-    opt.AddPolicy(name: misReglasCors, builder =>
-    {
-        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
-    });
-});
 
 builder.Services.AddControllers().AddJsonOptions(opt =>
 {
@@ -80,6 +72,27 @@ builder.Services.AddAuthentication(config =>
     };
 });
 
+// var misReglasCors = "ReglasCors";
+// builder.Services.AddCors(opt =>
+// {
+//     opt.AddPolicy(name: misReglasCors, builder =>
+//     {
+//         builder.AllowAnyOrigin()
+//         .AllowAnyHeader()
+//         .AllowAnyMethod();
+
+//     });
+// });
+
+builder.Services.AddCors(opt =>
+{
+    opt.AddDefaultPolicy(
+        policy =>
+        {
+            policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+        }
+    );
+});
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
@@ -98,10 +111,13 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-
+//primero los cores
+app.UseCors();
+//Segundo Authorizaciones
 app.UseAuthentication();
-app.UseAuthorization(); 
-app.UseCors(misReglasCors);
+app.UseAuthorization();
+
+
 app.MapControllers();
 
 app.Run();

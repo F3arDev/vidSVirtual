@@ -1,22 +1,20 @@
 ﻿using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using WebApiSalaVirtual.Services;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
+using Microsoft.AspNetCore.Authorization;
+
 using WebApiSalaVirtual.Models;
 using WebApiSalaVirtual.Models.Auth;
 using WebApiSalaVirtual.Models.Auth.VwAuth;
-using Microsoft.AspNetCore.Authorization;
+
 
 
 
 namespace WebApiSalaVirtual.Controllers.v1
 {
-    [EnableCors("ReglasCors")]
+    // [EnableCors("ReglasCors")]
+    [EnableCors]
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")] // Crea una instancia Unica para la version de la API
     //[Route("api/[controller]")] --- manda de manera general una instancia de las funciones de la API
@@ -69,6 +67,7 @@ namespace WebApiSalaVirtual.Controllers.v1
         }
 
         [HttpPost]
+        [Authorize]
         [Route("ValidarRuta")]
         public IActionResult ValidarRuta([FromBody] AuthRuta request)
         {
