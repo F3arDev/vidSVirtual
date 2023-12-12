@@ -133,7 +133,7 @@ const getDataSolicitud = async () => {
 		let userStore = new useAuthStore()
 		let jsonSendSolicitud =
 		{
-			"solicitanteId": userStore.user.usuarioID,
+			"solicitanteId": userStore.usuario.usuarioID,
 			"fechaRegistro": FechaInicio.value,
 			"fechaInicio": FechaInicio.value,
 			"fechaFin": FechaFin.value,
@@ -143,11 +143,12 @@ const getDataSolicitud = async () => {
 			"expediente": Expediente.value,
 			"actividad": Actividad.value
 		}
+		debugger
 		let result = await service.sendSolicitudPEN(jsonSendSolicitud)
 		if (result == true) {
 			alertify.success('Success notification message.');
 		} else {
-			alert(service.getError())
+			alert(await service.getError())
 		}
 	}
 

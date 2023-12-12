@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import customAlertify from '@/assets/customAlertify'
 const ac = new customAlertify();
 
-import { axios, axiosJwt } from '@/services';
+import { axiosJwt } from '@/services';
 
 class solicitudServices {
 	error	//Alamacena El error para metodos post y Put
@@ -44,30 +44,23 @@ class solicitudServices {
 
 
 	async fetchAllSolicitud() {
-
 		try {
-
 			const res = await axiosJwt.get('/api/v1/Solicitud/Lista')
-			debugger
 			this.SolicitudesREGISTRO.value = res.data
 		} catch (error) {
 			console.log(error)
 		}
 	}
-
 	async fetchAllSolicitudPEN() {
-
 		try {
 			const url = 'http://localhost:5172/api/v1/Solicitud/ListaPEN';
 			const res = await axiosJwt.get(url)
-			debugger
 			this.solicidudesPEN.value = await res.data.response;
 		} catch (error) {
 			console.error(error)
 			ac.alertifyWaitingClose();
 		}
 	}
-
 	async fetchAllSolicitudRegUSUARIO(id) {
 		try {
 			const url = `/api/v1/Solicitud/ListaRegUsuario/${id}`;
@@ -81,17 +74,9 @@ class solicitudServices {
 	//POST
 	async sendSolicitudPEN(sendSolicitud) {
 		try {
-			ac.alertifyWaitingOpen();
-			let result = await fetch('http://localhost:5172/api/v1/Solicitud/Guardar', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(sendSolicitud)
-			})
-			ac.alertifyWaitingClose();
-			let response = await result.json();
-			if (response.mensaje != 'ok') {
+			let res = await axiosJwt.post('/api/v1/Solicitud/Guardar', sendSolicitud)
+			debugger
+			if (res.status !== 200) {
 				this.error = 'Hubo un Error al enviar la Solicitud'
 				return false
 			}
@@ -99,27 +84,15 @@ class solicitudServices {
 			return true;
 		} catch (error) {
 			console.log(error)
-			ac.alertifyWaitingClose();
 		}
 	}
-
 	postSolicitudPEN() {
 		return this.solicidudesPOST
 	}
-
 	async putSolicitud(putSolicitud) {
 		try {
-			ac.alertifyWaitingOpen();
-			let result = await fetch('http://localhost:5172/api/v1/Solicitud/Editar', {
-				method: 'PUT',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(putSolicitud)
-			})
-			let response = await result.json();
-			ac.alertifyWaitingClose();
-			if (response.mensaje != 'ok') {
+			let res = await axiosJwt.post('/api/v1/Solicitud/Editar', putSolicitud)
+			if (res.status !== 200) {
 				this.error = 'Hubo un Error al Guardar Cambios a la Solicitud'
 				return false
 			}
@@ -127,11 +100,7 @@ class solicitudServices {
 			return true;
 		} catch (error) {
 			console.log(error)
-			ac.alertifyWaitingClose();
 		}
 	}
 }
-
-// export default solicitudServices
-
 export { solicitudServices }
