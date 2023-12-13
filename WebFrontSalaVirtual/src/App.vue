@@ -15,8 +15,6 @@ alertify.defaults.theme.input = "form-control";
 import googleApiServices from './services/googleApiServices';
 
 const gapi = new googleApiServices();
-
-
 onBeforeMount(async () => {
   await gapi.initClient();
 })

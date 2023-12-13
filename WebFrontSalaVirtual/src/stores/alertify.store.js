@@ -2,43 +2,67 @@ import { defineStore } from 'pinia';
 
 import alertify from 'alertifyjs';
 
+alertify.dialog('myAlert', function factory() {
+	return {
+		main: function (message) {
+			this.message = message;
+		},
+		setup: function () {
+			return {
+				buttons: [{ text: "cool!", key: 27/*Esc*/ }],
+				focus: { element: 0 }
+			};
+		},
+		prepare: function () {
+			this.setContent(this.message);
+		}
+	}
+})
+
 export const useAlertifyStore = defineStore({
 	id: 'Alertify',
 	state: () => ({
 	}),
 	actions: {
 		alertifyWaitingOpen() {
-
 			var dialog = `
-			<div id="dialogPreloader">
-				<div data-role="preloader" data-type="square" data-style="color" class="preloader-square color-style">
-					<div class="square">
+			<div class="container">
+				<div class="row">
+					<div>
+						<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+						<span role="status"> -- Por favor, espere un momento...</span>
 					</div>
-					<div class="square">
-					</div>
-					<div class="square">
-					</div>
-					<div class="square">
-					</div>
-				</div>
-				<div>
-					<span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-					<span role="status"> Por favor, espere un momento...</span>
 				</div>
 			</div>
 			`;
-
-			alertify.alert()
-				.set('basic', true)
-				.setting({ 'closable': false, 'maximizable': false })
-				.setContent(dialog)
-				.show();
+			if (!alertify.waiting) { // se define una vez y luego se utiliza
+				//define a new dialog
+				alertify.dialog('waiting', function factory() {
+					return {
+						main: function (message) {
+							this.message = message;
+						},
+						setup: function () {
+							return {
+								buttons: [{ text: "cool!", key: 27/*Esc*/ }],
+								focus: { element: 0 }
+							};
+						},
+						prepare: function () {
+							this.setContent(this.message);
+						}
+					}
+				});
+			}
+			alertify.waiting('')
+				.setting({ 'closable': false, 'maximizable': false, 'basic': true })
+				.setContent(dialog);
 		},
 
 		alertifyWaitingClose() {
-			if (alertify.alert().isOpen()) {
+			if (alertify.waiting().isOpen()) {
 				setTimeout(() => {
-					alertify.alert().close();
+					alertify.waiting().close();
 				}, 2000);
 			}
 		}

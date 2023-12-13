@@ -82,8 +82,6 @@
 							<input v-model="linkMeet" type="text" class="form-control"
 								placeholder="https://meet.google.com/Example" aria-label="Recipient's username"
 								aria-describedby="button-addon2" disabled>
-							<button @click="btnCrearMeets()" class="btn btn-outline-secondary" type="button">Generar
-								Link</button>
 						</div>
 					</div>
 				</div>
@@ -108,10 +106,10 @@ import { onMounted, onUnmounted, ref } from 'vue';
 import $ from 'jquery';
 import alertify from 'alertifyjs';
 import { solicitudServices } from '@/services'
-import customAlertify from '@/assets/customAlertify'
+import { useAlertifyStore } from '@/stores';
 
 const service = new solicitudServices();
-const ac = new customAlertify();
+const alertifyStore = useAlertifyStore();
 
 let tblSoliRegistros;
 let solicidudes
@@ -162,19 +160,18 @@ onMounted(async () => {
 
 	tblSoliRegistros.on('click', '.btnVer', function () {
 		const data = tblSoliRegistros.row($(this).parents('tr')).data();
-		ac.alertifyWaitingOpen();
+		alertifyStore.alertifyWaitingOpen();
 		setTimeout(() => {
-			alertify.confirm('')
+			alertify.alert('')
 				.setHeader('<div style="text-align: center; font-size: 1.2em; font-weight: bold">Detalles Solicitud</div>')
 				.setContent(modalDetallSoRegistros)
 				.set({
-					'closable': false, 'movable': false, labels: { "ok": "Reenviar", "cancel": "Cancelar" },
+					'closable': false, 'movable': false, label: 'OK',
 					onok: async function () {
 						console.log(data)
 					}
 				}).closeOthers();
 		}, 1500)
-
 		solicitante.value = data.solicitanteNombre
 		entidad.value = data.entidad
 		expediente.value = data.expediente
