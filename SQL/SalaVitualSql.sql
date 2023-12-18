@@ -1,66 +1,71 @@
 CREATE DATABASE dbSalasVirtuales;
+go
 
 USE dbSalasVirtuales;
-
+go
 --TABLA ESTADO SOLICITUD
-CREATE TABLE
-	EstadoSolicitud (
-		EstadoSolicitudID int PRIMARY KEY IDENTITY (1, 1) NOT NULL,
-		descripcion varchar(8) NOT NULL
-	);
+BEGIN TRY
+CREATE TABLE EstadoSolicitud (
+	EstadoSolicitudID int identity(1, 1) NOT NULL,
+	Descripcion varchar(16) NOT NULL,
+	primary key (EstadoSolicitudID)
+)
+END TRY
+BEGIN CATCH
+    -- Captura la excepción y muestra un mensaje de error
+    PRINT 'Error al crear la tabla: ' + ERROR_MESSAGE();
+END CATCH;
+go
+
+
 
 --TABLA ESTADO DEL REGISTRO
-CREATE TABLE
-	EstadoRegistro (
-		EstadoRegistroID int PRIMARY KEY IDENTITY (1, 1) NOT NULL,
-		descripcion varchar(32) NOT NULL
-	);
+CREATE TABLE EstadoRegistro (
+	EstadoRegistroID int identity (1, 1) NOT NULL,
+	Descripcion varchar(32) NOT NULL,
+	primary key (EstadoRegistroID)
+);
+go
 
 --Simular Gaia
-CREATE TABLE
-	UsuarioRol (
-		UsuarioRolID int PRIMARY KEY IDENTITY (1, 1) NOT NULL,
-		descripcion varchar(64) NOT NULL
-	);
+CREATE TABLE UsuarioRol (
+	UsuarioRolID int IDENTITY (1, 1) NOT NULL,
+	Descripcion varchar(64) NOT NULL,
+	primary key (UsuarioRolID)
+);
+go
 
-CREATE TABLE
-	Usuario (
-		UsuarioID int PRIMARY KEY IDENTITY (1, 1) NOT NULL,
-		Nombre varchar(64) NOT NULL,
-		UsuarioRolID int NOT NULL,
-		CONSTRAINT FK_USUARIOROLID FOREIGN KEY (UsuarioRolID) REFERENCES UsuarioRol (UsuarioRolID)
-	);
+--Entidad
+CREATE TABLE Entidad (
+	EntidadID int IDENTITY (1, 1) NOT NULL,
+	Descripcion varchar(64) NOT NULL,
+	primary key (EntidadID),
+);
+go
 
-CREATE TABLE
-	RolesRutas (
-		RutaID int PRIMARY KEY IDENTITY (1, 1) NOT NULL,
-		UsuarioRolID int,
-		NombreRuta varchar(255),
-		-- Ajusta el tamaño según tus necesidades
-		-- Agrega la clave foránea para la relación con UsuarioRol
-		FOREIGN KEY (UsuarioRolID) REFERENCES UsuarioRol (UsuarioRolID)
-	);
+CREATE TABLE RolesRutas (
+	RutaID int IDENTITY (1, 1) NOT NULL,
+	UsuarioRolID int,
+	NombreRuta varchar(255),
+	constraint PK_RutaID primary key (RutaID),
+	FOREIGN KEY (UsuarioRolID) REFERENCES UsuarioRol (UsuarioRolID)
+);
+go
 
---Simular VwDepMunicipio PJN
-CREATE TABLE
-	Entidad (
-		EntidadID int PRIMARY KEY IDENTITY (1, 1) NOT NULL,
-		descripcion varchar(64) NOT NULL
-	);
+CREATE TABLE Usuario (
+	UsuarioID int IDENTITY (1, 1) NOT NULL,
+	Nombre varchar(64) NOT NULL,
+	UsuarioRolID int NOT NULL,
+	EntidadID int,
+	primary key (UsuarioID),
+	CONSTRAINT FK_UsuarioRolID FOREIGN KEY (UsuarioRolID) REFERENCES UsuarioRol (UsuarioRolID),
+	CONSTRAINT FK_EntidadID FOREIGN KEY (EntidadID) REFERENCES Entidad (EntidadID)
+);
+go
 
-CREATE TABLE
-	VwDepMunicipio (
-		VwDepMunicipioID int PRIMARY KEY IDENTITY (1, 1) NOT NULL,
-		Departamento varchar(64) NOT NULL,
-		Municipio varchar(64) NOT NULL,
-		EntidadID int NOT NULL,
-		CONSTRAINT FK_ENTIDADID FOREIGN KEY (EntidadID) REFERENCES Entidad (EntidadID)
-	);
-
---db SalaViirtuales
-CREATE TABLE
-	Solicitud (
-		SolicitudID int PRIMARY KEY IDENTITY (1, 1) NOT NULL,
+BEGIN TRY
+CREATE TABLE Solicitud (
+		SolicitudID int IDENTITY (1, 1) NOT NULL,
 		SolicitanteID int NOT NULL,
 		FechaRegistro date NOT NULL,
 		--Regitra la fecha de Creacion del Registro
@@ -69,7 +74,7 @@ CREATE TABLE
 		FechaFin date NOT NULL,
 		HoraInicio Time(0) NOT NULL,
 		HoraFin Time(0) NOT NULL,
-		VwDepMunicipioID int NOT NULL,
+		EntidadID int NOT NULL,
 		Expediente varchar(128) NOT NULL,
 		Actividad varchar(256) NOT NULL,
 		UrlSesion varchar(256) NOT NULL DEFAULT 'Sin Generar',
@@ -78,14 +83,15 @@ CREATE TABLE
 		--Estado de la Solicitud
 		EstadoRegistroID INT NOT NULL DEFAULT 1,
 		--Estado del Registro
+		constraint PK_SolicitudID primary key (SolicitudID),
 		CONSTRAINT FK_SOLICITANTEID FOREIGN KEY (SolicitanteID) REFERENCES Usuario (UsuarioID),
-		CONSTRAINT FK_VWDEPMUNICIPIOID FOREIGN KEY (VwDepMunicipioID) REFERENCES VwDepMunicipio (VwDepMunicipioID),
+		CONSTRAINT FK_EntidadID FOREIGN KEY (EntidadID) REFERENCES Entidad (EntidadID),
 		CONSTRAINT FK_ESTADOSOLICITUDID FOREIGN KEY (EstadoSolicitudID) REFERENCES EstadoSolicitud (EstadoSolicitudID),
 		CONSTRAINT FK_ESTADOREGISTROID FOREIGN KEY (EstadoRegistroID) REFERENCES EstadoRegistro (EstadoRegistroID)
-	);
+);
+GO
 
-CREATE TABLE
-	SolicitudHistorial (
+CREATE TABLE SolicitudHistorial (
 		SolicitudID int PRIMARY KEY IDENTITY (1, 1) NOT NULL,
 		SolicitanteID int NOT NULL,
 		FechaRegistro date NOT NULL,
@@ -109,98 +115,17 @@ CREATE TABLE
 		UsuarioModificaID int,
 		CONSTRAINT FK_USUARIOMODIFICAID FOREIGN KEY (UsuarioModificaID) REFERENCES Usuario (UsuarioID)
 	);
+GO
 
-INSERT INTO
-	EstadoSolicitud (descripcion)
-VALUES
-	('PEN'),
-	--Pendiente
-	('APR'),
-	--Aprobado
-	('REC');
+END TRY
 
---Rechazado
-INSERT INTO
-	EstadoRegistro (descripcion)
-VALUES
-	('ACT'),
-	--activo
-	('DEB'),
-	--de Baja
-	('BOR');
+BEGIN CATCH
+    -- Captura la excepción y muestra un mensaje de error
+    PRINT 'Error al crear la tabla: ' + ERROR_MESSAGE();
+END CATCH
+go
+--db SalaViirtuales
 
---Borrado
-INSERT INTO
-	UsuarioRol (descripcion)
-VALUES
-	('aprobante'),
-	('solicitante');
-
-INSERT INTO
-	Usuario (Nombre, UsuarioRolID)
-VALUES
-	('Juan', 1),
-	('Fredd', 2),
-	('Moises', 1);
-
-INSERT INTO
-	Entidad (descripcion)
-VALUES
-	('CSJ');
-
-INSERT INTO
-	VwDepMunicipio (Departamento, Municipio, EntidadID)
-VALUES
-	('Managua', 'Managua', 1);
-
--- Insertar valor en la tabla Solicitud
-INSERT INTO
-	Solicitud (
-		SolicitanteID,
-		FechaRegistro,
-		FechaInicio,
-		FechaFin,
-		HoraInicio,
-		HoraFin,
-		VwDepMunicipioID,
-		Expediente,
-		Actividad,
-		Motivo
-	)
-VALUES
-	(
-		1,
-		'2023-09-20',
-		'2023-09-21',
-		'2023-09-22',
-		'08:00:00',
-		'17:00:00',
-		1,
-		'Exp001',
-		'Reunion',
-		'Reunion de trabajo'
-	),
-	(
-		2,
-		'2023-09-21',
-		'2023-09-23',
-		'2023-09-24',
-		'09:00:00',
-		'18:00:00',
-		1,
-		'Exp002',
-		'Conferencia',
-		'Conferencia anual'
-	);
-
-INSERT INTO
-	RolesRutas (UsuarioRolID, NombreRuta)
-VALUES
-	(2, '/solicitante'),
-	(2, '/solicitante/inicio'),
-	(2, '/solicitante/solicitar'),
-	(2, '/solicitante/registros') 
-	GO
 
 
 SELECT
@@ -261,80 +186,14 @@ SET
 WHERE
 	SolicitudID = 2;
 
-CREATE VIEW
-	VwSolicitudDetalles AS
-SELECT
-	s.SolicitudID,
-	u.UsuarioID AS SolicitanteID,
-	u.Nombre AS SolicitanteNombre,
-	s.FechaRegistro,
-	s.FechaInicio,
-	s.FechaFin,
-	s.HoraInicio,
-	s.HoraFin,
-	v.VwDepMunicipioID,
-	v.Departamento,
-	v.Municipio,
-	e.EntidadID,
-	e.descripcion AS Entidad,
-	s.Expediente,
-	s.Actividad,
-	s.UrlSesion,
-	s.Motivo,
-	es.EstadoSolicitudID,
-	es.descripcion AS EstadoSolicitud,
-	er.EstadoRegistroID,
-	er.descripcion AS EstadoRegistro
-FROM
-	Solicitud s
-	INNER JOIN Usuario u ON s.SolicitanteID = u.UsuarioID
-	INNER JOIN VwDepMunicipio v ON s.VwDepMunicipioID = v.VwDepMunicipioID
-	INNER JOIN Entidad e ON v.EntidadID = e.EntidadID
-	INNER JOIN EstadoSolicitud es ON s.EstadoSolicitudID = es.EstadoSolicitudID
-	INNER JOIN EstadoRegistro er ON s.EstadoRegistroID = er.EstadoRegistroID;
-
-CREATE VIEW
-	VwUsuarioDetalles AS
-SELECT
-	u.UsuarioID,
-	u.Nombre,
-	ur.UsuarioRolID AS RolId,
-	ur.descripcion AS Rol
-FROM
-	Usuario AS u
-	INNER JOIN UsuarioRol AS ur ON u.UsuarioID = ur.UsuarioRolID GO
 
 
-	-- Crear la vista que combina informacion de RolesRutas y UsuarioRol con INNER JOIN
-CREATE VIEW
-	VwRolesRutas AS
-SELECT
-	RR.UsuarioRolID,
-	UR.descripcion AS Rol,
-	RR.RutaID,
-	RR.NombreRuta
-FROM RolesRutas AS RR
-	INNER JOIN UsuarioRol AS UR ON RR.UsuarioRolID = UR.UsuarioRolID;
-GO
-
-
-CREATE TABLE
-	GuardRutas (
-		RutaID int PRIMARY KEY IDENTITY (1, 1) NOT NULL,
-		Nombre VARCHAR(50),
-		_URL VARCHAR(255)
-	)
-select
-	*
-from
-	VwSolicitudDetalles;
-
-select
-	*
-from
-	VwUsuarioDetalles;
-
-select
-	*
-from
-	VwRolesRutas;
+	
+--CREATE TABLE
+--	VwDepMunicipio (
+--		VwDepMunicipioID int PRIMARY KEY IDENTITY (1, 1) NOT NULL,
+--		Departamento varchar(64) NOT NULL,
+--		Municipio varchar(64) NOT NULL,
+--		EntidadID int NOT NULL,
+--		CONSTRAINT FK_ENTIDADID FOREIGN KEY (EntidadID) REFERENCES Entidad (EntidadID)
+--	);
