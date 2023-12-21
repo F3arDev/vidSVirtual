@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebApiSalaVirtual.Models;
+namespace WebApiSalaVirtual.Models.DbSalaVirtual.Vistas;
 
-public partial class VwUsuarioDetalle
+public partial class VwUsuarioDetalles
 {
     public int UsuarioId { get; set; }
 

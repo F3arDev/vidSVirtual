@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebApiSalaVirtual.Models;
+namespace WebApiSalaVirtual.Models.DbSalaVirtual.Vistas;
 
-public partial class VwRolesRuta
+public partial class VwRolesRutas
 {
     public int? UsuarioRolId { get; set; }
 

@@ -68,7 +68,7 @@ namespace WebApiSalaVirtual.Services
             {
                 var LogRefreshToken = new Models.DbSalaVirtual.LogRefreshToken
                 {
-                    UsuarioID = UsuarioID,
+                    UsuarioId = UsuarioID,
                     Token = Token,
                     RefreshToken = RefreshToken,
                     // FechaCreacion = DateTime.Now,
@@ -98,9 +98,9 @@ namespace WebApiSalaVirtual.Services
                 {
                     return await Task.FromResult<object>(null);
                 }
-                string Token = GenerarToken(usuario.UsuarioID.ToString());
+                string Token = GenerarToken(usuario.UsuarioId.ToString());
                 string RefreshToken = GenerarRefreshToken();
-                var Tokens = await GuardarLogRefreshToken(usuario.UsuarioID, Token, RefreshToken);
+                var Tokens = await GuardarLogRefreshToken(usuario.UsuarioId, Token, RefreshToken);
                 return new { usuario, Tokens };
             }
             catch (System.Exception)
@@ -114,7 +114,7 @@ namespace WebApiSalaVirtual.Services
             var refreshTokenEncontrado = _context.LogRefreshToken.FirstOrDefault(x =>
             x.Token == refreshTokenRequest.TokenExpirado &&
             x.RefreshToken == refreshTokenRequest.RefreshToken &&
-            x.UsuarioID == UsuarioID
+            x.UsuarioId == UsuarioID
             );
 
             if (refreshTokenEncontrado == null)

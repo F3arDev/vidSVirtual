@@ -30,8 +30,6 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     const authStore = await useAuthStore();
     let auth = await authStore.usuario;  // Simulando que el usuario está autenticado
-    // eslint-disable-next-line no-debugger
-    debugger
     if (to.name !== 'login') {
         if (!auth) {
             next({ name: 'login' });

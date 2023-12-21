@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebApiSalaVirtual.Models;
+namespace WebApiSalaVirtual.Models.DbSalaVirtual;
 
-public partial class VwSolicitudDetalle
+public partial class LogSolicitud
 {
     public int SolicitudId { get; set; }
 
     public int SolicitanteId { get; set; }
-
-    public string SolicitanteNombre { get; set; } = null!;
 
     public DateTime FechaRegistro { get; set; }
 
@@ -21,11 +19,7 @@ public partial class VwSolicitudDetalle
 
     public TimeSpan HoraFin { get; set; }
 
-    public string? Departamento { get; set; }
-
     public int EntidadId { get; set; }
-
-    public string Entidad { get; set; } = null!;
 
     public string Expediente { get; set; } = null!;
 
@@ -37,9 +31,11 @@ public partial class VwSolicitudDetalle
 
     public int EstadoSolicitudId { get; set; }
 
-    public string EstadoSolicitud { get; set; } = null!;
-
     public int EstadoRegistroId { get; set; }
 
-    public string EstadoRegistro { get; set; } = null!;
+    public DateTime? FechaModificacion { get; set; }
+
+    public int? UsuarioModificaId { get; set; }
+
+    //public virtual Usuario? UsuarioModifica { get; set; }
 }

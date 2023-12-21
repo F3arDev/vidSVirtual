@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using WebApiSalaVirtual.Models.DbSalaVirtual;
+using WebApiSalaVirtual.Models.DbSalaVirtual.Vistas;
 
-namespace WebApiSalaVirtual.Models;
+namespace WebApiSalaVirtual.Models.Data;
 
 public partial class DbSalasVirtualesContext : DbContext
 {
@@ -15,33 +17,29 @@ public partial class DbSalasVirtualesContext : DbContext
     {
     }
 
-    public virtual DbSet<Entidad> Entidads { get; set; }
+    public virtual DbSet<Entidad> Entidad { get; set; }
 
-    public virtual DbSet<EstadoRegistro> EstadoRegistros { get; set; }
+    public virtual DbSet<EstadoRegistro> EstadoRegistro { get; set; }
 
-    public virtual DbSet<EstadoSolicitud> EstadoSolicituds { get; set; }
+    public virtual DbSet<EstadoSolicitud> EstadoSolicitud { get; set; }
 
-    public virtual DbSet<LogRefreshToken> LogRefreshTokens { get; set; }
+    public virtual DbSet<LogRefreshToken> LogRefreshToken { get; set; }
 
-    public virtual DbSet<LogSolicitud> LogSolicituds { get; set; }
+    public virtual DbSet<LogSolicitud> LogSolicitud { get; set; }
 
-    public virtual DbSet<RolesRuta> RolesRutas { get; set; }
+    public virtual DbSet<RolesRuta> RolesRuta { get; set; }
 
-    public virtual DbSet<Solicitud> Solicituds { get; set; }
+    public virtual DbSet<Solicitud> Solicitud { get; set; }
 
-    public virtual DbSet<Usuario> Usuarios { get; set; }
+    public virtual DbSet<Usuario> Usuario { get; set; }
 
-    public virtual DbSet<UsuarioRol> UsuarioRols { get; set; }
+    public virtual DbSet<UsuarioRol> UsuarioRol { get; set; }
 
-    public virtual DbSet<VwRolesRuta> VwRolesRutas { get; set; }
+    public virtual DbSet<VwRolesRutas> VwRolesRutas { get; set; }
 
-    public virtual DbSet<VwSolicitudDetalle> VwSolicitudDetalles { get; set; }
+    public virtual DbSet<VwSolicitudDetalles> VwSolicitudDetalles { get; set; }
 
-    public virtual DbSet<VwUsuarioDetalle> VwUsuarioDetalles { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server= 192.168.68.13; Database=dbSalasVirtuales; User Id=favilez; Password=123; TrustServerCertificate=true;");
+    public virtual DbSet<VwUsuarioDetalles> VwUsuarioDetalles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -103,9 +101,9 @@ public partial class DbSalasVirtualesContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.UsuarioId).HasColumnName("UsuarioID");
 
-            entity.HasOne(d => d.Usuario).WithMany(p => p.LogRefreshTokens)
-                .HasForeignKey(d => d.UsuarioId)
-                .HasConstraintName("FK__LogRefres__Usuar__6EC0713C");
+            //entity.HasOne(d => d.Usuario).WithMany(p => p.LogRefreshTokens)
+            //    .HasForeignKey(d => d.UsuarioId)
+            //    .HasConstraintName("FK__LogRefres__Usuar__6EC0713C");
         });
 
         modelBuilder.Entity<LogSolicitud>(entity =>
@@ -145,9 +143,9 @@ public partial class DbSalasVirtualesContext : DbContext
                 .HasDefaultValueSql("('Sin Generar')");
             entity.Property(e => e.UsuarioModificaId).HasColumnName("UsuarioModificaID");
 
-            entity.HasOne(d => d.UsuarioModifica).WithMany(p => p.LogSolicituds)
-                .HasForeignKey(d => d.UsuarioModificaId)
-                .HasConstraintName("FK__LogSolici__Usuar__756D6ECB");
+            //entity.HasOne(d => d.UsuarioModifica).WithMany(p => p.LogSolicituds)
+            //    .HasForeignKey(d => d.UsuarioModificaId)
+            //    .HasConstraintName("FK__LogSolici__Usuar__756D6ECB");
         });
 
         modelBuilder.Entity<RolesRuta>(entity =>
@@ -160,9 +158,9 @@ public partial class DbSalasVirtualesContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.UsuarioRolId).HasColumnName("UsuarioRolID");
 
-            entity.HasOne(d => d.UsuarioRol).WithMany(p => p.RolesRuta)
-                .HasForeignKey(d => d.UsuarioRolId)
-                .HasConstraintName("FK__RolesRuta__Usuar__5CA1C101");
+            //entity.HasOne(d => d.UsuarioRol).WithMany(p => p.RolesRuta)
+            //    .HasForeignKey(d => d.UsuarioRolId)
+            //    .HasConstraintName("FK__RolesRuta__Usuar__5CA1C101");
         });
 
         modelBuilder.Entity<Solicitud>(entity =>
@@ -200,25 +198,25 @@ public partial class DbSalasVirtualesContext : DbContext
                 .IsUnicode(false)
                 .HasDefaultValueSql("('Sin Generar')");
 
-            entity.HasOne(d => d.Entidad).WithMany(p => p.Solicituds)
-                .HasForeignKey(d => d.EntidadId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Solicitud__Entid__681373AD");
+            //entity.HasOne(d => d.Entidad).WithMany(p => p.Solicituds)
+            //    .HasForeignKey(d => d.EntidadId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK__Solicitud__Entid__681373AD");
 
-            entity.HasOne(d => d.EstadoRegistro).WithMany(p => p.Solicituds)
-                .HasForeignKey(d => d.EstadoRegistroId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Solicitud__Estad__69FBBC1F");
+            //entity.HasOne(d => d.EstadoRegistro).WithMany(p => p.Solicituds)
+            //    .HasForeignKey(d => d.EstadoRegistroId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK__Solicitud__Estad__69FBBC1F");
 
-            entity.HasOne(d => d.EstadoSolicitud).WithMany(p => p.Solicituds)
-                .HasForeignKey(d => d.EstadoSolicitudId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Solicitud__Estad__690797E6");
+            //entity.HasOne(d => d.EstadoSolicitud).WithMany(p => p.Solicituds)
+            //    .HasForeignKey(d => d.EstadoSolicitudId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK__Solicitud__Estad__690797E6");
 
-            entity.HasOne(d => d.Solicitante).WithMany(p => p.Solicituds)
-                .HasForeignKey(d => d.SolicitanteId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Solicitud__Solic__671F4F74");
+            //entity.HasOne(d => d.Solicitante).WithMany(p => p.Solicituds)
+            //    .HasForeignKey(d => d.SolicitanteId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK__Solicitud__Solic__671F4F74");
         });
 
         modelBuilder.Entity<Usuario>(entity =>
@@ -237,14 +235,14 @@ public partial class DbSalasVirtualesContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.UsuarioRolId).HasColumnName("UsuarioRolID");
 
-            entity.HasOne(d => d.Entidad).WithMany(p => p.Usuarios)
-                .HasForeignKey(d => d.EntidadId)
-                .HasConstraintName("FK__Usuario__Entidad__607251E5");
+            //entity.HasOne(d => d.Entidad).WithMany(p => p.Usuarios)
+            //    .HasForeignKey(d => d.EntidadId)
+            //    .HasConstraintName("FK__Usuario__Entidad__607251E5");
 
-            entity.HasOne(d => d.UsuarioRol).WithMany(p => p.Usuarios)
-                .HasForeignKey(d => d.UsuarioRolId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Usuario__Usuario__5F7E2DAC");
+            //entity.HasOne(d => d.UsuarioRol).WithMany(p => p.Usuarios)
+            //    .HasForeignKey(d => d.UsuarioRolId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK__Usuario__Usuario__5F7E2DAC");
         });
 
         modelBuilder.Entity<UsuarioRol>(entity =>
@@ -259,7 +257,7 @@ public partial class DbSalasVirtualesContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<VwRolesRuta>(entity =>
+        modelBuilder.Entity<VwRolesRutas>(entity =>
         {
             entity
                 .HasNoKey()
@@ -275,7 +273,7 @@ public partial class DbSalasVirtualesContext : DbContext
             entity.Property(e => e.UsuarioRolId).HasColumnName("UsuarioRolID");
         });
 
-        modelBuilder.Entity<VwSolicitudDetalle>(entity =>
+        modelBuilder.Entity<VwSolicitudDetalles>(entity =>
         {
             entity
                 .HasNoKey()
@@ -320,7 +318,7 @@ public partial class DbSalasVirtualesContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<VwUsuarioDetalle>(entity =>
+        modelBuilder.Entity<VwUsuarioDetalles>(entity =>
         {
             entity
                 .HasNoKey()

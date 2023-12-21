@@ -4,7 +4,7 @@ using WebApiSalaVirtual.Services;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authorization;
 using WebApiSalaVirtual.Models.Auth;
-using WebApiSalaVirtual.Models.Auth.VwAuth;
+using WebApiSalaVirtual.Models.DbSalaVirtual.Vistas;
 using WebApiSalaVirtual.Models.Data;
 
 namespace WebApiSalaVirtual.Controllers.v1

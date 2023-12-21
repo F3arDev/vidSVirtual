@@ -1,12 +1,15 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Collections.Generic;
 
-namespace WebApiSalaVirtual.Models.DbSalaVirtual;
+namespace WebApiSalaVirtual.Models.DbSalaVirtual.Vistas;
 
-public partial class SolicitudHistorial
+public partial class VwSolicitudDetalles
 {
     public int SolicitudId { get; set; }
 
     public int SolicitanteId { get; set; }
+
+    public string SolicitanteNombre { get; set; } = null!;
 
     public DateTime FechaRegistro { get; set; }
 
@@ -18,7 +21,11 @@ public partial class SolicitudHistorial
 
     public TimeSpan HoraFin { get; set; }
 
-    public int EntidadID { get; set; }
+    public string? Departamento { get; set; }
+
+    public int EntidadId { get; set; }
+
+    public string Entidad { get; set; } = null!;
 
     public string Expediente { get; set; } = null!;
 
@@ -30,12 +37,9 @@ public partial class SolicitudHistorial
 
     public int EstadoSolicitudId { get; set; }
 
+    public string EstadoSolicitud { get; set; } = null!;
+
     public int EstadoRegistroId { get; set; }
 
-    public DateTime? FechaModificacion { get; set; }
-
-    public int? UsuarioModificaId { get; set; }
-
-    [JsonIgnore]
-    public virtual Usuario? UsuarioModifica { get; set; }
+    public string EstadoRegistro { get; set; } = null!;
 }

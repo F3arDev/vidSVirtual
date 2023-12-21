@@ -1,0 +1,72 @@
+{
+	"kind": "calendar#events",
+	"etag": "\"p3289lm6vkme860o\"",
+	"summary": "Google Meet API",
+	"description": "Test para ver si me permite crear eventos en un solo calendario de diferentes Usuarios",
+	"updated": "2023-12-19T20:03:25.258Z",
+	"timeZone": "America/Chicago",
+	"accessRole": "owner",
+	"defaultReminders": [],
+	"nextSyncToken": "CJCa2N-lnIMDEJCa2N-lnIMDGAUgvLaUmgIovLaUmgI=",
+	"items": [
+	 {
+	  "kind": "calendar#event",
+	  "etag": "\"3406032410516000\"",
+	  "id": "174pptrsnmmr7rjrr0qike36mo",
+	  "status": "confirmed",
+	  "htmlLink": "https://www.google.com/calendar/event?eid=MTc0cHB0cnNubW1yN3JqcnIwcWlrZTM2bW8gMDAxYmI2YTk4M2MyM2Y1NzcyMzhmYjQzNzRmNTcwYjc2MjM5MDE3ZTBmZmMxZDllMTlhNmUyZTMxMDM3ZDBlY0Bn",
+	  "created": "2023-12-19T20:03:25.000Z",
+	  "updated": "2023-12-19T20:03:25.258Z",
+	  "summary": "DataCalendar desde Calendar",
+	  "description": "Algo que ver con al conferencia",
+	  "location": "Managua, Nicaragua",
+	  "creator": {
+	   "email": "avilezf.1226@gmail.com"
+	  },
+	  "organizer": {
+	   "email": "001bb6a983c23f577238fb4374f570b76239017e0ffc1d9e19a6e2e31037d0ec@group.calendar.google.com",
+	   "displayName": "Google Meet API",
+	   "self": true
+	  },
+	  "start": {
+	   "dateTime": "2023-12-19T14:30:00-06:00",
+	   "timeZone": "America/Chicago"
+	  },
+	  "end": {
+	   "dateTime": "2023-12-19T15:30:00-06:00",
+	   "timeZone": "America/Chicago"
+	  },
+	  "iCalUID": "174pptrsnmmr7rjrr0qike36mo@google.com",
+	  "sequence": 0,
+	  "attendees": [
+	   {
+		"email": "freddenderson@gmail.com",
+		"responseStatus": "needsAction"
+	   }
+	  ],
+	  "hangoutLink": "https://meet.google.com/bzm-dnad-ttx",
+	  "conferenceData": {
+	   "entryPoints": [
+		{
+		 "entryPointType": "video",
+		 "uri": "https://meet.google.com/bzm-dnad-ttx",
+		 "label": "meet.google.com/bzm-dnad-ttx"
+		}
+	   ],
+	   "conferenceSolution": {
+		"key": {
+		 "type": "hangoutsMeet"
+		},
+		"name": "Google Meet",
+		"iconUri": "https://fonts.gstatic.com/s/i/productlogos/meet_2020q4/v6/web-512dp/logo_meet_2020q4_color_2x_web_512dp.png"
+	   },
+	   "conferenceId": "bzm-dnad-ttx"
+	  },
+	  "reminders": {
+	   "useDefault": true
+	  },
+	  "eventType": "default"
+	 }
+	]
+   }
+   

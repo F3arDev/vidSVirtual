@@ -31,8 +31,7 @@ namespace WebApiSalaVirtual.Controllers.v2
             {
                 return NotFound();
             }
-            return await _context.Solicitud
-                            .ToListAsync(); // Incluye el primer objeto relacionado
+            return await _context.Solicitud.ToListAsync(); // Incluye el primer objeto relacionado
                                                                      // .Include(s => s.oVwDepMunicipio) // Incluye otro objeto relacionado
                                                                      // .Include(s => s.oEstadoSolicitud) // Incluye otro objeto relacionado
         }

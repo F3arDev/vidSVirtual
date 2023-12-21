@@ -2,9 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
-using WebApiSalaVirtual.Models.DbSalaVirtual.Vistas;
 using WebApiSalaVirtual.Models.Data;
 using WebApiSalaVirtual.Models.DbSalaVirtual;
+using WebApiSalaVirtual.Models.DbSalaVirtual.Vistas;
 
 namespace WebApiSalaVirtual.Controllers.v1
 {
@@ -25,7 +25,6 @@ namespace WebApiSalaVirtual.Controllers.v1
         }
 
         [HttpGet]
-
         [Route("Lista")]
         public async Task<ActionResult<IEnumerable<VwSolicitudDetalles>>> GetSolicitudsVista()
         {
@@ -49,7 +48,7 @@ namespace WebApiSalaVirtual.Controllers.v1
             try
             {
                 // Filtrar solicitudes pendientes por EstadoSolicitudId igual a un valor específico (por ejemplo, 1 para estado pendiente)
-                lista = _context.VwSolicitudDetalles.Where(s => s.EstadoSolicitudID == 1).ToList();
+                lista = _context.VwSolicitudDetalles.Where(s => s.EstadoSolicitudId == 1).ToList();
                 return StatusCode(StatusCodes.Status200OK, new { mensaje = "Ok", response = lista });
             }
             catch (Exception error)
@@ -67,7 +66,7 @@ namespace WebApiSalaVirtual.Controllers.v1
             try
             {
                 // Filtrar solicitudes por el solicitanteId proporcionado en la URL
-                lista = _context.VwSolicitudDetalles.Where(s => s.SolicitanteID == solicitanteId).ToList();
+                lista = _context.VwSolicitudDetalles.Where(s => s.SolicitanteId == solicitanteId).ToList();
                 return StatusCode(StatusCodes.Status200OK, new { mensaje = "Ok", response = lista });
             }
             catch (Exception error)

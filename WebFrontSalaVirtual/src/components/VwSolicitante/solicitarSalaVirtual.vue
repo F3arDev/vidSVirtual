@@ -77,15 +77,9 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
-
-
 import { solicitudServices } from '@/services'
 const service = new solicitudServices();
-
 import alertify from 'alertifyjs';
-
-
-
 import { useAuthStore } from '@/stores';
 
 
@@ -143,7 +137,6 @@ const getDataSolicitud = async () => {
 			"expediente": Expediente.value,
 			"actividad": Actividad.value
 		}
-		debugger
 		let result = await service.sendSolicitudPEN(jsonSendSolicitud)
 		if (result == true) {
 			alertify.success('Success notification message.');

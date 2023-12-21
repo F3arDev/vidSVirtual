@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebApiSalaVirtual.Models;
+namespace WebApiSalaVirtual.Models.DbSalaVirtual;
 
 public partial class RolesRuta
 {
@@ -11,5 +11,5 @@ public partial class RolesRuta
 
     public string? NombreRuta { get; set; }
 
-    public virtual UsuarioRol? UsuarioRol { get; set; }
+    //public virtual UsuarioRol? UsuarioRol { get; set; }
 }
