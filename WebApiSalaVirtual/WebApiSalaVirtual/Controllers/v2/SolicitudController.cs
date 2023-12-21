@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebApiSalaVirtual.Models;
+using WebApiSalaVirtual.Models.Data;
+using WebApiSalaVirtual.Models.DbSalaVirtual;
+using WebApiSalaVirtual.Models.DbSalaVirtual.Vistas;
 
 namespace WebApiSalaVirtual.Controllers.v2
 {
@@ -25,11 +27,11 @@ namespace WebApiSalaVirtual.Controllers.v2
         [Route("Lista")]
         public async Task<ActionResult<IEnumerable<Solicitud>>> GetSolicituds()
         {
-            if (_context.Solicituds == null)
+            if (_context.Solicitud == null)
             {
                 return NotFound();
             }
-            return await _context.Solicituds
+            return await _context.Solicitud
                             .ToListAsync(); // Incluye el primer objeto relacionado
                                                                      // .Include(s => s.oVwDepMunicipio) // Incluye otro objeto relacionado
                                                                      // .Include(s => s.oEstadoSolicitud) // Incluye otro objeto relacionado
@@ -40,11 +42,11 @@ namespace WebApiSalaVirtual.Controllers.v2
         [HttpGet("{id}")]
         public async Task<ActionResult<Solicitud>> GetSolicitud(int id)
         {
-            if (_context.Solicituds == null)
+            if (_context.Solicitud == null)
             {
                 return NotFound();
             }
-            var solicitud = await _context.Solicituds.FindAsync(id);
+            var solicitud = await _context.Solicitud.FindAsync(id);
 
             if (solicitud == null)
             {

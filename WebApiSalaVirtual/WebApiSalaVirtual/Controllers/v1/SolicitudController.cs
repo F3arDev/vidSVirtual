@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebApiSalaVirtual.Models;
 using Microsoft.AspNetCore.Authorization;
-
-
+using WebApiSalaVirtual.Models.DbSalaVirtual.Vistas;
+using WebApiSalaVirtual.Models.Data;
+using WebApiSalaVirtual.Models.DbSalaVirtual;
 
 namespace WebApiSalaVirtual.Controllers.v1
 {
@@ -82,7 +82,7 @@ namespace WebApiSalaVirtual.Controllers.v1
         {
             try
             {
-                _context.Solicituds.Add(objeto);
+                _context.Solicitud.Add(objeto);
                 _context.SaveChanges();
                 return StatusCode(StatusCodes.Status200OK, new { mensaje = "ok" });
             }
@@ -100,7 +100,7 @@ namespace WebApiSalaVirtual.Controllers.v1
             try
             {
                 // Busca la solicitud existente en la base de datos por su solicitudId
-                var objeto = _context.Solicituds.Find(oSolicitud.SolicitudId);
+                var objeto = _context.Solicitud.Find(oSolicitud.SolicitudId);
 
                 // Si el producto no existe, devuelve un BadRequest
                 if (objeto == null)

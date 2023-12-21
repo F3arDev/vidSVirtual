@@ -5,11 +5,16 @@ SELECT
 	u.UsuarioID,
 	u.Nombre,
 	ur.UsuarioRolID AS RolId,
-	ur.descripcion AS Rol
+	ur.Descripcion AS Rol,
+	en.EntidadID,
+	en.descripcion AS Entidad
 FROM
 	Usuario AS u
 	INNER JOIN UsuarioRol AS ur ON u.UsuarioID = ur.UsuarioRolID 
+	INNER JOIN Entidad AS en ON u.EntidadID = u.EntidadID
 GO
+select * from VwUsuarioDetalles
+
 
 --VwSolicitudDetalles
 CREATE VIEW
@@ -23,7 +28,7 @@ SELECT
 	s.FechaFin,
 	s.HoraInicio,
 	s.HoraFin,
-	v.VwDepMunicipioID,
+	u.Departamento,
 	v.Departamento,
 	v.Municipio,
 	e.EntidadID,

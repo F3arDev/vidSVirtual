@@ -6,12 +6,12 @@ using System.Text;
 
 
 using WebApiSalaVirtual.Models.Auth;
-using WebApiSalaVirtual.Models;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography;
-
+using WebApiSalaVirtual.Models.DbSalaVirtual.Vistas;
+using WebApiSalaVirtual.Models.Data;
 
 namespace WebApiSalaVirtual.Services
 {
@@ -66,7 +66,7 @@ namespace WebApiSalaVirtual.Services
         {
             try
             {
-                var LogRefreshToken = new LogRefreshToken
+                var LogRefreshToken = new Models.DbSalaVirtual.LogRefreshToken
                 {
                     UsuarioID = UsuarioID,
                     Token = Token,

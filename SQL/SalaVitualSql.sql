@@ -47,7 +47,7 @@ CREATE TABLE RolesRutas (
 	RutaID int IDENTITY (1, 1) NOT NULL,
 	UsuarioRolID int,
 	NombreRuta varchar(255),
-	constraint PK_RutaID primary key (RutaID),
+	primary key (RutaID),
 	FOREIGN KEY (UsuarioRolID) REFERENCES UsuarioRol (UsuarioRolID)
 );
 go
@@ -58,12 +58,11 @@ CREATE TABLE Usuario (
 	UsuarioRolID int NOT NULL,
 	EntidadID int,
 	primary key (UsuarioID),
-	CONSTRAINT FK_UsuarioRolID FOREIGN KEY (UsuarioRolID) REFERENCES UsuarioRol (UsuarioRolID),
-	CONSTRAINT FK_EntidadID FOREIGN KEY (EntidadID) REFERENCES Entidad (EntidadID)
+	FOREIGN KEY (UsuarioRolID) REFERENCES UsuarioRol (UsuarioRolID),
+	FOREIGN KEY (EntidadID) REFERENCES Entidad (EntidadID)
 );
 go
 
-BEGIN TRY
 CREATE TABLE Solicitud (
 		SolicitudID int IDENTITY (1, 1) NOT NULL,
 		SolicitanteID int NOT NULL,
@@ -83,15 +82,17 @@ CREATE TABLE Solicitud (
 		--Estado de la Solicitud
 		EstadoRegistroID INT NOT NULL DEFAULT 1,
 		--Estado del Registro
-		constraint PK_SolicitudID primary key (SolicitudID),
-		CONSTRAINT FK_SOLICITANTEID FOREIGN KEY (SolicitanteID) REFERENCES Usuario (UsuarioID),
-		CONSTRAINT FK_EntidadID FOREIGN KEY (EntidadID) REFERENCES Entidad (EntidadID),
-		CONSTRAINT FK_ESTADOSOLICITUDID FOREIGN KEY (EstadoSolicitudID) REFERENCES EstadoSolicitud (EstadoSolicitudID),
-		CONSTRAINT FK_ESTADOREGISTROID FOREIGN KEY (EstadoRegistroID) REFERENCES EstadoRegistro (EstadoRegistroID)
+		primary key (SolicitudID),
+		FOREIGN KEY (SolicitanteID) REFERENCES Usuario (UsuarioID),
+		FOREIGN KEY (EntidadID) REFERENCES Entidad (EntidadID),
+		FOREIGN KEY (EstadoSolicitudID) REFERENCES EstadoSolicitud (EstadoSolicitudID),
+		FOREIGN KEY (EstadoRegistroID) REFERENCES EstadoRegistro (EstadoRegistroID)
 );
 GO
 
-CREATE TABLE SolicitudHistorial (
+
+
+CREATE TABLE LogSolicitud (
 		SolicitudID int PRIMARY KEY IDENTITY (1, 1) NOT NULL,
 		SolicitanteID int NOT NULL,
 		FechaRegistro date NOT NULL,
@@ -101,7 +102,7 @@ CREATE TABLE SolicitudHistorial (
 		FechaFin date NOT NULL,
 		HoraInicio Time(0) NOT NULL,
 		HoraFin Time(0) NOT NULL,
-		VwDepMunicipioID int NOT NULL,
+		EntidadID int NOT NULL,
 		Expediente varchar(128) NOT NULL,
 		Actividad varchar(256) NOT NULL,
 		UrlSesion varchar(256) NOT NULL DEFAULT 'Sin Generar',
@@ -113,12 +114,17 @@ CREATE TABLE SolicitudHistorial (
 		--Nuevos Campos
 		FechaModificacion date,
 		UsuarioModificaID int,
-		CONSTRAINT FK_USUARIOMODIFICAID FOREIGN KEY (UsuarioModificaID) REFERENCES Usuario (UsuarioID)
+		FOREIGN KEY (UsuarioModificaID) REFERENCES Usuario (UsuarioID)
 	);
 GO
 
-END TRY
+begin try
 
+SELECT
+	*
+FROM
+	RolesRutas
+END TRY
 BEGIN CATCH
     -- Captura la excepción y muestra un mensaje de error
     PRINT 'Error al crear la tabla: ' + ERROR_MESSAGE();
@@ -128,10 +134,6 @@ go
 
 
 
-SELECT
-	*
-FROM
-	RolesRutas
 select
 	*
 from

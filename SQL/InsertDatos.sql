@@ -1,25 +1,24 @@
 --Insert Datos
 
 INSERT INTO
-	EstadoSolicitud (descripcion)
+	EstadoSolicitud (Descripcion)
 VALUES
-	('PEN'),
+	('Pendiente'),
 	--Pendiente
-	('APR'),
+	('Aprobado'),
 	--Aprobado
-	('REC');
+	('Rechazado');
 go
 
 --Rechazado
 INSERT INTO
-	EstadoRegistro (descripcion)
+	EstadoRegistro (Descripcion)
 VALUES
-	('ACT'),
+	('Activo'),
 	--activo
-	('DEB'),
+	('De Baja'),
 	--de Baja
-	('BOR');
-	
+	('Borrado');
 go
 
 --Borrado
@@ -30,13 +29,8 @@ VALUES
 	('solicitante');
 go
 
-INSERT INTO
-	Usuario (Nombre, UsuarioRolID)
-VALUES
-	('Juan', 1),
-	('Fredd', 2),
-	('Moises', 1);
-go
+
+
 
 INSERT INTO
 	Entidad (descripcion)
@@ -45,10 +39,14 @@ VALUES
 go
 
 INSERT INTO
-	VwDepMunicipio (Departamento, Municipio, EntidadID)
+	Usuario (Nombre, UsuarioRolID, EntidadID)
 VALUES
-	('Managua', 'Managua', 1);
+	('Juan', 1,1),
+	('Fredd', 2,1),
+	('Moises', 1,1);
 go
+
+
 
 -- Insertar valor en la tabla Solicitud
 INSERT INTO
@@ -59,7 +57,7 @@ INSERT INTO
 		FechaFin,
 		HoraInicio,
 		HoraFin,
-		VwDepMunicipioID,
+		EntidadID,
 		Expediente,
 		Actividad,
 		Motivo

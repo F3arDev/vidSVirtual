@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
-using WebApiSalaVirtual.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
@@ -8,6 +7,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using WebApiSalaVirtual.Services;
+using WebApiSalaVirtual.Models.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
