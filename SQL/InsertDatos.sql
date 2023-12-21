@@ -39,18 +39,16 @@ VALUES
 go
 
 INSERT INTO
-	Usuario (Nombre, UsuarioRolID, EntidadID)
+	Usuario (Nombre, UsuarioRolID, EntidadID, Departamento)
 VALUES
-	('Juan', 1,1),
-	('Fredd', 2,1),
-	('Moises', 1,1);
+	('Juan', 1,1,'Managua'),
+	('Fredd', 2,1,'Managua'),
+	('Moises', 1,1,'Managua');
 go
 
 
-
 -- Insertar valor en la tabla Solicitud
-INSERT INTO
-	Solicitud (
+INSERT INTO	Solicitud (
 		SolicitanteID,
 		FechaRegistro,
 		FechaInicio,
@@ -95,6 +93,11 @@ VALUES
 	(2, '/solicitante'),
 	(2, '/solicitante/inicio'),
 	(2, '/solicitante/solicitar'),
-	(2, '/solicitante/registros') 
-	
+	(2, '/solicitante/registros'),
+	(1, '/aprobante'),
+	(1, '/aprobante/inicio'),
+	(1, '/aprobante/solicitudes'),
+	(1, '/aprobante/registros') 	
 GO
+
+

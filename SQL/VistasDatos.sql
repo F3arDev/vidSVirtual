@@ -6,6 +6,7 @@ SELECT
 	u.Nombre,
 	ur.UsuarioRolID AS RolId,
 	ur.Descripcion AS Rol,
+	u.Departamento,
 	en.EntidadID,
 	en.descripcion AS Entidad
 FROM
@@ -29,8 +30,6 @@ SELECT
 	s.HoraInicio,
 	s.HoraFin,
 	u.Departamento,
-	v.Departamento,
-	v.Municipio,
 	e.EntidadID,
 	e.descripcion AS Entidad,
 	s.Expediente,
@@ -44,11 +43,13 @@ SELECT
 FROM
 	Solicitud s
 	INNER JOIN Usuario u ON s.SolicitanteID = u.UsuarioID
-	INNER JOIN VwDepMunicipio v ON s.VwDepMunicipioID = v.VwDepMunicipioID
-	INNER JOIN Entidad e ON v.EntidadID = e.EntidadID
+	INNER JOIN Entidad e ON e.EntidadID = e.EntidadID
 	INNER JOIN EstadoSolicitud es ON s.EstadoSolicitudID = es.EstadoSolicitudID
 	INNER JOIN EstadoRegistro er ON s.EstadoRegistroID = er.EstadoRegistroID;
 GO
+
+select * from VwSolicitudDetalles
+
 
 --VwRolesRutas
 CREATE VIEW
@@ -61,3 +62,5 @@ SELECT
 FROM RolesRutas AS RR
 	INNER JOIN UsuarioRol AS UR ON RR.UsuarioRolID = UR.UsuarioRolID;
 GO
+
+select * from VwRolesRutas
