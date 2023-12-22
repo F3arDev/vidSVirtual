@@ -66,7 +66,7 @@ go
 CREATE TABLE Solicitud (
 		SolicitudID int IDENTITY (1, 1) NOT NULL,
 		SolicitanteID int NOT NULL,
-		FechaRegistro date NOT NULL,
+		FechaRegistro date NOT NULL DEFAULT CONVERT(date, GETDATE()),--Agregar por defecto la fecha de insersion del dato,
 		--Regitra la fecha de Creacion del Registro
 		--Fecha de Inicio y Fin de la Sesion, Datos Solicitud
 		FechaInicio date NOT NULL,

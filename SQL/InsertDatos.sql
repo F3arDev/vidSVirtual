@@ -50,7 +50,6 @@ go
 -- Insertar valor en la tabla Solicitud
 INSERT INTO	Solicitud (
 		SolicitanteID,
-		FechaRegistro,
 		FechaInicio,
 		FechaFin,
 		HoraInicio,
@@ -63,7 +62,6 @@ INSERT INTO	Solicitud (
 VALUES
 	(
 		1,
-		'2023-09-20',
 		'2023-09-21',
 		'2023-09-22',
 		'08:00:00',
@@ -75,7 +73,6 @@ VALUES
 	),
 	(
 		2,
-		'2023-09-21',
 		'2023-09-23',
 		'2023-09-24',
 		'09:00:00',
