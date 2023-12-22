@@ -165,7 +165,7 @@ public partial class DbSalasVirtualesContext : DbContext
 
         modelBuilder.Entity<Solicitud>(entity =>
         {
-            entity.HasKey(e => e.SolicitudId).HasName("PK__Solicitu__85E95DA75FD71699");
+            entity.HasKey(e => e.SolicitudId).HasName("PK__Solicitu__85E95DA7FDEB6951");
 
             entity.ToTable("Solicitud");
 
@@ -185,7 +185,9 @@ public partial class DbSalasVirtualesContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.FechaFin).HasColumnType("date");
             entity.Property(e => e.FechaInicio).HasColumnType("date");
-            entity.Property(e => e.FechaRegistro).HasColumnType("date");
+            entity.Property(e => e.FechaRegistro)
+                .HasDefaultValueSql("(CONVERT([date],getdate()))")
+                .HasColumnType("date");
             entity.Property(e => e.HoraFin).HasPrecision(0);
             entity.Property(e => e.HoraInicio).HasPrecision(0);
             entity.Property(e => e.Motivo)
@@ -201,22 +203,22 @@ public partial class DbSalasVirtualesContext : DbContext
             //entity.HasOne(d => d.Entidad).WithMany(p => p.Solicituds)
             //    .HasForeignKey(d => d.EntidadId)
             //    .OnDelete(DeleteBehavior.ClientSetNull)
-            //    .HasConstraintName("FK__Solicitud__Entid__681373AD");
+            //    .HasConstraintName("FK__Solicitud__Entid__02C769E9");
 
             //entity.HasOne(d => d.EstadoRegistro).WithMany(p => p.Solicituds)
             //    .HasForeignKey(d => d.EstadoRegistroId)
             //    .OnDelete(DeleteBehavior.ClientSetNull)
-            //    .HasConstraintName("FK__Solicitud__Estad__69FBBC1F");
+            //    .HasConstraintName("FK__Solicitud__Estad__04AFB25B");
 
             //entity.HasOne(d => d.EstadoSolicitud).WithMany(p => p.Solicituds)
             //    .HasForeignKey(d => d.EstadoSolicitudId)
             //    .OnDelete(DeleteBehavior.ClientSetNull)
-            //    .HasConstraintName("FK__Solicitud__Estad__690797E6");
+            //    .HasConstraintName("FK__Solicitud__Estad__03BB8E22");
 
             //entity.HasOne(d => d.Solicitante).WithMany(p => p.Solicituds)
             //    .HasForeignKey(d => d.SolicitanteId)
             //    .OnDelete(DeleteBehavior.ClientSetNull)
-            //    .HasConstraintName("FK__Solicitud__Solic__671F4F74");
+            //    .HasConstraintName("FK__Solicitud__Solic__01D345B0");
         });
 
         modelBuilder.Entity<Usuario>(entity =>

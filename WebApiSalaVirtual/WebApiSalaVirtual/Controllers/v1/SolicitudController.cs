@@ -71,7 +71,7 @@ namespace WebApiSalaVirtual.Controllers.v1
             }
             catch (Exception error)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = error.Message, respuesta = lista });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = error.Message});
             }
         }
 
@@ -87,7 +87,7 @@ namespace WebApiSalaVirtual.Controllers.v1
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status200OK, new { mensaje = ex.Message });
+                return StatusCode(StatusCodes.Status500InternalServerError, new { mensaje = ex.Message });
             }
         }
 

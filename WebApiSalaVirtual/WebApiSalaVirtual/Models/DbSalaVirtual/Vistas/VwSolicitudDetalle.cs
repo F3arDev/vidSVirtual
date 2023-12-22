@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace WebApiSalaVirtual.Models.DbSalaVirtual.Vistas;
 
@@ -10,11 +12,11 @@ public partial class VwSolicitudDetalles
     public int SolicitanteId { get; set; }
 
     public string SolicitanteNombre { get; set; } = null!;
-
+    [JsonConverter(typeof(JsonDateFormatConverter))]
     public DateTime FechaRegistro { get; set; }
-
+    [JsonConverter(typeof(JsonDateFormatConverter))]
     public DateTime FechaInicio { get; set; }
-
+    [JsonConverter(typeof(JsonDateFormatConverter))]
     public DateTime FechaFin { get; set; }
 
     public TimeSpan HoraInicio { get; set; }
@@ -42,4 +44,17 @@ public partial class VwSolicitudDetalles
     public int EstadoRegistroId { get; set; }
 
     public string EstadoRegistro { get; set; } = null!;
+}
+
+public class JsonDateFormatConverter : JsonConverter<DateTime>
+{
+    public override DateTime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    {
+        return DateTime.Parse(reader.GetString());
+    }
+
+    public override void Write(Utf8JsonWriter writer, DateTime value, JsonSerializerOptions options)
+    {
+        writer.WriteStringValue(value.ToString("yyyy-MM-dd"));
+    }
 }
