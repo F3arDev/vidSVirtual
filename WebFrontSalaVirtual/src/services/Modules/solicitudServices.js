@@ -62,9 +62,11 @@ class solicitudServices {
 		}
 	}
 	async fetchAllSolicitudRegUSUARIO(id) {
+		debugger
 		try {
 			const url = `/api/v1/Solicitud/ListaRegUsuario/${id}`;
 			const res = await axiosJwt.get(url)
+	
 			this.SolicitudesRegUSUARIO.value = await res.data.response;
 		} catch (error) {
 			console.log(error)
@@ -75,7 +77,6 @@ class solicitudServices {
 	async sendSolicitudPEN(sendSolicitud) {
 		try {
 			let res = await axiosJwt.post('/api/v1/Solicitud/Guardar', sendSolicitud)
-			debugger
 			if (res.status !== 200) {
 				this.error = 'Hubo un Error al enviar la Solicitud'
 				return false
@@ -91,7 +92,7 @@ class solicitudServices {
 	}
 	async putSolicitud(putSolicitud) {
 		try {
-			let res = await axiosJwt.post('/api/v1/Solicitud/Editar', putSolicitud)
+			let res = await axiosJwt.put('/api/v1/Solicitud/Editar', putSolicitud)
 			if (res.status !== 200) {
 				this.error = 'Hubo un Error al Guardar Cambios a la Solicitud'
 				return false

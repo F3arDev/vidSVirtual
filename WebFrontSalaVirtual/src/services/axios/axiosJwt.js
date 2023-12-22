@@ -19,6 +19,7 @@ axiosJwt.interceptors.request.use(function (config) {
 	}
 	const alertifyStore = useAlertifyStore();
 	alertifyStore.alertifyWaitingOpen()
+	debugger
 	return config;
 }, function (error) {
 	return Promise.reject(error);
@@ -29,6 +30,7 @@ axiosJwt.interceptors.request.use(function (config) {
 axiosJwt.interceptors.response.use((response) => {
 	const alertifyStore = useAlertifyStore();
 	alertifyStore.alertifyWaitingClose()
+
 	return response
 }, async function (error) {
 	const originalRequest = error.config;

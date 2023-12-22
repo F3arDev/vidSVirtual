@@ -166,7 +166,7 @@ onMounted(async () => {
 						labels: { "ok": "Aprobar", "cancel": "Cancelar" },
 						onok: async function () {
 							let jsonPutSolicitud = {
-								"solicitudId": data.solicitudID,
+								"solicitudId": data.solicitudId,
 								"urlSesion": linkMeet.value,
 								"motivo": Motivo.value,
 								"estadoSolicitudId": 2,//Estado Aprobado
@@ -205,7 +205,7 @@ onMounted(async () => {
 						labels: { "ok": "Rechazar", "cancel": "Cancelar" },
 						onok: async function () {
 							let jsonPutSolicitud = {
-								"solicitudId": data.solicitudID,
+								"solicitudId": data.solicitudId,
 								"urlSesion": linkMeet.value,
 								"motivo": Motivo.value,
 								"estadoSolicitudId": 3, //Estado Rechazado

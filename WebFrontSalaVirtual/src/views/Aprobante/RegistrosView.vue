@@ -128,7 +128,7 @@ onMounted(async () => {
 		data: solicidudes.value,
 		columns: [
 			{ defaultContent: `<button class="btn btn-primary btn-sm btnVer">+</button>`, title: '+', orderable: false, },
-			{ data: 'solicitudID', title: 'ID' },
+			{ data: 'solicitudId', title: 'ID' },
 			{ data: 'solicitanteNombre', title: 'Solicitante' },
 			{ data: 'entidad', title: 'Entidad' },
 			{ data: 'expediente', title: 'Expediente' },

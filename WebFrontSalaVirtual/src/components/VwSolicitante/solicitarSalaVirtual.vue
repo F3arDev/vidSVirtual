@@ -127,15 +127,14 @@ const getDataSolicitud = async () => {
 		let userStore = new useAuthStore()
 		let jsonSendSolicitud =
 		{
-			"solicitanteId": userStore.usuario.usuarioID,
-			"fechaRegistro": FechaInicio.value,
-			"fechaInicio": FechaInicio.value,
-			"fechaFin": FechaFin.value,
-			"horaInicio": HoraInicio.value + ':00',
-			"horaFin": HoraFin.value + ':00',
-			"vwDepMunicipioId": '1',
-			"expediente": Expediente.value,
-			"actividad": Actividad.value
+			"SolicitanteId": userStore.usuario.usuarioId,
+			"FechaInicio": FechaInicio.value,
+			"FechaFin": FechaFin.value,
+			"HoraInicio": HoraInicio.value + ':00',
+			"HoraFin": HoraFin.value + ':00',
+			"EntidadId": userStore.usuario.entidadId,
+			"Expediente": Expediente.value,
+			"Actividad": Actividad.value
 		}
 		let result = await service.sendSolicitudPEN(jsonSendSolicitud)
 		if (result == true) {

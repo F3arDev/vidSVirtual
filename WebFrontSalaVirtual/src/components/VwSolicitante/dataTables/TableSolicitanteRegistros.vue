@@ -95,7 +95,7 @@ let Motivo = ref('');
 
 
 let table;
-let Usuario = userStore.usuario.usuarioID;
+let Usuario = userStore.usuario.usuarioId;
 onMounted(async () => {
 	await service.fetchAllSolicitudRegUSUARIO(Usuario);
 	const solicidudes = await service.getSolicitudRegUSUARIO();
@@ -103,7 +103,7 @@ onMounted(async () => {
 		data: solicidudes.value,
 		columns: [
 			{ defaultContent: `<button class="btn btn-primary btn-sm btnVer">+</button>`, title: '+', orderable: false, },
-			{ data: 'solicitudID', title: 'ID' },
+			{ data: 'solicitudId', title: 'ID' },
 			{ data: 'solicitanteNombre', title: 'Solicitante' },
 			{ data: 'entidad', title: 'Entidad' },
 			{ data: 'expediente', title: 'Expediente' },
