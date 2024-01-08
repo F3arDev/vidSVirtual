@@ -1,3 +1,4 @@
+Use dbSalasVirtuales
 --VwUsuarioDetalles
 CREATE VIEW
 	VwUsuarioDetalles AS
@@ -14,8 +15,9 @@ FROM
 	INNER JOIN UsuarioRol AS ur ON u.UsuarioID = ur.UsuarioRolID 
 	INNER JOIN Entidad AS en ON u.EntidadID = u.EntidadID
 GO
-select * from VwUsuarioDetalles
 
+select * from VwUsuarioDetalles
+GO
 
 --VwSolicitudDetalles
 CREATE VIEW
@@ -49,7 +51,7 @@ FROM
 GO
 
 select * from VwSolicitudDetalles
-
+GO
 
 --VwRolesRutas
 CREATE VIEW

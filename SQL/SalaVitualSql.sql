@@ -17,32 +17,49 @@ BEGIN CATCH
 END CATCH;
 go
 
-
-
 --TABLA ESTADO DEL REGISTRO
+BEGIN TRY
 CREATE TABLE EstadoRegistro (
 	EstadoRegistroID int identity (1, 1) NOT NULL,
 	Descripcion varchar(32) NOT NULL,
 	primary key (EstadoRegistroID)
 );
+END TRY
+BEGIN CATCH
+    -- Captura la excepción y muestra un mensaje de error
+    PRINT 'Error al crear la tabla: ' + ERROR_MESSAGE();
+END CATCH;
 go
 
 --Simular Gaia
+BEGIN TRY
 CREATE TABLE UsuarioRol (
 	UsuarioRolID int IDENTITY (1, 1) NOT NULL,
 	Descripcion varchar(64) NOT NULL,
 	primary key (UsuarioRolID)
 );
+END TRY
+BEGIN CATCH
+    -- Captura la excepción y muestra un mensaje de error
+    PRINT 'Error al crear la tabla: ' + ERROR_MESSAGE();
+END CATCH;
 go
 
 --Entidad
+BEGIN TRY
 CREATE TABLE Entidad (
 	EntidadID int IDENTITY (1, 1) NOT NULL,
 	Descripcion varchar(64) NOT NULL,
 	primary key (EntidadID),
 );
+END TRY
+BEGIN CATCH
+    -- Captura la excepción y muestra un mensaje de error
+    PRINT 'Error al crear la tabla: ' + ERROR_MESSAGE();
+END CATCH;
 go
-
+--RolesRutas
+BEGIN TRY
 CREATE TABLE RolesRutas (
 	RutaID int IDENTITY (1, 1) NOT NULL,
 	UsuarioRolID int,
@@ -50,19 +67,32 @@ CREATE TABLE RolesRutas (
 	primary key (RutaID),
 	FOREIGN KEY (UsuarioRolID) REFERENCES UsuarioRol (UsuarioRolID)
 );
+END TRY
+BEGIN CATCH
+    -- Captura la excepción y muestra un mensaje de error
+    PRINT 'Error al crear la tabla: ' + ERROR_MESSAGE();
+END CATCH;
 go
-
+--Usuario
+BEGIN TRY
 CREATE TABLE Usuario (
 	UsuarioID int IDENTITY (1, 1) NOT NULL,
 	Nombre varchar(64) NOT NULL,
 	UsuarioRolID int NOT NULL,
 	EntidadID int,
+	Departamento varchar(64),
 	primary key (UsuarioID),
 	FOREIGN KEY (UsuarioRolID) REFERENCES UsuarioRol (UsuarioRolID),
 	FOREIGN KEY (EntidadID) REFERENCES Entidad (EntidadID)
 );
+END TRY
+BEGIN CATCH
+    -- Captura la excepción y muestra un mensaje de error
+    PRINT 'Error al crear la tabla: ' + ERROR_MESSAGE();
+END CATCH;
 go
-
+--Solicitud
+BEGIN TRY
 CREATE TABLE Solicitud (
 		SolicitudID int IDENTITY (1, 1) NOT NULL,
 		SolicitanteID int NOT NULL,
@@ -88,10 +118,15 @@ CREATE TABLE Solicitud (
 		FOREIGN KEY (EstadoSolicitudID) REFERENCES EstadoSolicitud (EstadoSolicitudID),
 		FOREIGN KEY (EstadoRegistroID) REFERENCES EstadoRegistro (EstadoRegistroID)
 );
+END TRY
+BEGIN CATCH
+    -- Captura la excepción y muestra un mensaje de error
+    PRINT 'Error al crear la tabla: ' + ERROR_MESSAGE();
+END CATCH;
 GO
 
-
-
+--LogSolicitud
+BEGIN TRY
 CREATE TABLE LogSolicitud (
 		SolicitudID int PRIMARY KEY IDENTITY (1, 1) NOT NULL,
 		SolicitanteID int NOT NULL,
@@ -115,79 +150,13 @@ CREATE TABLE LogSolicitud (
 		FechaModificacion date,
 		UsuarioModificaID int,
 		FOREIGN KEY (UsuarioModificaID) REFERENCES Usuario (UsuarioID)
-	);
-GO
-
-begin try
-
-SELECT
-	*
-FROM
-	RolesRutas
-END TRY
-BEGIN CATCH
+);
+	END TRY
+	BEGIN CATCH
     -- Captura la excepción y muestra un mensaje de error
     PRINT 'Error al crear la tabla: ' + ERROR_MESSAGE();
-END CATCH
-go
---db SalaViirtuales
-
-
-
-select
-	*
-from
-	EstadoSolicitud;
-
-select
-	*
-from
-	UsuarioRol;
-
--- Actualizar la descripci�n 'aprobante' a 'nueva_descripcion_aprobante'
-UPDATE UsuarioRol
-SET
-	descripcion = 'aprobante'
-WHERE
-	descripcion = 'APROBANTE';
-
--- Actualizar la descripci�n 'solicitante' a 'nueva_descripcion_solicitante'
-UPDATE UsuarioRol
-SET
-	descripcion = 'solicitante'
-WHERE
-	descripcion = 'Solicitante';
-
-select
-	*
-from
-	Usuario;
-
-select
-	*
-from
-	SolicitudHistorial;
-
-select
-	*
-from
-	VwDepMunicipio;
-
-select
-	*
-from
-	Entidad;
-
-DELETE FROM Solicitud;
-DBCC CHECKIDENT ('Solicitud', RESEED, 0);
-
-
-UPDATE Solicitud
-SET
-	EstadoSolicitudID = 2
-WHERE
-	SolicitudID = 2;
-
+END CATCH;
+GO
 
 
 	

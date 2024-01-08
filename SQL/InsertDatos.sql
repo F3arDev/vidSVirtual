@@ -54,6 +54,7 @@ INSERT INTO	Solicitud (
 		FechaFin,
 		HoraInicio,
 		HoraFin,
+		Departamento,
 		EntidadID,
 		Expediente,
 		Actividad,
