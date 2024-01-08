@@ -1,7 +1,7 @@
+Use dbSalasVirtuales;
 --Insert Datos
 
-INSERT INTO
-	EstadoSolicitud (Descripcion)
+INSERT INTO EstadoSolicitud (Descripcion)
 VALUES
 	('Pendiente'),
 	--Pendiente
@@ -11,8 +11,7 @@ VALUES
 go
 
 --Rechazado
-INSERT INTO
-	EstadoRegistro (Descripcion)
+INSERT INTO EstadoRegistro (Descripcion)
 VALUES
 	('Activo'),
 	--activo
@@ -22,15 +21,11 @@ VALUES
 go
 
 --Borrado
-INSERT INTO
-	UsuarioRol (descripcion)
+INSERT INTO UsuarioRol (descripcion)
 VALUES
 	('aprobante'),
 	('solicitante');
 go
-
-
-
 
 INSERT INTO
 	Entidad (descripcion)
@@ -38,14 +33,12 @@ VALUES
 	('CSJ');
 go
 
-INSERT INTO
-	Usuario (Nombre, UsuarioRolID, EntidadID, Departamento)
+INSERT INTO Usuario (Nombre, UsuarioRolID, EntidadID, Departamento)
 VALUES
 	('Juan', 1,1,'Managua'),
 	('Fredd', 2,1,'Managua'),
 	('Moises', 1,1,'Managua');
 go
-
 
 -- Insertar valor en la tabla Solicitud
 INSERT INTO	Solicitud (
@@ -54,7 +47,6 @@ INSERT INTO	Solicitud (
 		FechaFin,
 		HoraInicio,
 		HoraFin,
-		Departamento,
 		EntidadID,
 		Expediente,
 		Actividad,
@@ -85,8 +77,7 @@ VALUES
 	);
 go
 
-INSERT INTO
-	RolesRutas (UsuarioRolID, NombreRuta)
+INSERT INTO RolesRutas (UsuarioRolID, NombreRuta)
 VALUES
 	(2, '/solicitante'),
 	(2, '/solicitante/inicio'),

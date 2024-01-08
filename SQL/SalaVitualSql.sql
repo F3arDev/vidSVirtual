@@ -3,6 +3,7 @@ go
 
 USE dbSalasVirtuales;
 go
+
 --TABLA ESTADO SOLICITUD
 BEGIN TRY
 CREATE TABLE EstadoSolicitud (
@@ -58,6 +59,7 @@ BEGIN CATCH
     PRINT 'Error al crear la tabla: ' + ERROR_MESSAGE();
 END CATCH;
 go
+
 --RolesRutas
 BEGIN TRY
 CREATE TABLE RolesRutas (
@@ -73,6 +75,7 @@ BEGIN CATCH
     PRINT 'Error al crear la tabla: ' + ERROR_MESSAGE();
 END CATCH;
 go
+
 --Usuario
 BEGIN TRY
 CREATE TABLE Usuario (
@@ -91,6 +94,26 @@ BEGIN CATCH
     PRINT 'Error al crear la tabla: ' + ERROR_MESSAGE();
 END CATCH;
 go
+
+--Log de Auth Jwt Token y Jwt Refresh
+BEGIN TRY
+CREATE TABLE LogRefreshToken (
+    LogRefreshTokenID INT PRIMARY KEY IDENTITY,
+    UsuarioID INT,
+    Token VARCHAR(500),
+    RefreshToken VARCHAR(200),
+    FechaCreacion DATETIME DEFAULT GETDATE(),
+    FechaExpiracion DATETIME DEFAULT DATEADD(MINUTE, 240, GETDATE()),
+    Estado AS (IIF(FechaExpiracion < GETDATE(), CONVERT(BIT, 0), CONVERT(BIT, 1))),
+	FOREIGN KEY (UsuarioID) REFERENCES Usuario (UsuarioID)
+);
+END TRY
+BEGIN CATCH
+    -- Captura la excepción y muestra un mensaje de error
+    PRINT 'Error al crear la tabla: ' + ERROR_MESSAGE();
+END CATCH;
+GO
+
 --Solicitud
 BEGIN TRY
 CREATE TABLE Solicitud (
@@ -157,14 +180,3 @@ CREATE TABLE LogSolicitud (
     PRINT 'Error al crear la tabla: ' + ERROR_MESSAGE();
 END CATCH;
 GO
-
-
-	
---CREATE TABLE
---	VwDepMunicipio (
---		VwDepMunicipioID int PRIMARY KEY IDENTITY (1, 1) NOT NULL,
---		Departamento varchar(64) NOT NULL,
---		Municipio varchar(64) NOT NULL,
---		EntidadID int NOT NULL,
---		CONSTRAINT FK_ENTIDADID FOREIGN KEY (EntidadID) REFERENCES Entidad (EntidadID)
---	);
